@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elfa Sasha, ¿cómo vengarse? | Gacha Infinita</title>
+    <title>¿Cómo vengarse de la elfa Sasha? | Gacha Infinita</title>
     <style>
         * {
             margin: 0;
@@ -150,13 +150,13 @@
         [data-theme="dark"] h1 {
             color: #5a9e8c;
         }
-        .chapter-number {
+        .episode-number {
             color: #6b6a68;
             margin-bottom: 1rem;
             border-bottom: 1px solid #e5e0d8;
             padding-bottom: 0.5rem;
         }
-        [data-theme="dark"] .chapter-number {
+        [data-theme="dark"] .episode-number {
             color: #a0a0a0;
             border-bottom-color: #404040;
         }
@@ -242,20 +242,20 @@
     <div class="nav-container">
         <div class="nav-center">
             <a href="index.html" class="nav-btn">📚 Índice</a>
-            <a href="capitulo-2.html" id="prevLinkTop" class="nav-btn">← Futura dirección</a>
-            <span class="chapter-counter" id="chapterCounterTop">Capítulo ? de ?</span>
-            <a href="#" id="nextLinkTop" class="nav-btn">Siguiente →</a>
+            <a href="capitulo1e2.html" id="prevLinkTop" class="nav-btn">← Planes de futuro</a>
+            <span class="chapter-counter" id="chapterCounterTop">Capítulo 1 - Episodio 3</span>
+            <a href="capitulo1e4.html" id="nextLinkTop" class="nav-btn">Infiltración →</a>
         </div>
     </div>
 
     <div class="chapter-selector">
         <select id="chapterSelect">
-            <option value="">📖 Ir a capítulo...</option>
+            <option value="">📖 Ir a episodio...</option>
         </select>
     </div>
 
-    <h1>Elfa Sasha, ¿cómo vengarse?</h1>
-    <div class="chapter-number">Capítulo 3</div>
+    <h1>¿Cómo vengarse de la elfa Sasha?</h1>
+    <div class="episode-number">Capítulo 1 - Episodio 3</div>
 
     <div class="story-content">
         <p>La noche antes de partir hacia la superficie, Light no podía dormir.</p>
@@ -314,7 +314,7 @@
         
         <p>—¿Justicia?</p>
         
-        <p>—Usted no está buscando destruir por placer. Está buscando que quienes le hicieron daño enfrenten las consecuencias de sus actos. Eso es justicia, aunque sea implacable.</p>
+        <p>—Usted no busca destruir por placer. Busca que quienes le hicieron daño enfrenten las consecuencias de sus actos. Eso es justicia, aunque sea implacable.</p>
         
         <p>Light sonrió con amargura.</p>
         
@@ -364,7 +364,7 @@
         
         <p>—No la mataré. No de inmediato. Primero, haré que todos sepan lo que hizo. Que sus queridos Caballeros Blancos sepan que una de sus figuras prominentes es una traidora. Que su prometido sepa que la mujer que ama apuñala por la espalda a quienes le son leales.</p>
         
-        <p>—¿Y después?</p>
+        <p>—¿Después?</p>
         
         <p>—Después… cuando no le quede nada, cuando esté sola y despreciada por todos… entonces decidiré si merece vivir.</p>
         
@@ -406,15 +406,15 @@
     <div class="nav-container">
         <div class="nav-bottom">
             <a href="index.html" class="nav-btn">📚 Índice</a>
-            <a href="capitulo-2.html" id="prevLinkBottom" class="nav-btn">← Futura dirección</a>
-            <span class="chapter-counter" id="chapterCounterBottom">Capítulo ? de ?</span>
-            <a href="capitulo-4.html" id="nextLinkBottom" class="nav-btn">Siguiente →</a>
+            <a href="capitulo1e2.html" id="prevLinkBottom" class="nav-btn">← Planes de futuro</a>
+            <span class="chapter-counter" id="chapterCounterBottom">Capítulo 1 - Episodio 3</span>
+            <a href="capitulo1e4.html" id="nextLinkBottom" class="nav-btn">Infiltración →</a>
         </div>
     </div>
 
     <div class="chapter-selector">
         <select id="chapterSelectBottom">
-            <option value="">📖 Ir a capítulo...</option>
+            <option value="">📖 Ir a episodio...</option>
         </select>
     </div>
 
@@ -427,21 +427,21 @@
 
     <script src="data.js"></script>
     <script>
-        const CHAPTER_NUM = 3;
+        // ========== CONFIGURACIÓN DEL EPISODIO ==========
+        const CHAPTER_NUM = 1;
+        const EPISODE_NUM = 3;
         
-        let currentChapter = null;
-        let prevChapter = null;
-        let nextChapter = null;
-        let allChapters = [];
-        let totalTranslated = 0;
+        let currentEpisode = null;
+        let prevEpisode = null;
+        let nextEpisode = null;
+        let allEpisodes = [];
         
-        function loadChapterData() {
+        function loadEpisodeData() {
             if (typeof GACHA_DATA !== 'undefined') {
-                currentChapter = GACHA_DATA.getChapter(CHAPTER_NUM);
-                prevChapter = GACHA_DATA.getPrevChapter(CHAPTER_NUM);
-                nextChapter = GACHA_DATA.getNextChapter(CHAPTER_NUM);
-                allChapters = GACHA_DATA.getOrderedChapters();
-                totalTranslated = allChapters.length;
+                currentEpisode = GACHA_DATA.getEpisode(CHAPTER_NUM, EPISODE_NUM);
+                prevEpisode = GACHA_DATA.getPrevEpisode(CHAPTER_NUM, EPISODE_NUM);
+                nextEpisode = GACHA_DATA.getNextEpisode(CHAPTER_NUM, EPISODE_NUM);
+                allEpisodes = GACHA_DATA.getAllEpisodesOrdered();
                 return true;
             }
             return false;
@@ -453,25 +453,27 @@
             const counters = [document.getElementById('chapterCounterTop'), document.getElementById('chapterCounterBottom')];
             
             counters.forEach(counter => {
-                if (counter) counter.textContent = `Capítulo ${CHAPTER_NUM} de ${totalTranslated}`;
+                if (counter) counter.textContent = `Capítulo 1 - Episodio 3`;
             });
             
-            if (nextChapter) {
-                nextLinks.forEach(link => {
+            if (prevEpisode) {
+                prevLinks.forEach(link => {
                     if (link) {
-                        link.href = `capitulo-${nextChapter.num}.html`;
+                        link.href = `capitulo${prevEpisode.chapter}e${prevEpisode.episodeNum}.html`;
                         link.classList.remove('disabled');
-                        let shortTitle = nextChapter.title;
-                        if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
-                        link.textContent = `${shortTitle} →`;
+                        link.textContent = `← ${prevEpisode.title}`;
                     }
                 });
-            } else {
+            }
+            
+            if (nextEpisode) {
                 nextLinks.forEach(link => {
                     if (link) {
-                        link.classList.add('disabled');
-                        link.removeAttribute('href');
-                        link.textContent = 'Sin siguiente →';
+                        link.href = `capitulo${nextEpisode.chapter}e${nextEpisode.episodeNum}.html`;
+                        link.classList.remove('disabled');
+                        let shortTitle = nextEpisode.title;
+                        if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                        link.textContent = `${shortTitle} →`;
                     }
                 });
             }
@@ -482,11 +484,11 @@
             
             selectors.forEach(select => {
                 if (!select) return;
-                let options = '<option value="">📖 Seleccionar capítulo...</option>';
-                for (const ch of allChapters) {
-                    const selected = ch.num === CHAPTER_NUM ? 'selected' : '';
-                    const title = ch.title.length > 45 ? ch.title.substring(0, 42) + '...' : ch.title;
-                    options += `<option value="capitulo-${ch.num}.html" ${selected}>${ch.num}: ${title}</option>`;
+                let options = '<option value="">📖 Seleccionar episodio...</option>';
+                for (const ep of allEpisodes) {
+                    const selected = (ep.chapter == CHAPTER_NUM && ep.episodeNum == EPISODE_NUM) ? 'selected' : '';
+                    const title = ep.title.length > 45 ? ep.title.substring(0, 42) + '...' : ep.title;
+                    options += `<option value="capitulo${ep.chapter}e${ep.episodeNum}.html" ${selected}>${ep.chapterTitle} - Episodio ${ep.episodeNum}: ${title}</option>`;
                 }
                 select.innerHTML = options;
                 
@@ -502,8 +504,11 @@
             let history = localStorage.getItem(`gacha_history_${user}`);
             let historyObj = history ? JSON.parse(history) : { chapters: [] };
             if (!historyObj.chapters) historyObj.chapters = [];
-            historyObj.chapters = historyObj.chapters.filter(c => c !== CHAPTER_NUM);
-            historyObj.chapters.unshift(CHAPTER_NUM);
+            
+            historyObj.chapters = historyObj.chapters.filter(item => 
+                !(item.chapter == CHAPTER_NUM && item.episode == EPISODE_NUM)
+            );
+            historyObj.chapters.unshift({ chapter: CHAPTER_NUM, episode: EPISODE_NUM });
             if (historyObj.chapters.length > 20) historyObj.chapters.pop();
             localStorage.setItem(`gacha_history_${user}`, JSON.stringify(historyObj));
         }
@@ -544,7 +549,7 @@
         }
         
         document.addEventListener('DOMContentLoaded', () => {
-            if (loadChapterData()) {
+            if (loadEpisodeData()) {
                 setupNavLinks();
                 populateSelectors();
             }
