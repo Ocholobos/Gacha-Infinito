@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gacha Infinita | Novela Web</title>
+    <style>
+        :root {
+            --bg-color: #faf9f7;
+            --text-color: #2c2b28;
+            --card-bg: white;
+            --border-color: #e5e0d8;
+            --accent: #1a4d5f;
+            --accent-light: #eef2f0;
+            --secondary-text: #6b6a68;
+        }
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e5e5e5;
+            --card-bg: #2d2d2d;
+            --border-color: #404040;
+            --accent: #5a9e8c;
+            --accent-light: #2a3a35;
+            --secondary-text: #a0a0a0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 1rem 1.5rem 2rem; }
+        
+        /* Barra de opciones */
+        .options-bar {
+            position: sticky;
+            top: 0;
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.6rem 1rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            z-index: 100;
+            flex-wrap: wrap;
+        }
+        .options-bar button {
+            background: var(--accent-light);
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+        .font-size-control { display: flex; gap: 0.3rem; align-items: center; }
+        .font-size-control button { width: 32px; padding: 0.2rem; }
+        
+        /* Header */
+        .series-header { text-align: center; padding: 1.5rem 0; border-bottom: 3px solid var(--border-color); margin-bottom: 1.5rem; }
+        h1 { font-size: 2rem; color: var(--accent); margin-bottom: 0.5rem; }
+        .author { font-size: 0.9rem; color: var(--secondary-text); }
+        .author a { color: var(--accent); text-decoration: none; }
+        .info-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin: 1rem 0; }
+        .badge { background: var(--accent-light); padding: 0.3rem 0.8rem; border-radius: 30px; font-size: 0.75rem; color: var(--accent); }
+        
+        /* Información de la serie */
+        .other-titles, .synopsis, .user-panel, .comments-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        .synopsis { padding: 1.5rem; }
+        .synopsis h2 { font-size: 1.2rem; color: var(--accent); margin-bottom: 1rem; border-left: 4px solid var(--accent); padding-left: 1rem; }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .stat-number { font-size: 1.5rem; font-weight: bold; color: var(--accent); }
+        .stat-label { font-size: 0.7rem; color: var(--secondary-text); }
+        
+        /* Panel de usuario */
+        .login-form { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .login-form input {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            flex: 1;
+        }
+        .login-form button, .logout-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .history-list { margin-top: 1rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color); }
+        .history-item { padding: 0.2rem 0; font-size: 0.85rem; }
+        .history-item a { color: var(--accent); text-decoration: none; }
+        
+        /* Tabla de capítulos */
+        .chapter-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .chapter-table th, .chapter-table td {
+            padding: 0.6rem 0.3rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .chapter-table th { color: var(--secondary-text); font-weight: normal; font-size: 0.75rem; }
+        .chapter-table td a { color: var(--accent); text-decoration: none; }
+        .chapter-status {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+        .chapter-status.pending { background: var(--border-color); color: var(--secondary-text); }
+        
+        /* Paginación */
+        .chapter-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .chapter-nav a, .chapter-nav button {
+            background: var(--accent-light);
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            color: var(--accent);
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+        .page-input {
+            display: inline-flex;
+            gap: 0.3rem;
+            align-items: center;
+            background: var(--accent-light);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+        }
+        .page-input input {
+            width: 50px;
+            padding: 0.2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+        
+        /* Comentarios */
+        .comment-form { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+        .comment-form input, .comment-form textarea {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: inherit;
+        }
+        .comment-form textarea { min-height: 80px; resize: vertical; }
+        .comment-form button { width: 100px; background: var(--accent); color: white; border: none; padding: 0.5rem; border-radius: 8px; cursor: pointer; }
+        .comment-item { border-bottom: 1px solid var(--border-color); padding: 0.8rem 0; }
+        .comment-name { font-weight: bold; color: var(--accent); }
+        .comment-date { font-size: 0.7rem; color: var(--secondary-text); margin-left: 0.5rem; }
+        
+        /* Botón flotante subir */
+        .floating-scroll-top {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+        }
+        .floating-scroll-top:hover { opacity: 1; transform: scale(1.05); }
+        
+        footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--secondary-text);
+        }
+        
+        @media (max-width: 600px) {
+            .container { padding: 0.5rem 1rem; }
+            .chapter-nav { flex-direction: column; align-items: stretch; }
+            .floating-scroll-top { width: 40px; height: 40px; font-size: 1.2rem; bottom: 70px; right: 15px; }
+        }
+    </style>
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+</head>
+<body>
+    <!-- Barra de opciones -->
+    <div class="options-bar">
+        <div class="font-size-control">
+            <button id="fontMinus">A-</button>
+            <button id="fontPlus">A+</button>
+        </div>
+        <button id="themeToggle">🌙 Modo oscuro</button>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="series-header">
+            <h1>Gacha Infinita</h1>
+            <div class="author">Autor: <a href="https://ncode.syosetu.com/n9584gd/" target="_blank">明鏡シスイ (Meikyō Shisui)</a></div>
+            <div class="info-badges">
+                <span class="badge">📖 Novela Web</span>
+                <span class="badge">🔥 En publicación</span>
+                <span class="badge">⚔️ Fantasía / Venganza</span>
+                <span class="badge">🎲 Gacha</span>
+                <span class="badge">📺 Anime adaptado</span>
+            </div>
+        </div>
+
+        <!-- Títulos alternativos -->
+        <div class="other-titles">
+            <h3>📌 También conocido como</h3>
+            <p><strong>日本語:</strong> 【連載版】信じていた仲間達にダンジョン奥地で殺されかけたがギフト『無限ガチャ』でレベル９９９９の仲間達を手に入れて元パーティーメンバーと世界に復讐＆『ざまぁ！』します！</p>
+            <p><strong>English:</strong> <em>Backstabbed in a Backwater Dungeon: My Trusted Companions Tried to Kill Me, But Thanks to the Gift of an Unlimited Gacha I Got Lvl 9999 Friends and Am Out for Revenge on My Former Party Members and the World</em></p>
+            <p><strong>Español:</strong> <em>Estuve a punto de ser asesinado en lo profundo del calabozo por mis compañeros en quienes confiaba, pero con el regalo "Gacha Infinito" conseguí aliados de nivel 9999 y ahora me vengaré de mis excompañeros y del mundo entero.</em></p>
+        </div>
+
+        <!-- Sinopsis -->
+        <div class="synopsis">
+            <h2>📖 Sinopsis</h2>
+            <p>Light, un humano, es expulsado del grupo <strong>"Reunión de Razas"</strong> en lo profundo de un <strong>calabozo</strong>. En este mundo existen seis razas: humana, bestia, dragón, elfo, enano y demonio. Los humanos son discriminados por las demás razas.</p>
+            <p>Tras ser traicionado, Light activa su habilidad <strong>Gacha Infinito</strong>, obteniendo a <strong>Mei</strong>, una luchadora de nivel 9999. Tres años después, Light ha creado su propio reino en el calabozo y planea vengarse de sus traidores.</p>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats">
+            <div class="stat-card"><div class="stat-number" id="totalChapters">576</div><div class="stat-label">Capítulos (Web)</div></div>
+            <div class="stat-card"><div class="stat-number">14</div><div class="stat-label">LN Volúmenes</div></div>
+            <div class="stat-card"><div class="stat-number">21</div><div class="stat-label">Manga Volúmenes</div></div>
+            <div class="stat-card"><div class="stat-number" id="translatedCount">0</div><div class="stat-label">Traducidos</div></div>
+        </div>
+
+        <!-- Panel de usuario -->
+        <div class="user-panel" id="userPanel">
+            <h3>📚 Mi historial de lectura</h3>
+            <div id="loginSection">
+                <div class="login-form">
+                    <input type="text" id="usernameInput" placeholder="Tu nombre o seudónimo">
+                    <button id="loginBtn">Comenzar a leer</button>
+                </div>
+                <p style="font-size: 0.7rem; margin-top: 0.5rem;">✅ Solo se guarda en tu navegador. Sin registro.</p>
+            </div>
+            <div id="historySection" style="display: none;">
+                <p>👤 <strong id="displayName"></strong> <button id="logoutBtn" class="logout-btn" style="margin-left: 1rem;">Cerrar sesión</button></p>
+                <div class="history-list"><div id="historyList"></div><a href="#" id="clearHistoryBtn" style="font-size:0.7rem;">Limpiar historial</a></div>
+            </div>
+        </div>
+
+        <!-- Índice -->
+        <h2 style="margin: 1rem 0 0.5rem; color: var(--accent);">📑 Índice de capítulos</h2>
+        <div id="chapterIndex"></div>
+        <div class="chapter-nav" id="pagination"></div>
+
+        <!-- Comentarios -->
+        <div class="comments-section">
+            <h3>💬 Comentarios</h3>
+            <div class="comment-form">
+                <input type="text" id="commentName" placeholder="Tu nombre">
+                <textarea id="commentText" placeholder="Escribe tu comentario..."></textarea>
+                <button id="submitComment">Enviar</button>
+            </div>
+            <div id="commentsList"></div>
+        </div>
+
+        <footer>
+            <p>Gacha Infinita © 明鏡シスイ (Meikyō Shisui) | Publicado en <a href="https://ncode.syosetu.com/n9584gd/" target="_blank">Shōsetsuka ni Narō</a></p>
+            <p>Traducción: Ocholobos | Apoya al autor comprando los volúmenes oficiales</p>
+        </footer>
+    </div>
+
+    <!-- Botón flotante subir -->
+    <button class="floating-scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆</button>
+
+    <script src="data.js"></script>
+    <script>
+        // ========== CONFIGURACIÓN ==========
+        const ITEMS_PER_PAGE = 15;
+        let currentPage = 1;
+        let allChapters = [];
+        let totalTranslated = 0;
+        
+        // ========== CARGAR DATOS ==========
+        function loadData() {
+            if (typeof GACHA_DATA !== 'undefined') {
+                allChapters = GACHA_DATA.getOrderedChapters();
+                totalTranslated = allChapters.length;
+                document.getElementById('translatedCount').textContent = totalTranslated;
+                return true;
+            }
+            return false;
+        }
+        
+        const totalPages = Math.ceil(totalTranslated / ITEMS_PER_PAGE);
+        
+        // ========== RENDERIZAR TABLA ==========
+        function renderTable(page) {
+            const start = (page - 1) * ITEMS_PER_PAGE;
+            const pageChapters = allChapters.slice(start, start + ITEMS_PER_PAGE);
+            
+            let html = '<table class="chapter-table"><thead><tr><th>#</th><th>Título</th><th></th></tr></thead><tbody>';
+            for (const ch of pageChapters) {
+                html += `
+                    <tr>
+                        <td>${ch.num}</td>
+                        <td><a href="capitulo-${ch.num}.html">${ch.title}</a></td>
+                        <td><span class="chapter-status">✅ Traducido</span></td>
+                    </tr>
+                `;
+            }
+            html += '</tbody></table>';
+            document.getElementById('chapterIndex').innerHTML = html;
+        }
+        
+        // ========== PAGINACIÓN ==========
+        function renderPagination() {
+            const total = Math.ceil(totalTranslated / ITEMS_PER_PAGE);
+            let html = '';
+            
+            if (currentPage > 1) {
+                html += `<a href="#" data-page="${currentPage-1}">← Anterior</a>`;
+            } else {
+                html += `<span class="disabled" style="background:var(--border-color);padding:0.4rem 0.8rem;border-radius:8px;">← Anterior</span>`;
+            }
+            
+            html += `<span style="margin:0 1rem;">Página ${currentPage} de ${total}</span>`;
+            
+            if (currentPage < total) {
+                html += `<a href="#" data-page="${currentPage+1}">Siguiente →</a>`;
+            } else {
+                html += `<span class="disabled" style="background:var(--border-color);padding:0.4rem 0.8rem;border-radius:8px;">Siguiente →</span>`;
+            }
+            
+            html += `<div class="page-input">
+                        <span>Ir a:</span>
+                        <input type="number" id="pageInput" min="1" max="${total}" value="${currentPage}">
+                        <button id="goPageBtn">Ir</button>
+                     </div>`;
+            
+            document.getElementById('pagination').innerHTML = html;
+            
+            document.querySelectorAll('#pagination a[data-page]').forEach(a => {
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    goToPage(parseInt(a.dataset.page));
+                });
+            });
+            
+            const goBtn = document.getElementById('goPageBtn');
+            const input = document.getElementById('pageInput');
+            if (goBtn) goBtn.onclick = () => goToPage(parseInt(input.value));
+            if (input) input.onkeypress = (e) => { if (e.key === 'Enter') goToPage(parseInt(input.value)); };
+        }
+        
+        function goToPage(page) {
+            const total = Math.ceil(totalTranslated / ITEMS_PER_PAGE);
+            if (page >= 1 && page <= total) {
+                currentPage = page;
+                renderTable(currentPage);
+                renderPagination();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        
+        // ========== HISTORIAL ==========
+        let currentUser = null;
+        let userHistory = { chapters: [] };
+        
+        function loadUser() {
+            const saved = localStorage.getItem('gacha_user');
+            if (saved) {
+                currentUser = saved;
+                const hist = localStorage.getItem(`gacha_history_${currentUser}`);
+                if (hist) userHistory = JSON.parse(hist);
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('historySection').style.display = 'block';
+                document.getElementById('displayName').textContent = currentUser;
+                updateHistoryDisplay();
+            }
+        }
+        
+        function updateHistoryDisplay() {
+            const div = document.getElementById('historyList');
+            if (!userHistory.chapters || userHistory.chapters.length === 0) {
+                div.innerHTML = '<p style="color:var(--secondary-text);">No has leído nada aún.</p>';
+                return;
+            }
+            let html = '';
+            userHistory.chapters.slice(0, 10).forEach(ch => {
+                const chapter = allChapters.find(c => c.num === ch);
+                const title = chapter ? chapter.title : `Capítulo ${ch}`;
+                html += `<div class="history-item">📖 <a href="capitulo-${ch}.html">${title}</a></div>`;
+            });
+            div.innerHTML = html;
+        }
+        
+        // ========== COMENTARIOS ==========
+        function loadComments() { const saved = localStorage.getItem('gacha_comments'); return saved ? JSON.parse(saved) : []; }
+        function saveComments(comments) { localStorage.setItem('gacha_comments', JSON.stringify(comments)); }
+        function renderComments() {
+            const comments = loadComments();
+            const div = document.getElementById('commentsList');
+            if (comments.length === 0) { div.innerHTML = '<p style="color:var(--secondary-text);">Sé el primero en comentar.</p>'; return; }
+            let html = '';
+            comments.slice().reverse().forEach(c => {
+                html += `<div class="comment-item"><span class="comment-name">${escapeHtml(c.name)}</span><span class="comment-date">${c.date}</span><div class="comment-text">${escapeHtml(c.text)}</div></div>`;
+            });
+            div.innerHTML = html;
+        }
+        function escapeHtml(str) { return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]); }
+        function addComment(name, text) {
+            if (!name.trim() || !text.trim()) return;
+            const comments = loadComments();
+            comments.push({ name: name.trim(), text: text.trim(), date: new Date().toLocaleString() });
+            saveComments(comments);
+            renderComments();
+            document.getElementById('commentName').value = '';
+            document.getElementById('commentText').value = '';
+        }
+        
+        // ========== CONFIGURACIÓN ==========
+        function initControls() {
+            const savedTheme = localStorage.getItem('gacha_theme');
+            if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            const savedFont = localStorage.getItem('gacha_fontsize');
+            if (savedFont) document.body.style.fontSize = savedFont + '%';
+            
+            document.getElementById('fontPlus').onclick = () => {
+                let size = parseInt(localStorage.getItem('gacha_fontsize')) || 100;
+                size = Math.min(150, size + 10);
+                document.body.style.fontSize = size + '%';
+                localStorage.setItem('gacha_fontsize', size);
+            };
+            document.getElementById('fontMinus').onclick = () => {
+                let size = parseInt(localStorage.getItem('gacha_fontsize')) || 100;
+                size = Math.max(70, size - 10);
+                document.body.style.fontSize = size + '%';
+                localStorage.setItem('gacha_fontsize', size);
+            };
+            
+            const themeBtn = document.getElementById('themeToggle');
+            if (document.documentElement.hasAttribute('data-theme')) themeBtn.textContent = '☀️ Modo claro';
+            themeBtn.onclick = () => {
+                const isDark = document.documentElement.hasAttribute('data-theme');
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('gacha_theme', 'light');
+                    themeBtn.textContent = '🌙 Modo oscuro';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('gacha_theme', 'dark');
+                    themeBtn.textContent = '☀️ Modo claro';
+                }
+            };
+        }
+        
+        // ========== INICIALIZACIÓN ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            if (loadData()) {
+                renderTable(1);
+                renderPagination();
+            }
+            initControls();
+            loadUser();
+            renderComments();
+            
+            document.getElementById('loginBtn').onclick = () => {
+                const name = document.getElementById('usernameInput').value;
+                if (name.trim()) {
+                    localStorage.setItem('gacha_user', name.trim());
+                    loadUser();
+                }
+            };
+            document.getElementById('logoutBtn').onclick = () => {
+                localStorage.removeItem('gacha_user');
+                location.reload();
+            };
+            document.getElementById('clearHistoryBtn').onclick = (e) => {
+                e.preventDefault();
+                if (confirm('¿Borrar todo tu historial de lectura?')) {
+                    userHistory = { chapters: [] };
+                    localStorage.setItem(`gacha_history_${currentUser}`, JSON.stringify(userHistory));
+                    updateHistoryDisplay();
+                }
+            };
+            document.getElementById('submitComment').onclick = () => addComment(
+                document.getElementById('commentName').value,
+                document.getElementById('commentText').value
+            );
+            
+            kofiWidgetOverlay.draw('ocholobos', {
+                'type': 'floating-chat',
+                'floating-chat.donateButton.text': 'Apóyame',
+                'floating-chat.donateButton.background-color': '#1a4d5f',
+                'floating-chat.donateButton.text-color': '#ffffff'
+            });
+        });
+    </script>
+</body>
+</html>
