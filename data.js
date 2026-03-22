@@ -1,179 +1,285 @@
 // ============================================================
-// DATOS CENTRALIZADOS DE CAPÍTULOS TRADUCIDOS
-// Solo actualiza este archivo cuando añadas un nuevo capítulo
+// DATOS CENTRALIZADOS DE EPISODIOS
+// Estructura: Capítulo > Episodio (numeración independiente por capítulo)
+// Archivos: capituloXeY.html (X=capítulo, Y=episodio dentro del capítulo)
 // ============================================================
 
 const GACHA_DATA = {
-    // Lista de capítulos traducidos (número y título en español)
+    // Lista de capítulos con sus episodios
     chapters: [
-        // ========== 0章 ==========
-        { num: 0, title: "Prólogo: Gacha Infinito" },
+        // ========== Capítulo 0 ==========
+        {
+            num: 0,
+            title: "Capítulo 0",
+            episodes: [
+                { num: 0, title: "Gacha Infinito", date: "17/04/2020 12:00" }
+            ]
+        },
         
-        // ========== 1章 ==========
-        { num: 1, title: "Partida" },
-        { num: 2, title: "Futura dirección" },
-        { num: 3, title: "Elfa Sasha, ¿cómo vengarse?" },
-        { num: 4, title: "Interrupción" },
-        { num: 5, title: "Interior del calabozo" },
-        { num: 6, title: "Límite de crecimiento" },
-        { num: 7, title: "Jóvenes aventureros" },
-        { num: 8, title: "Combate en el calabozo" },
-        { num: 9, title: "Ducado de Six" },
-        { num: 10, title: "Cambio de piedras mágicas" },
-        { num: 11, title: "Inyección de espíritu caballeresco" },
-        { num: 12, title: "Grandius" },
-        { num: 13, title: "Pulsera de la oración" },
-        { num: 14, title: "Extra: Charla de las sirvientas" },
-        { num: 15, title: "El nuevo grupo 'Bufón Negro'" },
-        { num: 16, title: "Crisis y huida" },
-        { num: 17, title: "Cambio de actitud" },
-        { num: 18, title: "Asesino de aventureros" },
-        { num: 19, title: "Extra: Ellie, la bruja prohibida" },
-        { num: 20, title: "Retirada y encuentro" },
-        { num: 21, title: "El orgullo del hermano" },
-        { num: 22, title: "Un pequeño milagro" },
-        { num: 23, title: "Cacería del 'Asesino de aventureros' 1" },
-        { num: 24, title: "Cacería del 'Asesino de aventureros' 2" },
-        { num: 25, title: "Cacería del 'Asesino de aventureros' 3" },
-        { num: 26, title: "Cacería del 'Asesino de aventureros' 4" },
-        { num: 27, title: "Cacería del 'Asesino de aventureros' 5" },
-        { num: 28, title: "El fin del 'Asesino de aventureros'" },
-        { num: 29, title: "Hacia la siguiente venganza" },
+        // ========== Capítulo 1 ==========
+        {
+            num: 1,
+            title: "Capítulo 1",
+            episodes: [
+                { num: 1, title: "La partida", date: "17/04/2020 12:00" },
+                { num: 2, title: "Planes de futuro", date: "17/04/2020 17:00" },
+                { num: 3, title: "¿Cómo vengarse de la elfa Sasha?", date: "18/04/2020 12:00" },
+                { num: 4, title: "Infiltración", date: "18/04/2020 17:00" },
+                { num: 5, title: "Dentro del calabozo", date: "19/04/2020 12:00" },
+                { num: 6, title: "Límites del crecimiento", date: "19/04/2020 17:00" },
+                { num: 7, title: "Jóvenes aventureros", date: "20/04/2020 12:00" },
+                { num: 8, title: "Combate en el calabozo", date: "20/04/2020 17:00" },
+                { num: 9, title: "Ducado de Six", date: "21/04/2020 12:00" },
+                { num: 10, title: "Cambio de piedras mágicas", date: "21/04/2020 17:00" },
+                { num: 11, title: "Inyección de espíritu caballeresco", date: "22/04/2020 12:00" },
+                { num: 12, title: "Grandius", date: "22/04/2020 17:00" },
+                { num: 13, title: "Pulsera de la oración", date: "23/04/2020 12:00" },
+                { num: 14, title: "Extra: Charla de las sirvientas", date: "23/04/2020 17:00" },
+                { num: 15, title: "El nuevo grupo 'Bufón Negro'", date: "24/04/2020 12:00" },
+                { num: 16, title: "Crisis y huida", date: "24/04/2020 17:00" },
+                { num: 17, title: "Cambio de actitud", date: "25/04/2020 12:00" },
+                { num: 18, title: "Asesino de aventureros", date: "25/04/2020 17:00" },
+                { num: 19, title: "Extra: Ellie, la bruja prohibida", date: "26/04/2020 12:00" },
+                { num: 20, title: "Retirada y encuentro", date: "26/04/2020 17:00" },
+                { num: 21, title: "El orgullo del hermano", date: "27/04/2020 12:00" },
+                { num: 22, title: "Un pequeño milagro", date: "27/04/2020 17:00" },
+                { num: 23, title: "Cacería del 'Asesino de aventureros' 1", date: "28/04/2020 12:00" },
+                { num: 24, title: "Cacería del 'Asesino de aventureros' 2", date: "28/04/2020 17:00" },
+                { num: 25, title: "Cacería del 'Asesino de aventureros' 3", date: "29/04/2020 12:00" },
+                { num: 26, title: "Cacería del 'Asesino de aventureros' 4", date: "29/04/2020 17:00" },
+                { num: 27, title: "Cacería del 'Asesino de aventureros' 5", date: "30/04/2020 12:00" },
+                { num: 28, title: "El fin del 'Asesino de aventureros'", date: "30/04/2020 17:00" },
+                { num: 29, title: "Hacia la siguiente venganza", date: "01/05/2020 12:00" }
+            ]
+        },
         
-        // ========== 幕間 ==========
-        { num: 30, title: "Extra: Un día de Nazuna - Parte 1" },
-        { num: 31, title: "Extra: Un día de Nazuna - Parte 2" },
-        { num: 32, title: "Extra: Las demandas de las sirvientas" },
+        // ========== Interludio 1 ==========
+        {
+            num: "1i",
+            title: "Interludio 1",
+            episodes: [
+                { num: 1, title: "Un día de Nazuna - Parte 1", date: "01/05/2020 17:00" },
+                { num: 2, title: "Un día de Nazuna - Parte 2", date: "02/05/2020 12:00" },
+                { num: 3, title: "Las demandas de las sirvientas", date: "02/05/2020 17:00" }
+            ]
+        },
         
-        // ========== 2章 - Venganza contra Sasha ==========
-        { num: 33, title: "Sasha y su prometido" },
-        { num: 34, title: "El pasado alcanzado" },
-        { num: 35, title: "La historia de Sasha" },
-        { num: 36, title: "Light y Ellie" },
-        { num: 37, title: "Los Caballeros Blancos 1" },
-        { num: 38, title: "Los Caballeros Blancos 2" },
-        { num: 39, title: "La misteriosa torre gigante" },
-        { num: 40, title: "Aventureros mohicanos" },
-        { num: 41, title: "Nya~" },
-        { num: 42, title: "Siguiente acción" },
-        { num: 43, title: "Leaf VII" },
-        { num: 44, title: "Thunder Arrow" },
-        { num: 45, title: "Cada cual con sus intenciones" },
-        { num: 46, title: "Después de casi 3 años..." },
-        { num: 47, title: "Conversación con Sasha" },
-        { num: 48, title: "Tres personas" },
-        { num: 49, title: "Ice Heat y Suzu" },
-        { num: 50, title: "Objetivo" },
-        { num: 51, title: "Nivel 7777" },
-        { num: 52, title: "Sasha, hacia el bosque" },
-        { num: 53, title: "Sasha, de reconocimiento" },
-        { num: 54, title: "Los Caballeros Blancos deciden atacar" },
-        { num: 55, title: "Reunión de estrategia" },
-        { num: 56, title: "Preparativos de irrupción" },
-        { num: 57, title: "Irrupción en la torre" },
-        { num: 58, title: "Batalla en el primer piso 1" },
-        { num: 59, title: "Batalla en el primer piso 2" },
-        { num: 60, title: "Batalla en el primer piso 3" },
-        { num: 61, title: "Batalla en el segundo piso 1" },
-        { num: 62, title: "Batalla en el segundo piso 2" },
-        { num: 63, title: "Batalla en el segundo piso 3" },
-        { num: 64, title: "Batalla en el tercer piso 1" },
-        { num: 65, title: "Batalla en el tercer piso 2" },
-        { num: 66, title: "Reencuentro tras 3 años" },
-        { num: 67, title: "Encuentro tras 3 años" },
-        { num: 68, title: "Segunda venganza" },
-        { num: 69, title: "¿Qué es la desesperación?" },
-        { num: 70, title: "Gungnir, liberación fase 1" },
-        { num: 71, title: "El as de Michael" },
-        { num: 72, title: "Discordia" },
-        { num: 73, title: "Ataduras de espinas" },
-        { num: 74, title: "Venganza contra Sasha" },
-        { num: 75, title: "Nueva información y caída de un reino" },
-        { num: 76, title: "Reunión danzante" },
-        { num: 77, title: "La memoria de Leaf VII" },
-        { num: 78, title: "Declaración de independencia humana" },
-        { num: 79, title: "Nueva información y..." },
+        // ========== Capítulo 2: Venganza contra Sasha ==========
+        {
+            num: 2,
+            title: "Capítulo 2: Venganza contra la elfa Sasha",
+            episodes: [
+                { num: 1, title: "Sasha y su prometido", date: "03/05/2020 12:00" },
+                { num: 2, title: "El pasado alcanzado", date: "03/05/2020 17:00" },
+                { num: 3, title: "La historia de Sasha", date: "04/05/2020 12:00" },
+                { num: 4, title: "Light y Ellie", date: "04/05/2020 17:00" },
+                { num: 5, title: "Los Caballeros Blancos 1", date: "05/05/2020 12:00" },
+                { num: 6, title: "Los Caballeros Blancos 2", date: "05/05/2020 17:00" },
+                { num: 7, title: "La misteriosa torre gigante", date: "06/05/2020 12:00" },
+                { num: 8, title: "Aventureros mohicanos", date: "06/05/2020 17:00" },
+                { num: 9, title: "Nya~", date: "07/05/2020 12:00" },
+                { num: 10, title: "Siguiente acción", date: "07/05/2020 17:00" },
+                { num: 11, title: "Leaf VII", date: "08/05/2020 12:00" },
+                { num: 12, title: "Thunder Arrow", date: "08/05/2020 17:00" },
+                { num: 13, title: "Cada cual con sus intenciones", date: "09/05/2020 12:00" },
+                { num: 14, title: "Después de casi 3 años...", date: "09/05/2020 17:00" },
+                { num: 15, title: "Conversación con Sasha", date: "10/05/2020 12:00" },
+                { num: 16, title: "Tres personas", date: "10/05/2020 17:00" },
+                { num: 17, title: "Ice Heat y Suzu", date: "11/05/2020 12:00" },
+                { num: 18, title: "Objetivo", date: "11/05/2020 17:00" },
+                { num: 19, title: "Nivel 7777", date: "12/05/2020 12:00" },
+                { num: 20, title: "Sasha, hacia el bosque", date: "12/05/2020 17:00" },
+                { num: 21, title: "Sasha, de reconocimiento", date: "13/05/2020 12:00" },
+                { num: 22, title: "Los Caballeros Blancos deciden atacar", date: "13/05/2020 17:00" },
+                { num: 23, title: "Reunión de estrategia", date: "14/05/2020 12:00" },
+                { num: 24, title: "Preparativos de irrupción", date: "14/05/2020 17:00" },
+                { num: 25, title: "Irrupción en la torre", date: "15/05/2020 12:00" },
+                { num: 26, title: "Batalla en el primer piso 1", date: "15/05/2020 17:00" },
+                { num: 27, title: "Batalla en el primer piso 2", date: "16/05/2020 12:00" },
+                { num: 28, title: "Batalla en el primer piso 3", date: "16/05/2020 17:00" },
+                { num: 29, title: "Batalla en el segundo piso 1", date: "17/05/2020 12:00" },
+                { num: 30, title: "Batalla en el segundo piso 2", date: "17/05/2020 17:00" },
+                { num: 31, title: "Batalla en el segundo piso 3", date: "18/05/2020 12:00" },
+                { num: 32, title: "Batalla en el tercer piso 1", date: "18/05/2020 17:00" },
+                { num: 33, title: "Batalla en el tercer piso 2", date: "19/05/2020 12:00" },
+                { num: 34, title: "Reencuentro tras 3 años", date: "19/05/2020 17:00" },
+                { num: 35, title: "Encuentro tras 3 años", date: "20/05/2020 12:00" },
+                { num: 36, title: "Segunda venganza", date: "20/05/2020 17:00" },
+                { num: 37, title: "¿Qué es la desesperación?", date: "21/05/2020 12:00" },
+                { num: 38, title: "Gungnir, liberación fase 1", date: "21/05/2020 17:00" },
+                { num: 39, title: "El as de Michael", date: "22/05/2020 12:00" },
+                { num: 40, title: "Discordia", date: "22/05/2020 17:00" },
+                { num: 41, title: "Ataduras de espinas", date: "23/05/2020 12:00" },
+                { num: 42, title: "Venganza contra Sasha", date: "23/05/2020 17:00" },
+                { num: 43, title: "Nueva información y caída de un reino", date: "24/05/2020 12:00" },
+                { num: 44, title: "Reunión danzante", date: "24/05/2020 17:00" },
+                { num: 45, title: "La memoria de Leaf VII", date: "25/05/2020 12:00" },
+                { num: 46, title: "Declaración de independencia humana", date: "25/05/2020 17:00" },
+                { num: 47, title: "Nueva información y...", date: "26/05/2020 12:00" }
+            ]
+        },
         
-        // ========== 幕間2 ==========
-        { num: 80, title: "Extra: Pasta de frijol dulce o con granos" },
-        { num: 81, title: "Extra: Baño y secretos" },
-        { num: 82, title: "Extra: La historia de Nemumu" },
+        // ========== Interludio 2 ==========
+        {
+            num: "2i",
+            title: "Interludio 2",
+            episodes: [
+                { num: 1, title: "Pasta de frijol dulce o con granos", date: "26/05/2020 17:00" },
+                { num: 2, title: "Baño y secretos", date: "27/05/2020 12:00" },
+                { num: 3, title: "La historia de Nemumu", date: "27/05/2020 17:00" }
+            ]
+        },
         
-        // ========== 3章 - Arco del pasado ==========
-        { num: 83, title: "Light, nivel 15" },
-        { num: 84, title: "Light, nivel 1000" },
-        { num: 85, title: "Capítulo del baño" },
-        { num: 86, title: "Light, alrededor de nivel 3000" },
-        { num: 87, title: "Light, alrededor de nivel 3000 (2)" },
-        { num: 88, title: "vs Hydra" },
-        { num: 89, title: "Light, nivel 3500" },
-        { num: 90, title: "Calabozo 'Abismo', año 1" },
-        { num: 91, title: "Light, nivel 7000" },
-        { num: 92, title: "Calabozo 'Abismo', alrededor del año 2" },
-        { num: 93, title: "Regreso a casa 1" },
-        { num: 94, title: "Regreso a casa 2" },
-        { num: 95, title: "Extra 1" },
-        { num: 96, title: "Extra 2" },
+        // ========== Capítulo 3: Arco del pasado ==========
+        {
+            num: 3,
+            title: "Capítulo 3: Arco del pasado",
+            episodes: [
+                { num: 1, title: "Light, nivel 15", date: "28/05/2020 12:00" },
+                { num: 2, title: "Light, nivel 1000", date: "28/05/2020 17:00" },
+                { num: 3, title: "Capítulo del baño", date: "29/05/2020 12:00" },
+                { num: 4, title: "Light, alrededor de nivel 3000", date: "29/05/2020 17:00" },
+                { num: 5, title: "Light, alrededor de nivel 3000 (2)", date: "30/05/2020 12:00" },
+                { num: 6, title: "vs Hydra", date: "30/05/2020 17:00" },
+                { num: 7, title: "Light, nivel 3500", date: "31/05/2020 12:00" },
+                { num: 8, title: "Calabozo 'Abismo', año 1", date: "31/05/2020 17:00" },
+                { num: 9, title: "Light, nivel 7000", date: "01/06/2020 12:00" },
+                { num: 10, title: "Calabozo 'Abismo', alrededor del año 2", date: "01/06/2020 17:00" },
+                { num: 11, title: "Regreso a casa 1", date: "02/06/2020 12:00" },
+                { num: 12, title: "Regreso a casa 2", date: "02/06/2020 17:00" }
+            ]
+        },
         
-        // ========== 4章 - Reino Humano ==========
-        { num: 97, title: "Justicia Azul" },
-        { num: 98, title: "El paradero de Yume" },
-        { num: 99, title: "Inspección a la gran torre" },
+        // ========== Extra 3 ==========
+        {
+            num: "3e",
+            title: "Extras del Capítulo 3",
+            episodes: [
+                { num: 1, title: "Extra 1", date: "03/06/2020 12:00" },
+                { num: 2, title: "Extra 2", date: "03/06/2020 17:00" }
+            ]
+        },
         
-        // ========== Arco de Nano (capítulos 112-133) ==========
-        { num: 112, title: "Nano y la espada prohibida - Introducción" },
-        { num: 113, title: "Nano y la espada prohibida 1" },
-        { num: 114, title: "Nano y la espada prohibida 2" },
-        { num: 115, title: "Nano y la espada prohibida 3" },
-        { num: 116, title: "Nano y la espada prohibida 4" },
-        { num: 117, title: "Nano y la espada prohibida 5" },
-        { num: 118, title: "Nano y la espada prohibida 6" },
-        { num: 119, title: "Nano y la espada prohibida 7" },
-        { num: 120, title: "Nano y la espada prohibida 8" },
-        { num: 121, title: "Nano y la espada prohibida 9" },
-        { num: 122, title: "Nano y la espada prohibida 10" },
-        { num: 123, title: "Nano y la espada prohibida 11" },
-        { num: 124, title: "Nano y la espada prohibida 12" },
-        { num: 125, title: "Nano y la espada prohibida 13" },
-        { num: 126, title: "Nano y la espada prohibida 14" },
-        { num: 127, title: "Nano y la espada prohibida 15" },
-        { num: 128, title: "Nano y la espada prohibida 16" },
-        { num: 129, title: "Nano y la espada prohibida 17" },
-        { num: 130, title: "Nano y la espada prohibida 18" },
-        { num: 131, title: "Nano y la espada prohibida 19" },
-        { num: 132, title: "Nano y la espada prohibida 20" },
-        { num: 133, title: "Nano y la espada prohibida 21" }
+        // ========== Capítulo 4: Reino Humano ==========
+        {
+            num: 4,
+            title: "Capítulo 4: Reino Humano",
+            episodes: [
+                { num: 1, title: "Justicia Azul", date: "04/06/2020 12:00" },
+                { num: 2, title: "El paradero de Yume", date: "04/06/2020 17:00" },
+                { num: 3, title: "Inspección a la gran torre", date: "05/06/2020 12:00" }
+            ]
+        },
+        
+        // ========== Arco de Nano (Interludio especial) ==========
+        {
+            num: "nano",
+            title: "Arco de Nano: La espada prohibida",
+            episodes: [
+                { num: 1, title: "Nano y la espada prohibida - Introducción", date: "12/06/2020 12:00" },
+                { num: 2, title: "Nano y la espada prohibida 1", date: "12/06/2020 12:00" },
+                { num: 3, title: "Nano y la espada prohibida 2", date: "12/06/2020 17:00" },
+                { num: 4, title: "Nano y la espada prohibida 3", date: "13/06/2020 12:00" },
+                { num: 5, title: "Nano y la espada prohibida 4", date: "13/06/2020 17:00" },
+                { num: 6, title: "Nano y la espada prohibida 5", date: "14/06/2020 12:00" },
+                { num: 7, title: "Nano y la espada prohibida 6", date: "14/06/2020 17:00" },
+                { num: 8, title: "Nano y la espada prohibida 7", date: "15/06/2020 12:00" },
+                { num: 9, title: "Nano y la espada prohibida 8", date: "15/06/2020 17:00" },
+                { num: 10, title: "Nano y la espada prohibida 9", date: "16/06/2020 12:00" },
+                { num: 11, title: "Nano y la espada prohibida 10", date: "16/06/2020 17:00" },
+                { num: 12, title: "Nano y la espada prohibida 11", date: "17/06/2020 12:00" },
+                { num: 13, title: "Nano y la espada prohibida 12", date: "17/06/2020 17:00" },
+                { num: 14, title: "Nano y la espada prohibida 13", date: "18/06/2020 12:00" },
+                { num: 15, title: "Nano y la espada prohibida 14", date: "18/06/2020 17:00" },
+                { num: 16, title: "Nano y la espada prohibida 15", date: "19/06/2020 12:00" },
+                { num: 17, title: "Nano y la espada prohibida 16", date: "19/06/2020 17:00" },
+                { num: 18, title: "Nano y la espada prohibida 17", date: "20/06/2020 12:00" },
+                { num: 19, title: "Nano y la espada prohibida 18", date: "20/06/2020 17:00" },
+                { num: 20, title: "Nano y la espada prohibida 19", date: "21/06/2020 12:00" },
+                { num: 21, title: "Nano y la espada prohibida 20", date: "21/06/2020 17:00" },
+                { num: 22, title: "Nano y la espada prohibida 21", date: "22/06/2020 12:00" }
+            ]
+        }
     ],
     
-    // Total de capítulos en la web original (para referencia)
-    totalWebChapters: 576,
+    // ========== FUNCIONES AUXILIARES ==========
     
-    // Obtener capítulo por número
-    getChapter: function(num) {
-        return this.chapters.find(c => c.num === num);
+    // Generar nombre de archivo
+    getFileName: function(chapterNum, episodeNum) {
+        return `capitulo${chapterNum}e${episodeNum}.html`;
     },
     
-    // Obtener índice de un capítulo en la lista
-    getIndex: function(num) {
-        return this.chapters.findIndex(c => c.num === num);
+    // Obtener todos los episodios con su información completa
+    getAllEpisodes: function() {
+        const all = [];
+        for (const chapter of this.chapters) {
+            for (const ep of chapter.episodes) {
+                all.push({
+                    chapter: chapter.num,
+                    chapterTitle: chapter.title,
+                    episodeNum: ep.num,
+                    title: ep.title,
+                    date: ep.date,
+                    file: `capitulo${chapter.num}e${ep.num}.html`
+                });
+            }
+        }
+        return all;
     },
     
-    // Obtener capítulo anterior
-    getPrevChapter: function(num) {
-        const idx = this.getIndex(num);
-        if (idx > 0) return this.chapters[idx - 1];
+    // Obtener episodio por capítulo y número de episodio
+    getEpisode: function(chapterNum, episodeNum) {
+        const chapter = this.chapters.find(c => c.num == chapterNum);
+        if (!chapter) return null;
+        const episode = chapter.episodes.find(e => e.num == episodeNum);
+        if (!episode) return null;
+        return {
+            chapter: chapter.num,
+            chapterTitle: chapter.title,
+            episodeNum: episode.num,
+            title: episode.title,
+            date: episode.date,
+            file: `capitulo${chapter.num}e${episode.num}.html`
+        };
+    },
+    
+    // Obtener todos los episodios en orden (para navegación secuencial)
+    getAllEpisodesOrdered: function() {
+        const all = [];
+        for (const chapter of this.chapters) {
+            for (const ep of chapter.episodes) {
+                all.push({
+                    chapter: chapter.num,
+                    chapterTitle: chapter.title,
+                    episodeNum: ep.num,
+                    title: ep.title,
+                    date: ep.date,
+                    file: `capitulo${chapter.num}e${ep.num}.html`
+                });
+            }
+        }
+        return all;
+    },
+    
+    // Obtener índice de un episodio en la lista ordenada
+    getIndex: function(chapterNum, episodeNum) {
+        const all = this.getAllEpisodesOrdered();
+        return all.findIndex(ep => ep.chapter == chapterNum && ep.episodeNum == episodeNum);
+    },
+    
+    // Obtener episodio anterior
+    getPrevEpisode: function(chapterNum, episodeNum) {
+        const all = this.getAllEpisodesOrdered();
+        const idx = this.getIndex(chapterNum, episodeNum);
+        if (idx > 0) return all[idx - 1];
         return null;
     },
     
-    // Obtener capítulo siguiente
-    getNextChapter: function(num) {
-        const idx = this.getIndex(num);
-        if (idx < this.chapters.length - 1) return this.chapters[idx + 1];
+    // Obtener episodio siguiente
+    getNextEpisode: function(chapterNum, episodeNum) {
+        const all = this.getAllEpisodesOrdered();
+        const idx = this.getIndex(chapterNum, episodeNum);
+        if (idx < all.length - 1) return all[idx + 1];
         return null;
-    },
-    
-    // Obtener lista ordenada
-    getOrderedChapters: function() {
-        return [...this.chapters].sort((a, b) => a.num - b.num);
     }
 };
