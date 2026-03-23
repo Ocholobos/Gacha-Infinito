@@ -65,7 +65,6 @@
             text-align: center;
         }
         
-        /* Formularios */
         .auth-section, .profile-section {
             background: white;
             border: 1px solid #e5e0d8;
@@ -124,7 +123,6 @@
             margin-top: 0.3rem;
         }
         
-        /* Perfil */
         .profile-header {
             text-align: center;
             margin-bottom: 1.5rem;
@@ -195,7 +193,6 @@
     <div class="container">
         <h1>📖 Mi perfil - Gacha Infinita</h1>
         
-        <!-- Sección de autenticación (solo visible si no hay sesión) -->
         <div id="authSection" class="auth-section">
             <h2>🔐 Iniciar sesión / Registrarse</h2>
             <div id="loginForm">
@@ -235,7 +232,6 @@
             </div>
         </div>
         
-        <!-- Sección de perfil (solo visible con sesión) -->
         <div id="profileSection" style="display: none;">
             <div class="profile-header">
                 <h2 id="profileUsername">Usuario</h2>
@@ -265,7 +261,6 @@
             <button id="logoutBtn" style="width: 100%; margin-top: 1rem;">Cerrar sesión</button>
         </div>
         
-        <!-- Tabla de clasificación -->
         <div class="auth-section">
             <h2>🏆 Clasificación de lectores</h2>
             <div id="leaderboardContainer">
@@ -275,7 +270,6 @@
     </div>
 
     <script>
-        // ========== CONTROLES DE TEMA Y TAMAÑO ==========
         function initControls() {
             const savedTheme = localStorage.getItem('gacha_theme');
             if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
@@ -311,7 +305,6 @@
             };
         }
         
-        // ========== ACTUALIZAR PERFIL ==========
         async function updateProfileDisplay() {
             const result = await getUserProfile();
             if (!result.success) return;
@@ -327,7 +320,6 @@
             document.getElementById('statLikes').textContent = profile.stats?.likesReceived || 0;
         }
         
-        // ========== CARGAR TABLA DE CLASIFICACIÓN ==========
         async function loadLeaderboard() {
             const container = document.getElementById('leaderboardContainer');
             const result = await getLeaderboard(20);
@@ -360,7 +352,6 @@
             return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]);
         }
         
-        // ========== MANEJAR AUTENTICACIÓN ==========
         function showLogin() {
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('registerForm').style.display = 'none';
@@ -426,11 +417,9 @@
             location.reload();
         }
         
-        // ========== INICIALIZACIÓN ==========
         document.addEventListener('DOMContentLoaded', () => {
             initControls();
             
-            // Verificar estado de autenticación
             onAuthStateChanged(async (state) => {
                 if (state.loggedIn) {
                     document.getElementById('authSection').style.display = 'none';
@@ -444,7 +433,6 @@
                 }
             });
             
-            // Eventos de autenticación
             document.getElementById('loginBtn').onclick = handleLogin;
             document.getElementById('registerBtn').onclick = handleRegister;
             document.getElementById('logoutBtn').onclick = handleLogout;
