@@ -273,15 +273,19 @@
             color: #6b6a68;
             margin-left: 0.5rem;
         }
-        .comment-like {
-            margin-left: 1rem;
+        .comment-like, .comment-report, .comment-delete {
+            margin-left: 0.8rem;
             cursor: pointer;
-            color: #6b6a68;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
+            display: inline-block;
+            transition: all 0.2s;
         }
-        .comment-like:hover {
-            color: #e53e3e;
-        }
+        .comment-like { color: #9ca3af; }
+        .comment-like:hover { color: #e53e3e; }
+        .comment-report { color: #9ca3af; }
+        .comment-report:hover { color: #e53e3e; }
+        .comment-delete { color: #9ca3af; }
+        .comment-delete:hover { color: #e53e3e; }
         
         .floating-buttons {
             position: fixed;
@@ -366,6 +370,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
     <script src="auth.js"></script>
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 </head>
 <body>
     <div class="options-bar">
@@ -373,8 +378,10 @@
             <button id="fontMinus">A-</button>
             <button id="fontPlus">A+</button>
         </div>
-        <a href="usuario.html" id="profileLink">👤 Mi perfil</a>
-        <div id="userInfo" style="display: none;" class="user-info"></div>
+        <a href="usuario.html">👤 Mi perfil</a>
+        <a href="reglas.html">📜 Reglas</a>
+        <a href="moderacion.html" id="modLink" style="display: none;">🛡️ Moderación</a>
+        <div id="userInfo" class="user-info" style="display: none;"></div>
         <button id="logoutBtnHeader" style="display: none;">Cerrar sesión</button>
         <a href="index.html">📚 Índice</a>
         <button id="themeToggle">🌙 Modo oscuro</button>
@@ -1110,12 +1117,16 @@
                 return;
             }
             
+            const user = auth.currentUser;
             let html = '';
             for (const comment of comments) {
+                const isOwner = user && user.uid === comment.userId;
                 html += `<div class="comment-item" data-comment-id="${comment.id}" data-author-id="${comment.userId}">
                             <span class="comment-name">${escapeHtml(comment.username)}</span>
                             <span class="comment-date">${new Date(comment.timestamp?.toDate()).toLocaleString()}</span>
                             <span class="comment-like" onclick="handleLike('${comment.id}', '${comment.userId}')">❤️ ${comment.likes || 0}</span>
+                            <span class="comment-report" onclick="handleReport('${comment.id}', '${escapeHtml(comment.text)}')">🚩 Reportar</span>
+                            ${isOwner ? `<span class="comment-delete" onclick="handleDeleteComment('${comment.id}')">🗑️ Eliminar</span>` : ''}
                             <div class="comment-text">${escapeHtml(comment.text)}</div>
                          </div>`;
             }
@@ -1135,6 +1146,49 @@
             } else {
                 alert(result.error);
             }
+        }
+        
+        async function handleReport(commentId, commentText) {
+            const user = auth.currentUser;
+            if (!user) {
+                alert('Debes iniciar sesión para reportar un comentario');
+                return;
+            }
+            
+            const reason = prompt(
+                'Motivo del reporte:\n\n' +
+                '1. Insulto o acoso\n' +
+                '2. Spoiler sin aviso\n' +
+                '3. Spam o publicidad\n' +
+                '4. Contenido inapropiado\n' +
+                '5. Otro\n\n' +
+                'Escribe el motivo:'
+            );
+            
+            if (reason === null) return;
+            
+            const result = await reportComment(commentId, reason, user.uid);
+            if (result.success) {
+                alert('✅ Comentario reportado. Gracias por ayudar a mantener la comunidad.');
+            } else {
+                alert('❌ Error: ' + result.error);
+            }
+        }
+        
+        async function handleDeleteComment(commentId) {
+            if (!confirm('¿Eliminar tu comentario? Esta acción no se puede deshacer.')) return;
+            
+            const result = await deleteComment(commentId);
+            if (result.success) {
+                alert('✅ Comentario eliminado');
+                loadComments();
+            } else {
+                alert('❌ Error: ' + result.error);
+            }
+        }
+        
+        function escapeHtml(str) {
+            return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]);
         }
         
         async function submitComment() {
@@ -1169,16 +1223,13 @@
             }
         }
         
-        function escapeHtml(str) {
-            return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]);
-        }
-        
         // ========== ACTUALIZAR INFO DE USUARIO ==========
         async function updateUserInfo() {
             const user = auth.currentUser;
             const userInfoDiv = document.getElementById('userInfo');
             const logoutBtn = document.getElementById('logoutBtnHeader');
             const nameInput = document.getElementById('commentName');
+            const modLink = document.getElementById('modLink');
             
             if (user) {
                 const result = await getUserProfile();
@@ -1190,6 +1241,12 @@
                     nameInput.value = currentUserProfile.username;
                     nameInput.readonly = true;
                     document.getElementById('commentText').placeholder = "Escribe tu comentario...";
+                    
+                    if (isAdmin(user)) {
+                        modLink.style.display = 'inline-block';
+                    } else {
+                        modLink.style.display = 'none';
+                    }
                 }
             } else {
                 userInfoDiv.style.display = 'none';
@@ -1197,6 +1254,7 @@
                 nameInput.value = "Inicia sesión para comentar";
                 nameInput.readonly = true;
                 document.getElementById('commentText').placeholder = "Inicia sesión para comentar";
+                modLink.style.display = 'none';
             }
         }
         
@@ -1298,6 +1356,8 @@
             
             document.getElementById('submitComment').onclick = submitComment;
             window.handleLike = handleLike;
+            window.handleReport = handleReport;
+            window.handleDeleteComment = handleDeleteComment;
         });
     </script>
 </body>
