@@ -223,6 +223,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
     <script src="auth.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 </head>
 <body>
@@ -340,6 +341,10 @@
 
     <script src="data.js"></script>
     <script>
+        // ========== CONFIGURACIÓN EMAILJS ==========
+        // REEMPLAZA CON TUS DATOS DE EMAILJS
+        emailjs.init("TU_USER_ID"); // ← Tu Public Key de EmailJS
+        
         // ========== CONFIGURACIÓN ==========
         let allEpisodes = [];
         let totalEpisodes = 0;
@@ -523,7 +528,7 @@
             document.getElementById('commentText').value = '';
         }
         
-        // ========== CONTACTO ==========
+        // ========== CONTACTO CON EMAILJS ==========
         function setupContact() {
             const sendBtn = document.getElementById('sendContactBtn');
             const nameInput = document.getElementById('contactName');
@@ -531,7 +536,12 @@
             const messageInput = document.getElementById('contactMessage');
             const statusDiv = document.getElementById('contactMessageStatus');
             
-            sendBtn.onclick = () => {
+            // REEMPLAZA CON TUS DATOS DE EMAILJS
+            const SERVICE_ID = 'service_l24lbmj';     // ← Tu Service ID
+            const TEMPLATE_ID = 'template_22cqg24';   // ← Tu Template ID
+            const TO_EMAIL = 'carlos8a10@gmail.com';  // ← Tu correo donde recibirás los mensajes
+            
+            sendBtn.onclick = async () => {
                 const name = nameInput.value.trim();
                 const email = emailInput.value.trim();
                 const message = messageInput.value.trim();
@@ -545,25 +555,32 @@
                     return;
                 }
                 
-                const subject = encodeURIComponent(`Contacto desde Gacha Infinita - ${name}`);
-                const body = encodeURIComponent(
-                    `Nombre: ${name}\n` +
-                    `Email: ${email || 'No especificado'}\n\n` +
-                    `Mensaje:\n${message}\n\n` +
-                    `---\nEnviado desde Gacha Infinita`
-                );
+                statusDiv.innerHTML = '<span style="color:#38a169;">📤 Enviando mensaje...</span>';
+                sendBtn.disabled = true;
                 
-                window.location.href = `mailto:ocholobos@gmail.com?subject=${subject}&body=${body}`;
-                statusDiv.innerHTML = '<span style="color:#38a169;">📧 Abriendo tu cliente de correo. ¡Gracias por tu mensaje!</span>';
+                const templateParams = {
+                    from_name: name,
+                    from_email: email || 'anonimo@lector.com',
+                    message: message,
+                    to_email: TO_EMAIL
+                };
                 
-                // Limpiar campos
-                nameInput.value = '';
-                emailInput.value = '';
-                messageInput.value = '';
-                
-                setTimeout(() => {
-                    statusDiv.innerHTML = '';
-                }, 5000);
+                try {
+                    const response = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
+                    console.log('SUCCESS!', response);
+                    statusDiv.innerHTML = '<span style="color:#38a169;">✅ Mensaje enviado. ¡Gracias por tu contacto!</span>';
+                    nameInput.value = '';
+                    emailInput.value = '';
+                    messageInput.value = '';
+                } catch (error) {
+                    console.error('FAILED...', error);
+                    statusDiv.innerHTML = '<span style="color:#e53e3e;">❌ Error al enviar. Intenta más tarde.</span>';
+                } finally {
+                    sendBtn.disabled = false;
+                    setTimeout(() => {
+                        statusDiv.innerHTML = '';
+                    }, 5000);
+                }
             };
         }
         
