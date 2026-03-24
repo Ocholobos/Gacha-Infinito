@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gacha Infinita | Novela Web</title>
+    <meta name="description" content="Lee Gacha Infinita, una novela web de fantasía y venganza. Light fue traicionado por sus compañeros, pero con el poder del Gacha Infinito reunirá aliados de nivel 9999 para cobrar venganza.">
+    <meta name="keywords" content="Gacha Infinita, novela web, fantasía, venganza, Light, Mei, novela online, leer gratis">
     <style>
         :root {
             --bg-color: #faf9f7;
@@ -68,7 +70,7 @@
         .info-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin: 1rem 0; }
         .badge { background: var(--accent-light); padding: 0.3rem 0.8rem; border-radius: 30px; font-size: 0.75rem; color: var(--accent); }
         
-        .other-titles, .synopsis, .user-panel, .comments-section, .rating-section {
+        .other-titles, .synopsis, .user-panel {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -149,49 +151,6 @@
             flex-shrink: 0;
         }
         
-        /* Estrellas para calificación */
-        .stars {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin: 1rem 0;
-        }
-        .star {
-            font-size: 2rem;
-            cursor: pointer;
-            color: #cbd5e0;
-            transition: color 0.2s;
-        }
-        .star:hover, .star.active {
-            color: #f5b042;
-        }
-        
-        /* Comentarios */
-        .comment-form { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
-        .comment-form input, .comment-form textarea {
-            padding: 0.5rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            background: var(--bg-color);
-            color: var(--text-color);
-            font-family: inherit;
-        }
-        .comment-form textarea { min-height: 80px; resize: vertical; }
-        .comment-form button { width: 100px; background: var(--accent); color: white; border: none; padding: 0.5rem; border-radius: 8px; cursor: pointer; }
-        .comment-item {
-            border-bottom: 1px solid var(--border-color);
-            padding: 0.8rem 0;
-        }
-        .comment-name { font-weight: bold; color: var(--accent); }
-        .comment-date { font-size: 0.7rem; color: var(--secondary-text); margin-left: 0.5rem; }
-        .comment-report {
-            margin-left: 0.8rem;
-            cursor: pointer;
-            font-size: 0.7rem;
-            color: #9ca3af;
-        }
-        .comment-report:hover { color: #e53e3e; }
-        
         .floating-buttons {
             position: fixed;
             bottom: 20px;
@@ -231,7 +190,6 @@
             .container { padding: 0.5rem 1rem; }
             .episode-item { flex-direction: column; align-items: flex-start; }
             .episode-date { align-self: flex-end; }
-            .star { font-size: 1.5rem; }
             .floating-btn { width: 40px; height: 40px; font-size: 1.2rem; }
         }
     </style>
@@ -295,32 +253,8 @@
             </div>
         </div>
 
-        <!-- Calificación general de la novela -->
-        <div class="rating-section">
-            <h3>⭐ Calificación general de la novela</h3>
-            <div class="stars" id="globalStars">
-                <span class="star" data-value="1">★</span>
-                <span class="star" data-value="2">★</span>
-                <span class="star" data-value="3">★</span>
-                <span class="star" data-value="4">★</span>
-                <span class="star" data-value="5">★</span>
-            </div>
-            <div id="globalRatingMessage" style="font-size:0.85rem; text-align:center;"></div>
-        </div>
-
         <h2 style="margin: 1rem 0 0.5rem; color: var(--accent);">📑 Índice de episodios</h2>
         <div id="chapterIndex"></div>
-
-        <!-- Comentarios generales -->
-        <div class="comments-section">
-            <h3>💬 Comentarios generales</h3>
-            <div class="comment-form">
-                <input type="text" id="commentName" placeholder="Tu nombre">
-                <textarea id="commentText" placeholder="Escribe tu comentario sobre la novela..."></textarea>
-                <button id="submitComment">Enviar</button>
-            </div>
-            <div id="commentsList"></div>
-        </div>
 
         <footer>
             <p>Gacha Infinita © 明鏡シスイ (Meikyō Shisui)</p>
@@ -404,7 +338,7 @@
             userHistory.chapters.slice(0, 10).forEach(item => {
                 const episode = allEpisodes.find(ep => ep.chapter == item.chapter && ep.episodeNum == item.episode);
                 if (episode) {
-                    html += `<div class="history-item">📖 <a href="capitulo${episode.chapter}e${episode.episodeNum}.html">${episode.chapterTitle} - Episodio ${ep.episodeNum}: ${episode.title}</a></div>`;
+                    html += `<div class="history-item">📖 <a href="capitulo${episode.chapter}e${episode.episodeNum}.html">${episode.chapterTitle} - Episodio ${episode.episodeNum}: ${episode.title}</a></div>`;
                 }
             });
             div.innerHTML = html;
@@ -418,93 +352,6 @@
             if (userHistory.chapters.length > 20) userHistory.chapters.pop();
             localStorage.setItem(`gacha_history_${currentUser}`, JSON.stringify(userHistory));
             updateHistoryDisplay();
-        }
-        
-        // ========== CALIFICACIÓN GLOBAL ==========
-        function initGlobalRating() {
-            const stars = document.querySelectorAll('#globalStars .star');
-            const savedRating = localStorage.getItem('gacha_global_rating');
-            const messageDiv = document.getElementById('globalRatingMessage');
-            
-            if (savedRating) {
-                updateGlobalStars(parseInt(savedRating));
-                messageDiv.innerHTML = `⭐ Calificaste la novela con ${savedRating} estrellas. ¡Gracias!`;
-            }
-            
-            stars.forEach(star => {
-                star.addEventListener('click', function() {
-                    const value = parseInt(this.dataset.value);
-                    localStorage.setItem('gacha_global_rating', value);
-                    updateGlobalStars(value);
-                    messageDiv.innerHTML = `⭐ Calificaste la novela con ${value} estrellas. ¡Gracias!`;
-                });
-            });
-        }
-        
-        function updateGlobalStars(rating) {
-            const stars = document.querySelectorAll('#globalStars .star');
-            stars.forEach((star, index) => {
-                if (index < rating) star.classList.add('active');
-                else star.classList.remove('active');
-            });
-        }
-        
-        // ========== COMENTARIOS GENERALES (localStorage) ==========
-        function loadComments() { const saved = localStorage.getItem('gacha_comments'); return saved ? JSON.parse(saved) : []; }
-        function saveComments(comments) { localStorage.setItem('gacha_comments', JSON.stringify(comments)); }
-        function renderComments() {
-            const comments = loadComments();
-            const div = document.getElementById('commentsList');
-            if (comments.length === 0) { div.innerHTML = '<p style="color:var(--secondary-text);">Sé el primero en comentar.</p>'; return; }
-            let html = '';
-            comments.slice().reverse().forEach((c, index) => {
-                html += `<div class="comment-item" data-index="${index}">
-                            <span class="comment-name">${escapeHtml(c.name)}</span>
-                            <span class="comment-date">${c.date}</span>
-                            <span class="comment-report" onclick="reportComment(${index})">🚩 Reportar</span>
-                            <div class="comment-text">${escapeHtml(c.text)}</div>
-                         </div>`;
-            });
-            div.innerHTML = html;
-        }
-        
-        function escapeHtml(str) { return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]); }
-        
-        function addComment(name, text) {
-            if (!name.trim() || !text.trim()) return;
-            const comments = loadComments();
-            comments.push({ name: name.trim(), text: text.trim(), date: new Date().toLocaleString() });
-            saveComments(comments);
-            renderComments();
-            document.getElementById('commentName').value = '';
-            document.getElementById('commentText').value = '';
-        }
-        
-        function reportComment(index) {
-            const comments = loadComments();
-            const comment = comments[index];
-            if (!comment) return;
-            
-            let reports = JSON.parse(localStorage.getItem('gacha_reports') || '[]');
-            const alreadyReported = reports.some(r => r.commentIndex === index && r.type === 'general');
-            
-            if (alreadyReported) {
-                alert('⚠️ Ya reportaste este comentario anteriormente.');
-                return;
-            }
-            
-            const reason = prompt('Motivo del reporte:\n\n1. Insulto o acoso\n2. Spoiler sin aviso\n3. Spam\n4. Contenido inapropiado\n5. Otro\n\nEscribe el motivo:');
-            if (!reason) return;
-            
-            reports.push({
-                type: 'general',
-                commentIndex: index,
-                comment: comment,
-                reason: reason,
-                date: new Date().toLocaleString()
-            });
-            localStorage.setItem('gacha_reports', JSON.stringify(reports));
-            alert('✅ Comentario reportado. Gracias por ayudar a mantener la comunidad.');
         }
         
         // ========== CONTROLES ==========
@@ -553,8 +400,6 @@
             }
             initControls();
             loadUser();
-            renderComments();
-            initGlobalRating();
             
             document.getElementById('loginBtn').onclick = () => {
                 const name = document.getElementById('usernameInput').value;
@@ -575,12 +420,7 @@
                     updateHistoryDisplay();
                 }
             };
-            document.getElementById('submitComment').onclick = () => addComment(
-                document.getElementById('commentName').value,
-                document.getElementById('commentText').value
-            );
             
-            window.reportComment = reportComment;
             window.markAsRead = markAsRead;
             
             kofiWidgetOverlay.draw('ocholobos', {
