@@ -17,6 +17,7 @@ firebase.initializeApp(firebaseConfig);
 // Inicializar servicios
 const auth = firebase.auth();
 const db = firebase.firestore();
+const RECAPTCHA_SITE_KEY = process.env.VITE_RECAPTCHA_SITE_KEY || "6LdsjZUsAAAAAFNogpL5d5UUdiEkLKBxvM2Q6v3c";
 
 // ============================================================
 // APP CHECK (reCAPTCHA v3)
