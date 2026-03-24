@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de moderación | Gacha Infinita</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem;
+            line-height: 1.6;
+            background: #faf9f7;
+            color: #2c2b28;
+            transition: all 0.3s ease;
+        }
+        [data-theme="dark"] body {
+            background: #1a1a1a;
+            color: #e5e5e5;
+        }
+        .options-bar {
+            position: sticky;
+            top: 0;
+            background: #faf9f7;
+            border-bottom: 1px solid #e5e0d8;
+            padding: 0.6rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        [data-theme="dark"] .options-bar {
+            background: #1a1a1a;
+            border-bottom-color: #404040;
+        }
+        .options-bar a, .options-bar button {
+            background: #eef2f0;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #1a4d5f;
+        }
+        h1 { margin: 1.5rem 0; color: #1a4d5f; display: flex; align-items: center; gap: 0.5rem; }
+        .report-card {
+            background: white;
+            border: 1px solid #e5e0d8;
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        [data-theme="dark"] .report-card {
+            background: #2d2d2d;
+            border-color: #404040;
+        }
+        .comment-text {
+            background: #f5f2ed;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            font-style: italic;
+        }
+        [data-theme="dark"] .comment-text {
+            background: #3a3a3a;
+        }
+        .report-info {
+            font-size: 0.8rem;
+            color: #6b6a68;
+            margin: 0.5rem 0;
+        }
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+        .btn-delete {
+            background: #e53e3e;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .btn-dismiss {
+            background: #9ca3af;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #9ca3af;
+        }
+        .notification-badge {
+            background: #e53e3e;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+        }
+        .refresh-btn {
+            background: #1a4d5f;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="auth.js"></script>
+</head>
+<body>
+    <div class="options-bar">
+        <div>
+            <a href="index.html">📚 Índice</a>
+            <a href="usuario.html">👤 Mi perfil</a>
+            <a href="reglas.html">📜 Reglas</a>
+        </div>
+        <div>
+            <span id="adminEmail"></span>
+            <button id="themeToggle">🌙 Modo oscuro</button>
+        </div>
+    </div>
+
+    <h1>
+        🛡️ Panel de moderación
+        <span id="pendingBadge" class="notification-badge" style="display:none;">0</span>
+        <button id="refreshBtn" class="refresh-btn">⟳ Actualizar</button>
+    </h1>
+    
+    <div id="reportsContainer">
+        <div class="empty-state">🔒 Verificando permisos...</div>
+    </div>
+
+    <footer>
+        <p>⚡ Solo visible para administradores. Los comentarios reportados serán revisados.</p>
+    </footer>
+
+    <script>
+        let currentUser = null;
+        
+        async function checkAdminAndLoad() {
+            const user = auth.currentUser;
+            if (!user) {
+                document.getElementById('reportsContainer').innerHTML = '<div class="empty-state">🔒 Debes iniciar sesión como administrador para acceder a este panel.</div>';
+                document.getElementById('adminEmail').innerHTML = '❌ No autenticado';
+                return false;
+            }
+            
+            const isAdminUser = isAdmin(user);
+            document.getElementById('adminEmail').innerHTML = `👤 ${user.email}`;
+            
+            if (!isAdminUser) {
+                document.getElementById('reportsContainer').innerHTML = '<div class="empty-state">🔒 No tienes permisos de administrador para acceder a este panel.</div>';
+                return false;
+            }
+            
+            await loadReports();
+            return true;
+        }
+        
+        async function loadReports() {
+            const container = document.getElementById('reportsContainer');
+            container.innerHTML = '<div class="empty-state">📋 Cargando reportes...</div>';
+            
+            const result = await getReportedComments();
+            
+            if (!result.success) {
+                container.innerHTML = `<div class="empty-state">❌ Error: ${result.error}</div>`;
+                return;
+            }
+            
+            const reports = result.reports;
+            const badge = document.getElementById('pendingBadge');
+            
+            if (reports.length === 0) {
+                container.innerHTML = '<div class="empty-state">✅ No hay reportes pendientes. ¡Todo en orden!</div>';
+                badge.style.display = 'none';
+                return;
+            }
+            
+            badge.style.display = 'inline-block';
+            badge.textContent = reports.length;
+            
+            let html = '';
+            for (const report of reports) {
+                const comment = report.commentData;
+                const reportDate = report.reportedAt?.toDate ? new Date(report.reportedAt.toDate()).toLocaleString() : 'Fecha desconocida';
+                const commentDate = comment.timestamp?.toDate ? new Date(comment.timestamp.toDate()).toLocaleString() : 'Fecha desconocida';
+                
+                html += `
+                    <div class="report-card" data-report-id="${report.id}" data-comment-id="${report.commentId}">
+                        <div class="report-info">
+                            <strong>📢 Reporte #${report.id.slice(0, 8)}</strong><br>
+                            🚨 Motivo: <strong>${escapeHtml(report.reason || 'Sin motivo especificado')}</strong><br>
+                            👤 Reportado por: ${escapeHtml(report.reportedBy?.slice(0, 12) || 'usuario')}<br>
+                            📅 Reportado: ${reportDate}
+                        </div>
+                        <div class="comment-text">
+                            <strong>💬 ${escapeHtml(comment.username)}</strong> <span style="font-size:0.7rem;">(${commentDate})</span><br>
+                            ${escapeHtml(comment.text)}
+                        </div>
+                        <div class="report-info">
+                            📍 Capítulo ${comment.chapterNum}.${comment.episodeNum} | ❤️ ${comment.likes || 0} likes | 🚩 ${comment.reports || 0} reportes
+                        </div>
+                        <div class="actions">
+                            <button class="btn-delete" onclick="deleteReportedComment('${report.commentId}', '${report.id}')">🗑️ Eliminar comentario</button>
+                            <button class="btn-dismiss" onclick="dismissReport('${report.id}')">✓ Desestimar reporte</button>
+                        </div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        }
+        
+        async function deleteReportedComment(commentId, reportId) {
+            if (!confirm('⚠️ ¿Eliminar este comentario permanentemente? Esta acción no se puede deshacer.')) return;
+            
+            const btn = event.target;
+            btn.textContent = '⌛ Eliminando...';
+            btn.disabled = true;
+            
+            const result = await deleteComment(commentId, reportId);
+            if (result.success) {
+                alert('✅ Comentario eliminado correctamente');
+                await loadReports();
+            } else {
+                alert('❌ Error: ' + result.error);
+                btn.textContent = '🗑️ Eliminar comentario';
+                btn.disabled = false;
+            }
+        }
+        
+        async function dismissReport(reportId) {
+            if (!confirm('¿Marcar este reporte como revisado sin eliminar el comentario?')) return;
+            
+            const result = await dismissReport(reportId);
+            if (result.success) {
+                alert('✅ Reporte desestimado');
+                await loadReports();
+            } else {
+                alert('❌ Error: ' + result.error);
+            }
+        }
+        
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]);
+        }
+        
+        function initTheme() {
+            const saved = localStorage.getItem('gacha_theme');
+            if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('themeToggle').onclick = () => {
+                const isDark = document.documentElement.hasAttribute('data-theme');
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('gacha_theme', 'light');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('gacha_theme', 'dark');
+                }
+            };
+            document.getElementById('refreshBtn').onclick = () => loadReports();
+        }
+        
+        onAuthStateChanged(async (state) => {
+            currentUser = state.user;
+            await checkAdminAndLoad();
+        });
+        
+        initTheme();
+        
+        window.deleteReportedComment = deleteReportedComment;
+        window.dismissReport = dismissReport;
+    </script>
+</body>
+</html>
