@@ -36,6 +36,7 @@
             gap: 0.8rem;
             z-index: 100;
             flex-wrap: wrap;
+            align-items: center;
         }
         [data-theme="dark"] .options-bar {
             background: #1a1a1a;
@@ -50,6 +51,32 @@
             font-size: 0.8rem;
             color: #1a4d5f;
             text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        [data-theme="dark"] .options-bar button, [data-theme="dark"] .options-bar a {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        .font-size-control {
+            display: flex;
+            gap: 0.3rem;
+            align-items: center;
+        }
+        .font-size-control button {
+            width: 32px;
+            padding: 0.2rem;
+        }
+        .user-info {
+            background: #1a4d5f;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+        [data-theme="dark"] .user-info {
+            background: #5a9e8c;
         }
         
         .container {
@@ -168,6 +195,16 @@
             text-align: left;
             border-bottom: 1px solid #e5e0d8;
         }
+        [data-theme="dark"] .leaderboard-table th, [data-theme="dark"] .leaderboard-table td {
+            border-bottom-color: #404040;
+        }
+        
+        .refresh-btn {
+            background: #9ca3af;
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
         
         @media (max-width: 600px) {
             .container { padding: 0.5rem; }
@@ -179,6 +216,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="firebase-config.js"></script>
     <script src="auth.js"></script>
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 </head>
 <body>
     <div class="options-bar">
@@ -187,6 +225,10 @@
             <button id="fontPlus">A+</button>
         </div>
         <a href="index.html">📚 Índice</a>
+        <a href="reglas.html">📜 Reglas</a>
+        <a href="moderacion.html" id="modLink" style="display: none;">🛡️ Moderación</a>
+        <div id="userInfo" class="user-info" style="display: none;"></div>
+        <button id="logoutBtnHeader" style="display: none;">Cerrar sesión</button>
         <button id="themeToggle">🌙 Modo oscuro</button>
     </div>
 
@@ -205,7 +247,7 @@
                     <input type="password" id="loginPassword" placeholder="********">
                 </div>
                 <button id="loginBtn">Iniciar sesión</button>
-                <p style="margin-top: 1rem; text-align: center;">¿No tienes cuenta? <a href="#" id="showRegisterLink">Regístrate</a></p>
+                <p style="margin-top: 1rem; text-align: center;">¿No tienes cuenta? <a href="#" id="showRegisterLink" style="color: var(--accent);">Regístrate</a></p>
                 <div id="loginMessage"></div>
             </div>
             
@@ -227,7 +269,7 @@
                     <input type="password" id="regConfirmPassword" placeholder="********">
                 </div>
                 <button id="registerBtn">Registrarse</button>
-                <p style="margin-top: 1rem; text-align: center;"><a href="#" id="showLoginLink">← Volver al inicio de sesión</a></p>
+                <p style="margin-top: 1rem; text-align: center;"><a href="#" id="showLoginLink" style="color: var(--accent);">← Volver a iniciar sesión</a></p>
                 <div id="registerMessage"></div>
             </div>
         </div>
@@ -237,6 +279,7 @@
                 <h2 id="profileUsername">Usuario</h2>
                 <div id="profileLevelBadge" class="level-badge">🥚 Recluta</div>
                 <p id="profilePoints">0 puntos</p>
+                <button id="refreshProfileBtn" class="refresh-btn">⟳ Actualizar</button>
             </div>
             
             <div class="stats-grid">
@@ -258,11 +301,11 @@
                 </div>
             </div>
             
-            <button id="logoutBtn" style="width: 100%; margin-top: 1rem;">Cerrar sesión</button>
+            <button id="logoutBtn" class="logout-btn" style="width: 100%; margin-top: 1rem;">Cerrar sesión</button>
         </div>
         
         <div class="auth-section">
-            <h2>🏆 Clasificación de lectores</h2>
+            <h2>🏆 Clasificación de lectores <button id="refreshLeaderboardBtn" class="refresh-btn">⟳</button></h2>
             <div id="leaderboardContainer">
                 <p>Cargando...</p>
             </div>
@@ -270,6 +313,7 @@
     </div>
 
     <script>
+        // ========== CONTROLES ==========
         function initControls() {
             const savedTheme = localStorage.getItem('gacha_theme');
             if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
@@ -305,6 +349,7 @@
             };
         }
         
+        // ========== ACTUALIZAR PERFIL ==========
         async function updateProfileDisplay() {
             const result = await getUserProfile();
             if (!result.success) return;
@@ -318,14 +363,20 @@
             document.getElementById('statRatings').textContent = profile.stats?.ratingsGiven || 0;
             document.getElementById('statComments').textContent = profile.stats?.commentsWritten || 0;
             document.getElementById('statLikes').textContent = profile.stats?.likesReceived || 0;
+            
+            // Actualizar info en la barra superior
+            document.getElementById('userInfo').textContent = `${profile.username} | ${profile.totalPoints} pts | ${profile.levelBadge}`;
         }
         
+        // ========== CARGAR TABLA DE CLASIFICACIÓN ==========
         async function loadLeaderboard() {
             const container = document.getElementById('leaderboardContainer');
+            container.innerHTML = '<p>Cargando clasificación...</p>';
+            
             const result = await getLeaderboard(20);
             
             if (!result.success) {
-                container.innerHTML = '<p>Error al cargar la clasificación.</p>';
+                container.innerHTML = `<p>Error al cargar la clasificación: ${result.error}</p>`;
                 return;
             }
             
@@ -349,17 +400,37 @@
         }
         
         function escapeHtml(str) {
+            if (!str) return '';
             return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]);
         }
         
+        // ========== AUTENTICACIÓN ==========
         function showLogin() {
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('profileSection').style.display = 'none';
         }
         
         function showRegister() {
             document.getElementById('loginForm').style.display = 'none';
             document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('profileSection').style.display = 'none';
+        }
+        
+        function showLoggedIn() {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('profileSection').style.display = 'block';
+            document.getElementById('userInfo').style.display = 'inline-block';
+            document.getElementById('logoutBtnHeader').style.display = 'inline-block';
+        }
+        
+        function showLoggedOut() {
+            document.getElementById('authSection').style.display = 'block';
+            document.getElementById('profileSection').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('userInfo').style.display = 'none';
+            document.getElementById('logoutBtnHeader').style.display = 'none';
         }
         
         async function handleLogin() {
@@ -392,12 +463,10 @@
                 messageDiv.innerHTML = '<span class="error-message">Completa todos los campos</span>';
                 return;
             }
-            
             if (password !== confirm) {
                 messageDiv.innerHTML = '<span class="error-message">Las contraseñas no coinciden</span>';
                 return;
             }
-            
             if (password.length < 6) {
                 messageDiv.innerHTML = '<span class="error-message">La contraseña debe tener al menos 6 caracteres</span>';
                 return;
@@ -417,27 +486,49 @@
             location.reload();
         }
         
+        // ========== INICIALIZACIÓN ==========
         document.addEventListener('DOMContentLoaded', () => {
             initControls();
             
+            // Verificar estado de autenticación
             onAuthStateChanged(async (state) => {
                 if (state.loggedIn) {
-                    document.getElementById('authSection').style.display = 'none';
-                    document.getElementById('profileSection').style.display = 'block';
+                    showLoggedIn();
                     await updateProfileDisplay();
                     await loadLeaderboard();
+                    
+                    // Mostrar enlace de moderación solo si es admin
+                    const modLink = document.getElementById('modLink');
+                    if (modLink && isAdmin(state.user)) {
+                        modLink.style.display = 'inline-block';
+                    }
                 } else {
-                    document.getElementById('authSection').style.display = 'block';
-                    document.getElementById('profileSection').style.display = 'none';
+                    showLoggedOut();
                     await loadLeaderboard();
                 }
             });
             
+            // Eventos de autenticación
             document.getElementById('loginBtn').onclick = handleLogin;
             document.getElementById('registerBtn').onclick = handleRegister;
             document.getElementById('logoutBtn').onclick = handleLogout;
+            document.getElementById('logoutBtnHeader').onclick = handleLogout;
             document.getElementById('showRegisterLink').onclick = (e) => { e.preventDefault(); showRegister(); };
             document.getElementById('showLoginLink').onclick = (e) => { e.preventDefault(); showLogin(); };
+            
+            // Botones de actualización
+            document.getElementById('refreshProfileBtn').onclick = () => updateProfileDisplay();
+            document.getElementById('refreshLeaderboardBtn').onclick = () => loadLeaderboard();
+            
+            // Ko-fi
+            window.addEventListener('load', function() {
+                kofiWidgetOverlay.draw('ocholobos', {
+                    'type': 'floating-chat',
+                    'floating-chat.donateButton.text': 'Apóyame',
+                    'floating-chat.donateButton.background-color': '#1a4d5f',
+                    'floating-chat.donateButton.text-color': '#ffffff'
+                });
+            });
         });
     </script>
 </body>
