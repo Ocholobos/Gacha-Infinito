@@ -1,6 +1,6 @@
 // ============================================================
 // DATOS CENTRALIZADOS DE EPISODIOS TRADUCIDOS
-// Última actualización: 24/03/2026 21:25
+// Última actualización: 24/03/2026 22:19
 // ============================================================
 
 const GACHA_DATA = {
@@ -84,6 +84,11 @@ const GACHA_DATA = {
                 'num': 11,
                 'title': 'Inculcando el espíritu caballeresco',
                 'date': '2020/04/22 12:00'
+            },
+            {
+                'num': 12,
+                'title': 'Grandius',
+                'date': '2020/04/22 17:00'
             }
         ]
     }
