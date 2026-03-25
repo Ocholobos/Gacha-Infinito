@@ -14,6 +14,8 @@
             --accent: #1a4d5f;
             --accent-light: #eef2f0;
             --secondary-text: #6b6a68;
+            --interlude-color: #8b5a2b;
+            --extra-color: #2b6b5a;
         }
         [data-theme="dark"] {
             --bg-color: #1a1a1a;
@@ -23,6 +25,8 @@
             --accent: #5a9e8c;
             --accent-light: #2a3a35;
             --secondary-text: #a0a0a0;
+            --interlude-color: #c97e3a;
+            --extra-color: #4aa392;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -120,11 +124,14 @@
         .chapter-title {
             font-size: 1.3rem;
             font-weight: bold;
-            color: var(--accent);
             border-left: 4px solid var(--accent);
             padding-left: 1rem;
             margin-bottom: 1rem;
         }
+        .chapter-title.capitulo { color: var(--accent); }
+        .chapter-title.interludio { color: var(--interlude-color); border-left-color: var(--interlude-color); }
+        .chapter-title.extra { color: var(--extra-color); border-left-color: var(--extra-color); }
+        
         .episode-list { list-style: none; padding-left: 1rem; }
         .episode-item {
             display: flex;
@@ -136,11 +143,13 @@
             gap: 0.5rem;
         }
         .episode-link {
-            color: var(--accent);
             text-decoration: none;
             font-weight: 500;
             flex: 1;
         }
+        .episode-link.capitulo { color: var(--accent); }
+        .episode-link.interludio { color: var(--interlude-color); }
+        .episode-link.extra { color: var(--extra-color); }
         .episode-link:hover { text-decoration: underline; }
         .episode-date {
             font-size: 0.75rem;
@@ -149,6 +158,18 @@
             white-space: nowrap;
             flex-shrink: 0;
         }
+        .episode-type-badge {
+            font-size: 0.65rem;
+            padding: 0.1rem 0.4rem;
+            border-radius: 12px;
+            margin-right: 0.5rem;
+            font-weight: normal;
+        }
+        .episode-type-badge.capitulo { background: var(--accent-light); color: var(--accent); }
+        .episode-type-badge.interludio { background: #f0e4d0; color: var(--interlude-color); }
+        [data-theme="dark"] .episode-type-badge.interludio { background: #3a2a1a; }
+        .episode-type-badge.extra { background: #d0f0e8; color: var(--extra-color); }
+        [data-theme="dark"] .episode-type-badge.extra { background: #1a3a2a; }
         
         .pagination {
             display: flex;
@@ -169,9 +190,7 @@
             text-decoration: none;
             font-weight: 500;
         }
-        .pagination button:hover, .pagination a:hover {
-            background: var(--border-color);
-        }
+        .pagination button:hover, .pagination a:hover { background: var(--border-color); }
         .pagination .active {
             background: var(--accent);
             color: white;
@@ -343,45 +362,47 @@
         let currentPage = 1;
         let totalPages = 1;
         
+        // ========== FUNCIÓN PARA OBTENER TIPO DE CAPÍTULO ==========
+        // Esta función debe ser alimentada por el data.js
+        // Por ahora, detecta por el título si es interludio o extra
+        function detectarTipoEpisodio(ep) {
+            // Si el data.js ya tiene tipo, usarlo
+            if (ep.tipo) return ep.tipo;
+            
+            // Si no, detectar por título
+            const titulo = ep.title || '';
+            if (titulo.includes('Extra:') || titulo.includes('Interludio') || 
+                titulo.includes('Día de Nazuna') || titulo.includes('Charlas de las sirvientas') ||
+                titulo.includes('Las demandas de las sirvientas')) {
+                return 'interludio';
+            }
+            return 'capitulo';
+        }
+        
         // ========== CARGAR DATOS ==========
         function loadData() {
-            if (typeof GACHA_DATA === 'undefined') {
+            if (typeof GACHA_DATA !== 'undefined') {
+                allEpisodes = GACHA_DATA.getAllEpisodes();
+                totalEpisodes = allEpisodes.length;
+                totalPages = Math.ceil(totalEpisodes / ITEMS_PER_PAGE);
+                document.getElementById('totalChapters').textContent = totalEpisodes;
+                document.getElementById('translatedCount').textContent = totalEpisodes;
+                return true;
+            } else {
                 console.error('GACHA_DATA no está definido');
                 document.getElementById('chapterIndex').innerHTML = '<div class="error-message">❌ Error: No se pudo cargar el archivo data.js. Verifica que exista en la misma carpeta.</div>';
                 return false;
             }
-            
-            if (typeof GACHA_DATA.getAllEpisodes !== 'function') {
-                console.error('GACHA_DATA.getAllEpisodes no es una función');
-                document.getElementById('chapterIndex').innerHTML = '<div class="error-message">❌ Error: El archivo data.js no tiene la función getAllEpisodes().</div>';
-                return false;
-            }
-            
-            allEpisodes = GACHA_DATA.getAllEpisodes();
-            
-            if (!allEpisodes || allEpisodes.length === 0) {
-                console.warn('No hay episodios en GACHA_DATA');
-                document.getElementById('chapterIndex').innerHTML = '<div class="error-message">⚠️ No hay episodios disponibles en data.js.</div>';
-                return false;
-            }
-            
-            totalEpisodes = allEpisodes.length;
-            totalPages = Math.ceil(totalEpisodes / ITEMS_PER_PAGE);
-            document.getElementById('totalChapters').textContent = totalEpisodes;
-            document.getElementById('translatedCount').textContent = totalEpisodes;
-            
-            console.log(`Total episodios: ${totalEpisodes}`);
-            return true;
         }
         
-        // ========== FUNCIÓN PARA FORMATEAR TÍTULO DE CAPÍTULO ==========
-        function formatChapterTitle(chapterNum, rawTitle) {
-            // Si el título ya tiene formato "Capítulo X:" lo devolvemos tal cual
-            if (rawTitle && rawTitle.match(/^Capítulo \d+:/i)) {
-                return rawTitle;
+        // ========== FORMATEAR TÍTULO DE CAPÍTULO ==========
+        function formatChapterTitle(chapterNum, rawTitle, tipo) {
+            if (tipo === 'interludio') {
+                return `🎭 Interludio ${chapterNum}: ${rawTitle || ''}`;
+            } else if (tipo === 'extra') {
+                return `✨ Extra ${chapterNum}: ${rawTitle || ''}`;
             }
-            // Si no, lo formateamos como "Capítulo X: Título"
-            return `Capítulo ${chapterNum}: ${rawTitle || ''}`;
+            return `📖 ${rawTitle || `Capítulo ${chapterNum}`}`;
         }
         
         // ========== RENDERIZAR ÍNDICE ==========
@@ -390,33 +411,50 @@
             const end = Math.min(start + ITEMS_PER_PAGE, totalEpisodes);
             const pageEpisodes = allEpisodes.slice(start, end);
             
-            // Agrupar por capítulo
+            // Agrupar por capítulo y tipo
             const chaptersMap = new Map();
             for (const ep of pageEpisodes) {
-                if (!chaptersMap.has(ep.chapter)) {
-                    chaptersMap.set(ep.chapter, {
+                const tipo = detectarTipoEpisodio(ep);
+                const key = `${ep.chapter}_${tipo}`;
+                if (!chaptersMap.has(key)) {
+                    chaptersMap.set(key, {
                         chapter: ep.chapter,
-                        title: formatChapterTitle(ep.chapter, ep.chapterTitle),
+                        tipo: tipo,
+                        title: formatChapterTitle(ep.chapter, ep.chapterTitle, tipo),
                         episodes: []
                     });
                 }
-                chaptersMap.get(ep.chapter).episodes.push(ep);
+                chaptersMap.get(key).episodes.push(ep);
             }
             
-            // Ordenar capítulos
-            const chapters = Array.from(chaptersMap.values()).sort((a, b) => a.chapter - b.chapter);
+            // Ordenar por capítulo
+            const chapters = Array.from(chaptersMap.values()).sort((a, b) => {
+                if (a.chapter !== b.chapter) return a.chapter - b.chapter;
+                // Interludios después de capítulos principales
+                if (a.tipo === 'capitulo' && b.tipo !== 'capitulo') return -1;
+                if (a.tipo !== 'capitulo' && b.tipo === 'capitulo') return 1;
+                return 0;
+            });
             
             let html = '';
             for (const chapter of chapters) {
+                const chapterClass = chapter.tipo === 'capitulo' ? 'capitulo' : (chapter.tipo === 'interludio' ? 'interludio' : 'extra');
                 html += `<div class="chapter-group">`;
-                html += `<div class="chapter-title">${escapeHtml(chapter.title)}</div>`;
+                html += `<div class="chapter-title ${chapterClass}">${escapeHtml(chapter.title)}</div>`;
                 html += `<ul class="episode-list">`;
                 
                 for (const ep of chapter.episodes) {
+                    const tipo = detectarTipoEpisodio(ep);
+                    const tipoBadge = tipo === 'capitulo' ? '📖' : (tipo === 'interludio' ? '🎭' : '✨');
+                    const tipoTexto = tipo === 'capitulo' ? '' : (tipo === 'interludio' ? 'Interludio' : 'Extra');
+                    const linkClass = tipo === 'capitulo' ? 'capitulo' : (tipo === 'interludio' ? 'interludio' : 'extra');
                     const fileName = `capitulo${ep.chapter}e${ep.episodeNum}.html`;
                     html += `
                         <li class="episode-item">
-                            <a href="${fileName}" class="episode-link" onclick="markAsRead(${ep.chapter}, ${ep.episodeNum})">Episodio ${ep.episodeNum}: ${escapeHtml(ep.title)}</a>
+                            <a href="${fileName}" class="episode-link ${linkClass}" onclick="markAsRead(${ep.chapter}, ${ep.episodeNum})">
+                                <span class="episode-type-badge ${linkClass}">${tipoBadge} ${tipoTexto}</span>
+                                Episodio ${ep.episodeNum}: ${escapeHtml(ep.title)}
+                            </a>
                             <span class="episode-date">${ep.date || ''}</span>
                         </li>
                     `;
@@ -552,8 +590,10 @@
             userHistory.chapters.slice(0, 10).forEach(item => {
                 const episode = allEpisodes.find(ep => ep.chapter == item.chapter && ep.episodeNum == item.episode);
                 if (episode) {
-                    const chapterDisplay = formatChapterTitle(episode.chapter, episode.chapterTitle);
-                    html += `<div class="history-item">📖 <a href="capitulo${episode.chapter}e${episode.episodeNum}.html">${escapeHtml(chapterDisplay)} - Episodio ${episode.episodeNum}: ${escapeHtml(episode.title)}</a></div>`;
+                    const tipo = detectarTipoEpisodio(episode);
+                    const tipoBadge = tipo === 'capitulo' ? '📖' : (tipo === 'interludio' ? '🎭' : '✨');
+                    const chapterDisplay = formatChapterTitle(episode.chapter, episode.chapterTitle, tipo);
+                    html += `<div class="history-item">${tipoBadge} <a href="capitulo${episode.chapter}e${episode.episodeNum}.html">${escapeHtml(chapterDisplay)} - Episodio ${episode.episodeNum}: ${escapeHtml(episode.title)}</a></div>`;
                 }
             });
             div.innerHTML = html;
