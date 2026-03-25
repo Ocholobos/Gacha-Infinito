@@ -345,21 +345,18 @@
         
         // ========== CARGAR DATOS ==========
         function loadData() {
-            // Verificar que GACHA_DATA existe
             if (typeof GACHA_DATA === 'undefined') {
                 console.error('GACHA_DATA no está definido');
                 document.getElementById('chapterIndex').innerHTML = '<div class="error-message">❌ Error: No se pudo cargar el archivo data.js. Verifica que exista en la misma carpeta.</div>';
                 return false;
             }
             
-            // Verificar que tiene las funciones necesarias
             if (typeof GACHA_DATA.getAllEpisodes !== 'function') {
                 console.error('GACHA_DATA.getAllEpisodes no es una función');
                 document.getElementById('chapterIndex').innerHTML = '<div class="error-message">❌ Error: El archivo data.js no tiene la función getAllEpisodes().</div>';
                 return false;
             }
             
-            // Obtener episodios
             allEpisodes = GACHA_DATA.getAllEpisodes();
             
             if (!allEpisodes || allEpisodes.length === 0) {
@@ -373,12 +370,18 @@
             document.getElementById('totalChapters').textContent = totalEpisodes;
             document.getElementById('translatedCount').textContent = totalEpisodes;
             
-            // Debug: mostrar primer episodio
-            console.log('Primer episodio:', allEpisodes[0]);
-            console.log('Título del capítulo:', allEpisodes[0]?.chapterTitle);
             console.log(`Total episodios: ${totalEpisodes}`);
-            
             return true;
+        }
+        
+        // ========== FUNCIÓN PARA FORMATEAR TÍTULO DE CAPÍTULO ==========
+        function formatChapterTitle(chapterNum, rawTitle) {
+            // Si el título ya tiene formato "Capítulo X:" lo devolvemos tal cual
+            if (rawTitle && rawTitle.match(/^Capítulo \d+:/i)) {
+                return rawTitle;
+            }
+            // Si no, lo formateamos como "Capítulo X: Título"
+            return `Capítulo ${chapterNum}: ${rawTitle || ''}`;
         }
         
         // ========== RENDERIZAR ÍNDICE ==========
@@ -393,7 +396,7 @@
                 if (!chaptersMap.has(ep.chapter)) {
                     chaptersMap.set(ep.chapter, {
                         chapter: ep.chapter,
-                        title: ep.chapterTitle || `Capítulo ${ep.chapter}`,
+                        title: formatChapterTitle(ep.chapter, ep.chapterTitle),
                         episodes: []
                     });
                 }
@@ -431,8 +434,6 @@
                 if (m === '<') return '&lt;';
                 if (m === '>') return '&gt;';
                 return m;
-            }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-                return c;
             });
         }
         
@@ -551,7 +552,8 @@
             userHistory.chapters.slice(0, 10).forEach(item => {
                 const episode = allEpisodes.find(ep => ep.chapter == item.chapter && ep.episodeNum == item.episode);
                 if (episode) {
-                    html += `<div class="history-item">📖 <a href="capitulo${episode.chapter}e${episode.episodeNum}.html">${escapeHtml(episode.chapterTitle)} - Episodio ${episode.episodeNum}: ${escapeHtml(episode.title)}</a></div>`;
+                    const chapterDisplay = formatChapterTitle(episode.chapter, episode.chapterTitle);
+                    html += `<div class="history-item">📖 <a href="capitulo${episode.chapter}e${episode.episodeNum}.html">${escapeHtml(chapterDisplay)} - Episodio ${episode.episodeNum}: ${escapeHtml(episode.title)}</a></div>`;
                 }
             });
             div.innerHTML = html;
