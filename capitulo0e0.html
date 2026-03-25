@@ -68,16 +68,6 @@
             width: 32px;
             padding: 0.2rem;
         }
-        .user-info {
-            background: #1a4d5f;
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-        }
-        [data-theme="dark"] .user-info {
-            background: #5a9e8c;
-        }
         
         .nav-container {
             margin: 1rem 0;
@@ -187,106 +177,6 @@
             border-top-color: #404040;
         }
         
-        .rating-section {
-            background: white;
-            border: 1px solid #e5e0d8;
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            text-align: center;
-        }
-        [data-theme="dark"] .rating-section {
-            background: #2d2d2d;
-            border-color: #404040;
-        }
-        .stars {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        .star {
-            font-size: 2rem;
-            cursor: pointer;
-            color: #cbd5e0;
-            transition: color 0.2s;
-        }
-        .star:hover, .star.active {
-            color: #f5b042;
-        }
-        
-        .comments-section {
-            background: white;
-            border: 1px solid #e5e0d8;
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        [data-theme="dark"] .comments-section {
-            background: #2d2d2d;
-            border-color: #404040;
-        }
-        .comment-form {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .comment-form input, .comment-form textarea {
-            padding: 0.5rem;
-            border: 1px solid #e5e0d8;
-            border-radius: 8px;
-            background: #faf9f7;
-            font-family: inherit;
-        }
-        [data-theme="dark"] .comment-form input, [data-theme="dark"] .comment-form textarea {
-            background: #1a1a1a;
-            border-color: #404040;
-            color: #e5e5e5;
-        }
-        .comment-form textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-        .comment-form button {
-            width: 100px;
-            background: #1a4d5f;
-            color: white;
-            border: none;
-            padding: 0.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        [data-theme="dark"] .comment-form button {
-            background: #5a9e8c;
-        }
-        .comment-item {
-            border-bottom: 1px solid #e5e0d8;
-            padding: 0.8rem 0;
-        }
-        .comment-name {
-            font-weight: bold;
-            color: #1a4d5f;
-        }
-        .comment-date {
-            font-size: 0.7rem;
-            color: #6b6a68;
-            margin-left: 0.5rem;
-        }
-        .comment-like, .comment-report, .comment-delete {
-            margin-left: 0.8rem;
-            cursor: pointer;
-            font-size: 0.7rem;
-            display: inline-block;
-            transition: all 0.2s;
-        }
-        .comment-like { color: #9ca3af; }
-        .comment-like:hover { color: #e53e3e; }
-        .comment-report { color: #9ca3af; }
-        .comment-report:hover { color: #e53e3e; }
-        .comment-delete { color: #9ca3af; }
-        .comment-delete:hover { color: #e53e3e; }
-        
         .floating-buttons {
             position: fixed;
             bottom: 20px;
@@ -359,17 +249,11 @@
                 width: 40px;
                 height: 40px;
                 font-size: 1.2rem;
-            }
-            .star {
-                font-size: 1.5rem;
+                bottom: 70px;
+                right: 15px;
             }
         }
     </style>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="firebase-config.js"></script>
-    <script src="auth.js"></script>
     <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 </head>
 <body>
@@ -378,11 +262,7 @@
             <button id="fontMinus">A-</button>
             <button id="fontPlus">A+</button>
         </div>
-        <a href="usuario.html">👤 Mi perfil</a>
         <a href="reglas.html">📜 Reglas</a>
-        <a href="moderacion.html" id="modLink" style="display: none;">🛡️ Moderación</a>
-        <div id="userInfo" class="user-info" style="display: none;"></div>
-        <button id="logoutBtnHeader" style="display: none;">Cerrar sesión</button>
         <a href="index.html">📚 Índice</a>
         <button id="themeToggle">🌙 Modo oscuro</button>
     </div>
@@ -392,7 +272,7 @@
             <a href="index.html" class="nav-btn">📚 Índice</a>
             <a href="#" id="prevLinkTop" class="nav-btn disabled">← Sin anterior</a>
             <span class="chapter-counter" id="chapterCounterTop">Capítulo 0 - Episodio 0</span>
-            <a href="capitulo0e1.html" id="nextLinkTop" class="nav-btn">Gacha Infinita - Parte 2 →</a>
+            <a href="capitulo0e1.html" id="nextLinkTop" class="nav-btn ">Gacha Infinita - Parte 2 →</a>
         </div>
     </div>
 
@@ -407,590 +287,291 @@
 
     <div class="story-content">
         <p>El capítulo 0, episodio 0 tiene el mismo contenido que la novela.</p>
-        
-        <p>El episodio 0 es largo por ese motivo, pero a partir del siguiente capítulo 1, episodio 1, la duración será normal.</p>
-        
-        <p>Además, para los lectores que hayan leído los relatos cortos, el nuevo contenido de Gacha Infinita comienza en el Capítulo 1, Episodio 1, "El viaje comienza".</p>
-        
-        <p>***</p>
-        
-        <p>—Oye… te expulso del grupo.</p>
-        
-        <p>—…¿Eh?</p>
-        
-        <p>Sin comprender lo que estaba sucediendo, yo, Light, dejé escapar un sonido extraño.</p>
-        
-        <p>Actualmente, estábamos en el proceso de conquistar la mazmorra más grande, más fuerte y más peligrosa del mundo, el calabozo "Abismo".</p>
-        
-        <p>Participé en esta incursión como porteador de equipaje y ayudante general.</p>
-        
-        <p>Mientras descansaban en una sala de una cueva antes de entrar en los niveles intermedios del "Abismo" con los demás miembros del grupo, me comunicaron que iba a ser expulsado.</p>
-        
-        <p>Dejé la mochila que llevaba en el suelo, y el sudor que me había secado se convirtió en sudor frío.</p>
-        
-        <p>Drago, el líder del grupo de la legión "Reunión de Razas", podía parecer un dragón bípedo y robusto, pero era inteligente, amable y una persona de confianza.</p>
-        
-        <p>Parecía que, sin darme cuenta, había causado problemas a Drago, o al grupo, y lo había enfadado.</p>
-        
-        <p>Así que rápidamente incliné la cabeza y ofrecí palabras de disculpa.</p>
-        
-        <p>Llamé pidiendo disculpas con el rostro pálido.</p>
-        
-        <p>—¡Lo siento! Si hay algún problema, lo solucionaré enseguida, ¡así que por favor no me expulsen del grupo!</p>
-        
-        <p>—Je, je, je… No hay ningún problema ni nada, por supuesto que te vamos a expulsar porque ya no te necesitamos. ¿Es que ni siquiera lo entiendes?</p>
-        
-        <p>—Los humanos son una especie tan inferior, son tan estúpidos, es realmente molesto.</p>
-        
-        <p>—¡!</p>
-        
-        <p>Mientras me disculpaba, Garou, un hombre bestia, y Sasha, una elfa, que también eran miembros de mi grupo, me miraron con expresiones de desprecio.</p>
-        
-        <p>Me sorprendieron más sus declaraciones que cuando el señor Drago me dijo que me expulsara.</p>
-        
-        <p>En este mundo existían seis razas: humana, bestia, dragón, elfo, enano y demonio.</p>
-        
-        <p>Entre ellas, los humanos eran más débiles físicamente que los hombres bestia, no eran tan longevos ni hábiles mágicamente como los elfos. No eran tan diestros como los enanos, y su mente era más lenta que la de los demonios.</p>
-        
-        <p>Los humanos eran menospreciados y discriminados como la "especie inferior" entre las seis razas.</p>
-        
-        <p>Sin embargo, la "Reunión de Razas" fue famosa por ser una legión cuyos miembros rechazaban tal discriminación y se reunieron bajo el noble ideal de crear un mundo donde todas las razas fueran iguales en el futuro.</p>
-        
-        <p>Garou, que parecía un lobo caminando sobre dos patas, también me gritó y se enfadó conmigo cuando los hombres bestia del pueblo se burlaron de mí.</p>
-        
-        <p>Sasha, una elfa con un hermoso cabello rubio que le llegaba hasta la espalda y unas orejas puntiagudas muy características, me consoló cuando lloraba a causa de la discriminación.</p>
-        
-        <p>Esos dos, como si fueran personas completamente diferentes, me miraron con ojos que me veían como a un insecto feo, o como si fuera una presa patética, y me lanzaron insultos.</p>
-        
-        <p>Es comprensible sentirse conmocionado por un cambio de comportamiento tan repentino, como si te hubieran golpeado en la cabeza con un objeto contundente.</p>
-        
-        <p>—¿Q-qué están haciendo exactamente ustedes dos…?</p>
-        
-        <p>Antes de que pudiera formular mi pregunta, los otros dos miembros ofrecieron sus opiniones.</p>
-        
-        <p>—Oye, ¿cuánto tiempo más vas a seguir charlando? Ya no necesitamos a este tipo, ¿verdad? Entonces, mátalo de una vez. Será un fastidio si aparece otro grupo y ve lo que está pasando.</p>
-        
-        <p>—Estoy de acuerdo con Nano. Ya me resulta bastante doloroso respirar el mismo aire que él, así que no quiero hacerle perder más tiempo.</p>
-        
-        <p>Nano, un enano con una barba tupida, me instó a matarlo con una voz como la de alguien que desecha una herramienta que ya no necesita.</p>
-        
-        <p>Me enseñó detalladamente cómo afilar espadas y cómo reparar y mantener armaduras en la Mansión de la Legión.</p>
-        
-        <p>Diablo, un joven alto, pálido y desgarbado de la raza demoníaca, con cuernos de demonio y vestido de traje, a menudo me enseñaba modales en la mesa. Solía hacer comentarios sarcásticos, pero jamás lo había oído hablar con una intención asesina tan descarada.</p>
-        
-        <p>Volví a dirigir mi mirada hacia Drago, el líder del grupo.</p>
-        
-        <p>Le pregunté a Drago, consciente de que mis propios dientes castañeteaban de miedo.</p>
-        
-        <p>—Están bromeando, ¿verdad? Solo están actuando para burlarse de mí, ¿no? Es decir, no hay razón para que me maten.</p>
-        
-        <p>—No, sí que la hay.</p>
-        
-        <p>Drago afirmó esto inmediatamente.</p>
-        
-        <p>—Me han dicho desde arriba que te mate, para estar seguros.</p>
-        
-        <p>—B-bueno, para estar seguros… para estar seguros, ¿matarme para estar seguros? N-no entiendo qué significa eso…</p>
-        
-        <p>—Light, has sido bendecido con algo más raro que los demás, ¿verdad?</p>
-        
-        <p>—S-sí. Se llama "Gacha Infinita". Como ya sabéis, es un premio de consolación que solo da basura.</p>
-        
-        <p>En este mundo, cuando alguien cumple diez años, rara vez recibe un don.</p>
-        
-        <p>Tuve la suerte de conseguirlo, pero era algo que no entendía muy bien, llamado "Gacha Infinita".</p>
-        
-        <p>Para usar la "Gacha Infinita", simplemente abre el panel del gacha y presiónalo.</p>
-        
-        <p>Al pulsarlo, obtendrás una tarjeta.</p>
-        
-        <p>Es posible manifestar en el mundo real las cosas representadas en esta carta.</p>
-        
-        <p>Suena muy efectivo cuando solo lo escuchas, pero durante dos años, hasta que el niño cumplió doce años, lo único que encontraron fue basura como "pan (con moho)", "un calcetín" y "una cuchara (rota)".</p>
-        
-        <p>Completamente inútil.</p>
-        
-        <p>Al principio, incluso los altos mandos sospecharon que Light, quien había adquirido algo tan extraño como la "Gacha Infinita", podría ser el "Maestro". Lo interrogaron y observaron cuidadosamente su personalidad y comportamiento, pero… solo producía basura y sus estadísticas eran simplemente promedio. Los altos mandos determinaron que tú no eras el "Maestro", pero decidieron matarte por precaución. Querían evitar cualquier desastre potencial desde la raíz.</p>
-        
-        <p>—¡No entiendo ni la mitad de lo que dices!</p>
-        
-        <p>Pero parece que no soy el "Maestro", y aun así me van a matar solo para estar seguros.</p>
-        
-        <p>—¡¿Qué demonios es "Maestro"?!</p>
-        
-        <p>—El país se sintió decepcionado de que no fuera el "Maestro", pero yo estoy agradecida. Si Light hubiera sido el "Maestro", el país me habría obligado a casarme con él para heredar su sangre. ¡Ugh, solo de pensarlo se me pone la piel de gallina!</p>
-        
-        <p>—¡Jajaja! Seguro que los elfos estarían decepcionados. ¡He oído que los "Maestros" sienten un cariño inexplicable por la raza élfica!</p>
-        
-        <p>—¿Un país?</p>
-        
-        <p>Un momento, entonces cuando Drago hablaba de "las altas esferas", ¿se refería al país?</p>
-        
-        <p>¿Es "Maestro" alguien a quien el gobierno está buscando? ¿Qué hizo exactamente este "Maestro"?</p>
-        
-        <p>Drago fulminó con la mirada a Garou y Sasha.</p>
-        
-        <p>Como era de esperar, los dos hombres, tras haber recibido una mirada fulminante de Drago, el más hábil de ellos, temblaron y pusieron caras serias.</p>
-        
-        <p>Nano y Diablo los miraron a ambos con incredulidad.</p>
-        
-        <p>—¡Dios mío, los elfos y los hombres bestia son tan parlanchines, es insoportable!</p>
-        
-        <p>—Comparado con eso, los humanos son excelentes, así que supongo que eso es más un punto a su favor que un defecto.</p>
-        
-        <p>Drago ignoró lo que los dos tenían que decir y los reprendió.</p>
-        
-        <p>—No digas nada innecesario. ¿Cómo piensas asumir la responsabilidad si la información se filtra?</p>
-        
-        <p>—Lo siento, líder. Se me escapó…</p>
-        
-        <p>—Lo siento, me dejé llevar. Nos aseguraremos de que este chico reciba el trato que merece para que no se filtre ninguna información. Con eso quedaremos tranquilos.</p>
-        
-        <p>—¡Eso es! ¡Garou dijo algo bueno! ¡Nos haremos responsables!</p>
-        
-        <p>—¡Je!</p>
-        
-        <p>Sasha saca su arco y apunta hacia mí. Garou extiende sus garras de acero.</p>
-        
-        <p>—¡Hablan en serio cuando dicen que quieren matarme!</p>
-        
-        <p>Un grito escapó de mis labios involuntariamente.</p>
-        
-        <p>Retrocedí, les di la espalda y salí corriendo.</p>
-        
-        <p>—¡Jajajaja! ¡Esto es el "Abismo"! ¡Aunque intentes escapar de nosotros, no sobrevivirás al ataque de los monstruos!</p>
-        
-        <p>—Bueno, no pienso dejarte escapar, ¡pero!</p>
-        
-        <p>Sasha lanza una flecha al mismo tiempo que pronuncia sus palabras.</p>
-        
-        <p>—¡Aaaaaah!</p>
-        
-        <p>La flecha me atravesó la pierna izquierda.</p>
-        
-        <p>Grité de dolor y, incapaz de seguir corriendo, me desplomé al suelo.</p>
-        
-        <p>Caí aparatosamente sobre el suelo áspero y cavernoso de la mazmorra, sangrando por todas partes, pero la flecha clavada en mi pie izquierdo me dolió mucho más.</p>
-        
-        <p>—¡Ah, qué bien, esa expresión, ese grito! Es genial jugar fingiendo que son tu presa y cazándolos. Si fueran monstruos o simplemente animales, no podrías comunicarte con ellos, así que no sería ni la mitad de divertido.</p>
-        
-        <p>—¡Deja de actuar con tanta indiferencia y mátalo de una vez! Se supone que la historia es: "Mientras conquistábamos la mazmorra más fuerte y peligrosa del mundo, el Abismo, uno de nuestros compañeros fue atacado y asesinado por un monstruo", pero si otro grupo lo ve, ¡perderá toda credibilidad!</p>
-        
-        <p>—Lo sé. Realmente quiero torturarte y matarte, pero como agradecimiento por entretenernos bailando como un tonto sin conocer nuestras verdaderas intenciones, te mataré sin dejarte sufrir más.</p>
-        
-        <p>Garou se acerca hacia mí, que estoy indefenso.</p>
-        
-        <p>Para matarme.</p>
-        
-        <p>Lágrimas, saliva y sangre brotan del dolor de la flecha que le atraviesa la pierna, mientras niega la realidad que tiene ante sí.</p>
-        
-        <p>—¡Es mentira, es mentira, es mentira! Todos en la "Reunión de Razas" son buenas personas… ¡Son todos unos farsantes! ¡Son unos farsantes de verdad!</p>
-        
-        <p>El impostor del señor Drago escupió las palabras.</p>
-        
-        <p>—Tonterías. Aunque sean dragones, no tratarían realmente a los humanos como iguales. Simplemente lo hacían a regañadientes porque sus superiores se lo ordenaban.</p>
-        
-        <p>El impostor de Garou se rió.</p>
-        
-        <p>—¡Jajajaja! ¡Joder, esto es lo más divertido que he hecho nunca! ¡Es divertidísimo!</p>
-        
-        <p>La impostora de Sasha pone cara de asco.</p>
-        
-        <p>—¿Qué tienen de respetable esos humanos? ¡Son realmente feos y repugnantes! ¿Por qué el país no se deshace de ellos de una vez?</p>
-        
-        <p>El impostor de Nano me animó a seguir adelante, con un tono que denotaba auténtico enfado.</p>
-        
-        <p>—Mátenlo de una vez. No es el "Maestro", así que no es para tanto. Es una pérdida de tiempo.</p>
-        
-        <p>El impostor Diablo se encogió de hombros en señal de asentimiento.</p>
-        
-        <p>—Nano tiene razón, es una pérdida de tiempo. Y, sobre todo, esa mirada de desesperación es horrible. Lo más sensato es matarlo rápidamente y salir de la mazmorra.</p>
-        
-        <p>Los impostores profieren insultos, se burlan y amenazan con matar, utilizando el mismo tono, rostro y voz que los verdaderos.</p>
-        
-        <p>No quería que me mataran, así que intenté escapar desesperadamente.</p>
-        
-        <p>Me dolían las piernas y no podía correr, así que me arrastré por el suelo.</p>
-        
-        <p>Como se trata de un terreno parecido a una cueva, el suelo está hecho de material áspero y rocoso, por lo que simplemente gatear te desgarrará la piel y te hará sangrar, pero lo ignoras y sigues moviéndote.</p>
-        
-        <p>Porque no quiero morir sin saber por qué.</p>
-        
-        <p>Pero en el fondo lo entiendo.</p>
-        
-        <p>—No hay absolutamente ninguna posibilidad de que sobrevivas.</p>
-        
-        <p>Mi nivel es 15.</p>
-        
-        <p>Este año solo tiene doce años, pero su nivel de habilidad es muy alto para su edad.</p>
-        
-        <p>La razón es que me ayudaron a subir de nivel.</p>
-        
-        <p>¿Y qué tal les va a los demás?</p>
-        
-        <p>El nivel de Drago ronda los 500.</p>
-        
-        <p>Garou tiene alrededor del nivel 150.</p>
-        
-        <p>Sasha tiene alrededor del nivel 300.</p>
-        
-        <p>Nano está alrededor del nivel 300.</p>
-        
-        <p>Diablo tiene alrededor del nivel 400.</p>
-        
-        <p>En comparación con otras especies, los humanos son inferiores en términos de fuerza física, poder mágico y esperanza de vida.</p>
-        
-        <p>Por lo tanto, su nivel es el más bajo, mientras que otras especies pueden elevar fácilmente su nivel mediante la fuerza física, el poder mágico, la longevidad, etc. Este es un factor que agrava la discriminación.</p>
-        
-        <p>La abrumadora diferencia en el nivel de habilidad, las especies y el número de individuos significa que no hay absolutamente ninguna manera de escapar de ellos.</p>
-        
-        <p>Aun así, no quería morir, así que me arrastré por el suelo.</p>
-        
-        <p>Esa lucha solo atraerá la mala suerte.</p>
-        
-        <p>Mi mano derecha se estira para gatear y toca el siguiente trozo de tierra.</p>
-        
-        <p>En ese instante, el suelo comenzó a brillar intensamente.</p>
-        
-        <p>—¡¿Acaso toqué una trampa de teletransportación?!</p>
-        
-        <p>—¡No dejen que escape! ¡Mátenlo!</p>
-        
-        <p>En ese instante, todas las voces se detuvieron.</p>
-        
-        <p>Mi visión también se cortó por un momento.</p>
-        
-        <p>***</p>
-        
-        <p>—Uf, me duele todo el cuerpo…</p>
-        
-        <p>Tuve la suerte de escapar de los miembros de la legión "Reunión de Razas".</p>
-        
-        <p>Sin embargo, una flecha le había atravesado el pie izquierdo, y su piel se había desgarrado y sangrado al arrastrarse por el suelo de la cueva.</p>
-        
-        <p>El dolor reaparece implacablemente tras el alivio de haber escapado de él.</p>
-        
-        <p>Me tumbé boca arriba y miré hacia el techo.</p>
-        
-        <p>Logré escapar de ese lugar sano y salvo, pero parece que sigo dentro de una especie de mazmorra con forma de cueva.</p>
-        
-        <p>A diferencia de la cueva en la entrada central del "Abismo", me desplomo sobre el suelo, que ahora está aún más oscuro, con su superficie rocosa.</p>
-        
-        <p>—Papá, mamá, hermano mayor, Yume… la ciudad da mucho miedo. Quiero volver al campo…</p>
-        
-        <p>Sentía dolor en todo el cuerpo, estaba herido por una flecha, e insultado y casi asesinado por los compañeros en quienes confiaba.</p>
-        
-        <p>La tristeza de esa traición me llena de nostalgia.</p>
-        
-        <p>Él era originalmente el segundo hijo de una familia de agricultores pobres, y su hermano mayor se marchó de casa para hacerse cargo del negocio de su padre.</p>
-        
-        <p>Mis padres y mis hermanos mayores intentaron disuadirme, diciéndome: "Light, no hay necesidad de que te vayas de casa". Pero si me iba de casa, mi vida sería más fácil y podría alimentar mejor a mi hermana pequeña, Yume.</p>
-        
-        <p>Este es el resultado de la avaricia y del afán de triunfar en la ciudad.</p>
-        
-        <p>No puedo mirar a mi familia a la cara ahora.</p>
-        
-        <p>Ante todo, a menos que escape de la mazmorra más grande, más fuerte y más malvada de este mundo, el "Abismo", no podré reunirme con mi familia ni volver a ver la luz del sol.</p>
-        
-        <p>—…¿Por qué intentaron engañar a un don nadie como yo y matarme? ¿Qué es eso de "Maestro"? ¿Por qué el gobierno los está ayudando deliberadamente? No quiero morir sin saber nada. Más que nada…</p>
-        
-        <p>El respeto se convirtió en odio. La tristeza, en furia. La desesperación, en determinación.</p>
-        
-        <p>¡Jamás perdonaré a quienes me traicionaron! ¡Los mataré! ¡Me niego rotundamente a morir sin vengarme! ¡No podré morir en paz a menos que me vengue de quienes me traicionaron!</p>
-        
-        <p>Una llama de venganza se enciende en mi corazón.</p>
-        
-        <p>Las llamas de la venganza abruman el dolor que recorre todo mi cuerpo.</p>
-        
-        <p>—Para sobrevivir, vengarme de ellos y reunirme con mi familia, primero necesito detener la hemorragia y salir de aquí… ¡Uf!</p>
-        
-        <p>Pero mi mala suerte continuó.</p>
-        
-        <p>—¡Grrrrrrrrr!</p>
-        
-        <p>Quizás debido al alboroto, o quizás atraído por el olor a sangre, apareció un monstruo.</p>
-        
-        <p>Era una criatura gigantesca de cuatro patas, probablemente de diez metros de largo, con una cola parecida a la de una serpiente, más gruesa que mi propio cuerpo, que se extendía y me observaba.</p>
-        
-        <p>La bestia de cuatro patas me observaba fijamente, babeando profusamente.</p>
-        
-        <p>Si fuera un animal común y corriente, me atacaría y sería mi fin.</p>
-        
-        <p>—¡¿Eh?! ¡Eso es imposible, no puede ser… Nivel 1000?!</p>
-        
-        <p>La pantalla de estado puede mostrarse opcionalmente a terceros.</p>
-        
-        <p>La bestia de cuatro patas muestra una pantalla de estado, como si atormentara no solo tu cuerpo sino también tu mente.</p>
-        
-        <p>Me está mostrando la diferencia entre él y yo.</p>
-        
-        <p>Me equivoqué.</p>
-        
-        <p>Pensé erróneamente que el círculo de teletransportación se había activado y que me habían teletransportado a algún lugar cercano a la entrada central del "Abismo", donde me encontraba originalmente.</p>
-        
-        <p>Sin embargo, en realidad, ¿no nos encontramos en la parte más profunda del "Abismo", un lugar al que nadie en este mundo ha llegado jamás?</p>
-        
-        <p>De lo contrario, ¡no hay manera de que un monstruo mítico como uno de nivel 1000 estuviera parado justo frente a mí!</p>
-        
-        <p>—¡Tengo que correr! ¡Tengo que correr… ¿a dónde?!</p>
-        
-        <p>Si te encuentras en la parte más profunda del "Abismo", no hay forma de que un humano de nivel 15 aproximadamente pueda escapar.</p>
-        
-        <p>Es imposible escapar del monstruo que tienes delante.</p>
-        
-        <p>—¡Grrrrrrrrr!</p>
-        
-        <p>El monstruo se ríe.</p>
-        
-        <p>Parecía comprender mi desesperación como si pudiera sostenerla en sus manos, y rió con regocijo mientras se acercaba lentamente a mí.</p>
-        
-        <p>Si se acercan demasiado, probablemente te devorarán vivo, un destino tan terrible que preferirías morir.</p>
-        
-        <p>Pero aún no puedo morir.</p>
-        
-        <p>—¡No quiero morir sin saber la verdad, sin poder reunirme con mi familia y sin vengarme de quienes me engañaron y traicionaron! ¡No moriré como un pedazo de basura!</p>
-        
-        <p>Sin embargo, como dejé mi mochila en casa, no tengo ni un cuchillo, ni una botella de agua, ni siquiera un pedernal.</p>
-        
-        <p>Eso es lo único que hay: el don.</p>
-        
-        <p>Mientras rezaba desesperadamente, pulsaba repetidamente la "Gacha Infinita" que Dios me había dado.</p>
-        
-        <p>Para salir de esta situación absolutamente terrible, ¡la única opción que queda es confiar en la "Gacha Infinita"!</p>
-        
-        <p>—¡!</p>
-        
-        <p>—¡Grrr!?</p>
-        
-        <p>Aparece un magnífico y gigantesco círculo mágico conmigo en el centro.</p>
-        
-        <p>Incluso el monstruo de nivel 1000, que hasta entonces se había acercado con una actitud confiada, se detuvo en seco, asombrado por la deslumbrante y mística luz que emitía.</p>
-        
-        <p>—¡Grrrraaaaaaaaaaaaaaa!</p>
-        
-        <p>Ya fuera por intuición o por instinto, el monstruo, que hacía tan solo unos instantes se mostraba tan confiado, ¡ataca de repente con todas sus fuerzas!</p>
-        
-        <p>Como era de esperar de un personaje de nivel 1000, la distancia, que aún era de varias decenas de metros, se redujo instantáneamente.</p>
-        
-        <p>Las enormes fauces llenan por completo mi campo de visión.</p>
-        
-        <p>(¿Es esto lo último que veré en mi vida?)</p>
-        
-        <p>En el momento en que la desesperación lo abruma por completo, se desata una luz tan poderosa que cubre las profundidades mismas del 'Abismo'.</p>
-        
-        <p>—No tendré piedad con nadie que se atreva a mostrarle los colmillos a mi señor, ni siquiera con un cachorro.</p>
-        
-        <p>Cabello negro danzando bajo la luz.</p>
-        
-        <p>La cabeza de un monstruo de nivel 1000 es cercenada instantáneamente, y sus extremidades son cortadas en pedazos por la afilada hoja, dando la impresión de que ya estaban destrozadas desde el principio.</p>
-        
-        <p>La fuente de la voz ni siquiera estaba cubierta por una sola gota de sangre; permanecía allí, entre el monstruo y yo, como si hubiera estado allí desde el principio.</p>
-        
-        <p>Su larga y oscura melena, como una pincelada de la oscuridad nocturna, está recogida en una cola de caballo y adornada con una larga cinta.</p>
-        
-        <p>Llevaba un uniforme de sirvienta, del tipo que suelen usar las sirvientas de los nobles. Sus guantes eran de un blanco inmaculado y ni un solo zapato tenía una mota de polvo.</p>
-        
-        <p>Era alta para ser mujer, con ojos grandes, pestañas largas, labios rojos y una nariz bien definida. Todo en ella era perfecto, y su piel era tan pálida que casi parecía translúcida. Era una mujer hermosa, como una muñeca esculpida con esmero por Dios.</p>
-        
-        <p>Su belleza por sí sola es llamativa, pero sus pechos, que se asoman por debajo de su uniforme de sirvienta, son excepcionalmente grandes. Cualquier hombre no podría evitar mirarlos. Sin embargo, su cintura es tan delgada que parece que se va a romper, y sus largas y gráciles extremidades, junto con su estatura, le dan una figura increíblemente atractiva.</p>
-        
-        <p>Sus ojos se volvieron hacia mí.</p>
-        
-        <p>Sus ojos temblaban de dolor e hincó una rodilla en el suelo.</p>
-        
-        <p>Era como si fuera un caballero haciendo una reverencia ante un rey.</p>
-        
-        <p>—No podía soportar ver el hermoso rostro y la bella piel nacarada de mi señor sufrir más heridas, así que me tomé la libertad de curarlo. Pido disculpas si fui demasiado atrevida.</p>
-        
-        <p>—¿Eh? ¿Qué? ¡¿Oh?! ¡¿De verdad no duele?!</p>
-        
-        <p>Levantó la parte superior del cuerpo para comprobar si había lesiones.</p>
-        
-        <p>La flecha que tenía clavada en la pierna se había salido de alguna manera, y ni siquiera estaba herido, y mucho menos lesionado.</p>
-        
-        <p>—Señor, ¿sería usted tan amable de decirme su nombre con esa hermosa voz suya?</p>
-        
-        <p>—¿Eh? ¿Mi nombre? Es, es Light.</p>
-        
-        <p>—Señor Light, Señor Light, Señor Light… ¡qué nombre tan maravilloso y noble!</p>
-        
-        <p>Tras repetir mi nombre varias veces en voz baja, juntó las manos delante del pecho y comenzó a rezar.</p>
-        
-        <p>—He descubierto que el camino de una sirvienta es vivir para mi señor, servir a mi señor y morir por mi señor. Juro por el camino de una sirvienta que seré absolutamente leal a mi señor, así que por favor acepte mi promesa.</p>
-        
-        <p>—¿Sí?</p>
-        
-        <p>—Gracias. Que podamos ser como dos pájaros con alas entrelazadas en el cielo, y como ramas entrelazadas en la tierra, juntos para siempre, y que podamos seguir estando bajo tu cuidado incluso después de la muerte.</p>
-        
-        <p>Ese "sí" no era una afirmación, sino más bien una pregunta… Pero ya era demasiado tarde para corregirlo.</p>
-        
-        <p>Pero antes que nada, ¿quién es ella exactamente?</p>
-        
-        <p>¿Por qué te encuentras en la parte más profunda del 'Abismo'?</p>
-        
-        <p>¿Y qué hay del círculo mágico de antes?</p>
-        
-        <p>¿Cuándo curaste mis heridas?</p>
-        
-        <p>Hay sangre de monstruo salpicada por todas partes; ¿no deberíamos alejarnos de aquí antes de que el olor atraiga a otros?</p>
-        
-        <p>Muchos pensamientos me pasan por la cabeza, pero estoy confundido porque no sé por dónde empezar.</p>
-        
-        <p>Al percibir mi confusión, la sirvienta comenzó presentándose.</p>
-        
-        <p>—Me disculpo por la presentación tardía, soy la carta SUR "Doncella Buscadora Mei Nivel 9999".</p>
-        
-        <p>—¿A, una carta súper ultra rara? L, ¿nivel 9999?</p>
-        
-        <p>—Sí. Esta es una carta SUR obtenida de la "Gacha Infinita" de Light-sama. Mientras esté a tu lado, te prometo que ninguno de los incontables monstruos de esta mazmorra pondrá un solo dedo sobre la hermosa piel de Light-sama.</p>
-        
-        <p>De hecho, mató instantáneamente a un monstruo que no desentonaría en un mito de nivel 1000.</p>
-        
-        <p>Mientras ella esté cerca, mi seguridad está prácticamente garantizada.</p>
-        
-        <p>Pero al principio todavía no podía creerlo.</p>
-        
-        <p>—…Eso es imposible. Mi "Gacha Infinita" es un fiasco que solo da cartas de objetos inútiles. No hay manera de que alguien tan increíble como Mei salga de ahí. Además, ¿acaso la gente puede salir de las cartas del gacha?</p>
-        
-        <p>—Señor, no es necesario usar títulos honoríficos para una sirvienta. Puede llamarme Mei sin problema.</p>
-        
-        <p>—No, pero…</p>
-        
-        <p>—Por favor.</p>
-        
-        <p>Incapaz de resistir su voz firme y sus ojos llenos de tristeza, obedezco obedientemente.</p>
-        
-        <p>—M-Mei…</p>
-        
-        <p>—Gracias por acceder a la petición de su sirvienta. Su generosidad es digna del Señor Light. Con tales cualidades reales, es imposible que la "Gacha Infinita" del Señor Light sea un fracaso. ¿Puedo, si me permite la osadía, confirmarlo con una "Evaluación"?</p>
-        
-        <p>—¿Evaluación?! ¿Mei… Mei tiene la capacidad de "evaluar"?!</p>
-        
-        <p>La "evaluación" permite juzgar a personas, objetos, etc., según el propio nivel de experiencia.</p>
-        
-        <p>Se dice que quienes obtienen la "Evaluación" nunca tendrán que preocuparse por encontrar trabajo durante el resto de sus vidas, lo que la convierte en una de las habilidades más codiciadas.</p>
-        
-        <p>—Para ser precisos, es una de mis habilidades. ¿Puedo usarla para evaluarlo?</p>
-        
-        <p>—Eh, sí, por favor.</p>
-        
-        <p>—Bueno, entonces, discúlpeme. La evaluación… parece que el nivel de ocultamiento es tan alto que no se pueden comprender los detalles sin una evaluación de ese nivel… Como era de esperar de Lord Light, ni siquiera puedo imaginar lo poderoso que es. "Gacha Infinita". Un gacha con un número ilimitado de usos. La probabilidad de las cartas extraídas cambia según la concentración de poder mágico. Los rangos son EX, SUR, UR, SSSR, SSR, SR, R, N, E, en orden de arriba abajo.</p>
-        
-        <p>—¿Qué significa eso?</p>
-        
-        <p>Como segundo hijo de una familia de agricultores pobres, no lograba comprender del todo la esencia de aquello.</p>
-        
-        <p>Mei continuó.</p>
-        
-        <p>—La energía mágica que utilizan los magos y otros practicantes al realizar magia también está presente en el aire. Parece que la "Gacha Infinita" absorbe esta energía mágica y dispensa cartas. Por lo tanto, en la superficie, la concentración y densidad de esta energía son bajas, lo que hace que la probabilidad de obtener una carta SUR sea prácticamente nula. Sin embargo, en los niveles más bajos de las mazmorras, donde se concentra la energía mágica, esa probabilidad se dispara.</p>
-        
-        <p>—……Veo.</p>
-        
-        <p>Me explicó, pero aún así no entendí ni la mitad.</p>
-        
-        <p>Aparentemente, en lugares como el nivel más bajo del 'Abismo', puedes encontrar cartas increíbles como Mei.</p>
-        
-        <p>—Pero como era de esperar de Lord Light, incluso sin conocer los detalles de la "Gacha Infinita" mediante la "Evaluación", notaste sus características y descendiste solo al nivel más bajo de la mazmorra para intentar conseguirlo. Eres verdaderamente digno de recibir la bendición de tu sirvienta. Sin embargo, descender solo al nivel más bajo de la mazmorra es quizás un poco imprudente dadas tus estadísticas, ¿no crees? De ahora en adelante, siempre estaré a tu lado, así que te aseguro que jamás volverás a sufrir tales heridas, por el bien del espíritu de tu sirvienta.</p>
-        
-        <p>—......</p>
-        
-        <p>—Señor Light, ¿en qué puedo ayudarle?</p>
-        
-        <p>—No es eso, Mei. No llegué al nivel más bajo del "Abismo" por mi propia voluntad.</p>
-        
-        <p>Le conté a Mei, que estaba malinterpretando la situación, todo sobre mis graves heridas y por qué estaba solo en el nivel más bajo de la mazmorra más grande, fuerte y malvada del mundo, el "Abismo".</p>
-        
-        <p>En el camino, recordé lo terriblemente traicionado que me habían sentido los amigos en quienes confiaba, y no pude contener las lágrimas que brotaron de mis ojos.</p>
-        
-        <p>Después de terminar de contarle todo, Mei me dio un fuerte abrazo.</p>
-        
-        <p>Hay una diferencia de altura entre nosotras, así que termino enterrando mi cara en el gran pecho de Mei.</p>
-        
-        <p>Hacía apenas unos instantes estaba triste, pero jamás imaginé que una mujer tan hermosa como Mei me abrazaría y que mi rostro se hundiría en su pecho, por lo que no solo mi rostro, sino todo mi cuerpo se puso rojo.</p>
-        
-        <p>Un aroma más intenso que el de las flores, una fragancia deliciosa que te hace dar vueltas la cabeza y te cosquillea la nariz.</p>
-        
-        <p>Ella no se dio cuenta de que tenía la cara roja y siguió acariciándome la cabeza para consolarme.</p>
-        
-        <p>—Una sirvienta como yo jamás podría comprender el dolor, la frustración y la ira que siente Lord Light. Sin embargo, puedo impartir la retribución divina a esos canallas que son peores que bestias. Por favor, dame tu orden. ¡Juro por mi deber de sirvienta que haré alinear las cabezas de esos canallas ante mi señor en una hora!</p>
-        
-        <p>—¡E-espera, Mei! ¡Eso no está permitido!</p>
-        
-        <p>—Entiendo que Lord Light es bondadoso, pero no veo la más mínima razón para mostrar misericordia a esos canallas.</p>
-        
-        <p>Me aparté del pecho de Mei y negué con la cabeza.</p>
-        
-        <p>—No es eso. No pienso mostrarles ninguna piedad. Solo quiero hacerme fuerte y vengarme de ellos. Y quiero saber la verdad sobre por qué el país buscaba al "Maestro", intentando absorberlo y tratando de matarlo… Pero supongo que tú, Mei, seguirías oponiéndote, diciendo que es imposible para mí.</p>
-        
-        <p>—No, es la voluntad de mi señor. Si mi señor busca venganza, lo apoyaré en todo lo que pueda como sirvienta. Sobre todo, creo que Lord Light no tendrá problemas para vengarse y descubrir la verdad.</p>
-        
-        <p>—…Gracias, Mei.</p>
-        
-        <p>—Son palabras muy amables.</p>
-        
-        <p>Hace apenas un momento, un amigo en quien confiaba me traicionó.</p>
-        
-        <p>Sin embargo, en cambio, pude conocer a Mei, quien nació de mi "Gacha Infinita" y me declaró su lealtad eterna.</p>
-        
-        <p>La traición que sufrí me enfureció y me entristeció hasta el punto de desear morir, pero el hecho de haber caído al nivel más bajo del "Abismo" significó que conocí a Mei, y realmente me siento increíblemente afortunado.</p>
-        
-        <p>Sacó un pañuelo y secó los restos de mis lágrimas.</p>
-        
-        <p>—En ese caso, Señor Light, me siento avergonzada, pero no puedo hacerlo sola. Por favor, ayúdame a encontrar más aliados con la "Gacha Infinita".</p>
-        
-        <p>—¿Eh? Pero Mei es muy fuerte, ¿verdad? O sea, tiene nivel 9999… ¿Para qué necesitaría otros compañeros?</p>
-        
-        <p>—Sí. Juro por mi código de sirvienta que me sería fácil destruir uno o dos países yo sola. Si es solo por venganza, no hay problema. Sin embargo, si quieres descubrir la verdad, una sola persona no tiene los recursos suficientes. Es probable que no logres obtener lo que Lord Light anhela.</p>
-        
-        <p>—…Entonces, básicamente, todo lo que necesito hacer es usar la "Gacha Infinita" para conseguir una compañera como Mei, ¿verdad?</p>
-        
-        <p>Sus palabras aún eran difíciles de entender, y solo capté la mitad, pero sí entendí la idea de aumentar mis aliados a través de la "Gacha Infinita", así que asentí.</p>
-        
-        <p>Mei escucha mis palabras y sonríe ampliamente.</p>
-        
-        <p>—Sí, ese entendimiento es correcto. Usemos la "Gacha Infinita" para aumentar nuestros aliados y, primero, crear el reino del Señor Light en esta mazmorra.</p>
-        
-        <p>Entendí lo que decía, pero no comprendía por qué quería hacer eso, así que fingí no darme cuenta.</p>
-        
-        <p>Siguiendo las instrucciones de Mei, volví a pulsar el botón de la "Gacha Infinita" en el nivel más bajo de la mazmorra más grande, fuerte y malvada del mundo, el "Abismo".</p>
-        
-        <p>***</p>
-        
-        <p>Traicionado por los camaradas en quienes confiaba, y tras encontrarse con Mei en el nivel más bajo del 'Abismo', aproximadamente tres años después…</p>
+<p>El episodio 0 es largo por ese motivo, pero a partir del siguiente capítulo 1, episodio 1, la duración será normal.</p>
+<p>Además, para los lectores que hayan leído los relatos cortos, el nuevo contenido de Gacha Infinita comienza en el Capítulo 1, Episodio 1, "El viaje comienza".</p>
+<p>***</p>
+<p>—Oye… te expulso del grupo.</p>
+<p>—…¿Eh?</p>
+<p>Sin comprender lo que estaba sucediendo, yo, Light, dejé escapar un sonido extraño.</p>
+<p>Actualmente, estábamos en el proceso de conquistar la mazmorra más grande, más fuerte y más peligrosa del mundo, el calabozo "Abismo".</p>
+<p>Participé en esta incursión como porteador de equipaje y ayudante general.</p>
+<p>Mientras descansaban en una sala de una cueva antes de entrar en los niveles intermedios del "Abismo" con los demás miembros del grupo, me comunicaron que iba a ser expulsado.</p>
+<p>Dejé la mochila que llevaba en el suelo, y el sudor que me había secado se convirtió en sudor frío.</p>
+<p>Drago, el líder del grupo de la legión "Reunión de Razas", podía parecer un dragón bípedo y robusto, pero era inteligente, amable y una persona de confianza.</p>
+<p>Parecía que, sin darme cuenta, había causado problemas a Drago, o al grupo, y lo había enfadado.</p>
+<p>Así que rápidamente incliné la cabeza y ofrecí palabras de disculpa.</p>
+<p>Llamé pidiendo disculpas con el rostro pálido.</p>
+<p>—¡Lo siento! Si hay algún problema, lo solucionaré enseguida, ¡así que por favor no me expulsen del grupo!</p>
+<p>—Je, je, je… No hay ningún problema ni nada, por supuesto que te vamos a expulsar porque ya no te necesitamos. ¿Es que ni siquiera lo entiendes?</p>
+<p>—Los humanos son una especie tan inferior, son tan estúpidos, es realmente molesto.</p>
+<p>—¡!</p>
+<p>Mientras me disculpaba, Garou, un hombre bestia, y Sasha, una elfa, que también eran miembros de mi grupo, me miraron con expresiones de desprecio.</p>
+<p>Me sorprendieron más sus declaraciones que cuando el señor Drago me dijo que me expulsara.</p>
+<p>En este mundo existían seis razas: humana, bestia, dragón, elfo, enano y demonio.</p>
+<p>Entre ellas, los humanos eran más débiles físicamente que los hombres bestia, no eran tan longevos ni hábiles mágicamente como los elfos. No eran tan diestros como los enanos, y su mente era más lenta que la de los demonios.</p>
+<p>Los humanos eran menospreciados y discriminados como la "especie inferior" entre las seis razas.</p>
+<p>Sin embargo, la "Reunión de Razas" fue famosa por ser una legión cuyos miembros rechazaban tal discriminación y se reunieron bajo el noble ideal de crear un mundo donde todas las razas fueran iguales en el futuro.</p>
+<p>Garou, que parecía un lobo caminando sobre dos patas, también me gritó y se enfadó conmigo cuando los hombres bestia del pueblo se burlaron de mí.</p>
+<p>Sasha, una elfa con un hermoso cabello rubio que le llegaba hasta la espalda y unas orejas puntiagudas muy características, me consoló cuando lloraba a causa de la discriminación.</p>
+<p>Esos dos, como si fueran personas completamente diferentes, me miraron con ojos que me veían como a un insecto feo, o como si fuera una presa patética, y me lanzaron insultos.</p>
+<p>Es comprensible sentirse conmocionado por un cambio de comportamiento tan repentino, como si te hubieran golpeado en la cabeza con un objeto contundente.</p>
+<p>—¿Q-qué están haciendo exactamente ustedes dos…?</p>
+<p>Antes de que pudiera formular mi pregunta, los otros dos miembros ofrecieron sus opiniones.</p>
+<p>—Oye, ¿cuánto tiempo más vas a seguir charlando? Ya no necesitamos a este tipo, ¿verdad? Entonces, mátalo de una vez. Será un fastidio si aparece otro grupo y ve lo que está pasando.</p>
+<p>—Estoy de acuerdo con Nano. Ya me resulta bastante doloroso respirar el mismo aire que él, así que no quiero hacerle perder más tiempo.</p>
+<p>Nano, un enano con una barba tupida, me instó a matarlo con una voz como la de alguien que desecha una herramienta que ya no necesita.</p>
+<p>Me enseñó detalladamente cómo afilar espadas y cómo reparar y mantener armaduras en la Mansión de la Legión.</p>
+<p>Diablo, un joven alto, pálido y desgarbado de la raza demoníaca, con cuernos de demonio y vestido de traje, a menudo me enseñaba modales en la mesa. Solía hacer comentarios sarcásticos, pero jamás lo había oído hablar con una intención asesina tan descarada.</p>
+<p>Volví a dirigir mi mirada hacia Drago, el líder del grupo.</p>
+<p>Le pregunté a Drago, consciente de que mis propios dientes castañeteaban de miedo.</p>
+<p>—Están bromeando, ¿verdad? Solo están actuando para burlarse de mí, ¿no? Es decir, no hay razón para que me maten.</p>
+<p>—No, sí que la hay.</p>
+<p>Drago afirmó esto inmediatamente.</p>
+<p>—Me han dicho desde arriba que te mate, para estar seguros.</p>
+<p>—B-bueno, para estar seguros… para estar seguros, ¿matarme para estar seguros? N-no entiendo qué significa eso…</p>
+<p>—Light, has sido bendecido con algo más raro que los demás, ¿verdad?</p>
+<p>—S-sí. Se llama "Gacha Infinita". Como ya sabéis, es un premio de consolación que solo da basura.</p>
+<p>En este mundo, cuando alguien cumple diez años, rara vez recibe un don.</p>
+<p>Tuve la suerte de conseguirlo, pero era algo que no entendía muy bien, llamado "Gacha Infinita".</p>
+<p>Para usar la "Gacha Infinita", simplemente abre el panel del gacha y presiónalo.</p>
+<p>Al pulsarlo, obtendrás una tarjeta.</p>
+<p>Es posible manifestar en el mundo real las cosas representadas en esta carta.</p>
+<p>Suena muy efectivo cuando solo lo escuchas, pero durante dos años, hasta que el niño cumplió doce años, lo único que encontraron fue basura como "pan (con moho)", "un calcetín" y "una cuchara (rota)".</p>
+<p>Completamente inútil.</p>
+<p>Al principio, incluso los altos mandos sospecharon que Light, quien había adquirido algo tan extraño como la "Gacha Infinita", podría ser el "Maestro". Lo interrogaron y observaron cuidadosamente su personalidad y comportamiento, pero… solo producía basura y sus estadísticas eran simplemente promedio. Los altos mandos determinaron que tú no eras el "Maestro", pero decidieron matarte por precaución. Querían evitar cualquier desastre potencial desde la raíz.</p>
+<p>—¡No entiendo ni la mitad de lo que dices!</p>
+<p>Pero parece que no soy el "Maestro", y aun así me van a matar solo para estar seguros.</p>
+<p>—¡¿Qué demonios es "Maestro"?!</p>
+<p>—El país se sintió decepcionado de que no fuera el "Maestro", pero yo estoy agradecida. Si Light hubiera sido el "Maestro", el país me habría obligado a casarme con él para heredar su sangre. ¡Ugh, solo de pensarlo se me pone la piel de gallina!</p>
+<p>—¡Jajaja! Seguro que los elfos estarían decepcionados. ¡He oído que los "Maestros" sienten un cariño inexplicable por la raza élfica!</p>
+<p>—¿Un país?</p>
+<p>Un momento, entonces cuando Drago hablaba de "las altas esferas", ¿se refería al país?</p>
+<p>¿Es "Maestro" alguien a quien el gobierno está buscando? ¿Qué hizo exactamente este "Maestro"?</p>
+<p>Drago fulminó con la mirada a Garou y Sasha.</p>
+<p>Como era de esperar, los dos hombres, tras haber recibido una mirada fulminante de Drago, el más hábil de ellos, temblaron y pusieron caras serias.</p>
+<p>Nano y Diablo los miraron a ambos con incredulidad.</p>
+<p>—¡Dios mío, los elfos y los hombres bestia son tan parlanchines, es insoportable!</p>
+<p>—Comparado con eso, los humanos son excelentes, así que supongo que eso es más un punto a su favor que un defecto.</p>
+<p>Drago ignoró lo que los dos tenían que decir y los reprendió.</p>
+<p>—No digas nada innecesario. ¿Cómo piensas asumir la responsabilidad si la información se filtra?</p>
+<p>—Lo siento, líder. Se me escapó…</p>
+<p>—Lo siento, me dejé llevar. Nos aseguraremos de que este chico reciba el trato que merece para que no se filtre ninguna información. Con eso quedaremos tranquilos.</p>
+<p>—¡Eso es! ¡Garou dijo algo bueno! ¡Nos haremos responsables!</p>
+<p>—¡Je!</p>
+<p>Sasha saca su arco y apunta hacia mí. Garou extiende sus garras de acero.</p>
+<p>—¡Hablan en serio cuando dicen que quieren matarme!</p>
+<p>Un grito escapó de mis labios involuntariamente.</p>
+<p>Retrocedí, les di la espalda y salí corriendo.</p>
+<p>—¡Jajajaja! ¡Esto es el "Abismo"! ¡Aunque intentes escapar de nosotros, no sobrevivirás al ataque de los monstruos!</p>
+<p>—Bueno, no pienso dejarte escapar, ¡pero!</p>
+<p>Sasha lanza una flecha al mismo tiempo que pronuncia sus palabras.</p>
+<p>—¡Aaaaaah!</p>
+<p>La flecha me atravesó la pierna izquierda.</p>
+<p>Grité de dolor y, incapaz de seguir corriendo, me desplomé al suelo.</p>
+<p>Caí aparatosamente sobre el suelo áspero y cavernoso de la mazmorra, sangrando por todas partes, pero la flecha clavada en mi pie izquierdo me dolió mucho más.</p>
+<p>—¡Ah, qué bien, esa expresión, ese grito! Es genial jugar fingiendo que son tu presa y cazándolos. Si fueran monstruos o simplemente animales, no podrías comunicarte con ellos, así que no sería ni la mitad de divertido.</p>
+<p>—¡Deja de actuar con tanta indiferencia y mátalo de una vez! Se supone que la historia es: "Mientras conquistábamos la mazmorra más fuerte y peligrosa del mundo, el Abismo, uno de nuestros compañeros fue atacado y asesinado por un monstruo", pero si otro grupo lo ve, ¡perderá toda credibilidad!</p>
+<p>—Lo sé. Realmente quiero torturarte y matarte, pero como agradecimiento por entretenernos bailando como un tonto sin conocer nuestras verdaderas intenciones, te mataré sin dejarte sufrir más.</p>
+<p>Garou se acerca hacia mí, que estoy indefenso.</p>
+<p>Para matarme.</p>
+<p>Lágrimas, saliva y sangre brotan del dolor de la flecha que le atraviesa la pierna, mientras niega la realidad que tiene ante sí.</p>
+<p>—¡Es mentira, es mentira, es mentira! Todos en la "Reunión de Razas" son buenas personas… ¡Son todos unos farsantes! ¡Son unos farsantes de verdad!</p>
+<p>El impostor del señor Drago escupió las palabras.</p>
+<p>—Tonterías. Aunque sean dragones, no tratarían realmente a los humanos como iguales. Simplemente lo hacían a regañadientes porque sus superiores se lo ordenaban.</p>
+<p>El impostor de Garou se rió.</p>
+<p>—¡Jajajaja! ¡Joder, esto es lo más divertido que he hecho nunca! ¡Es divertidísimo!</p>
+<p>La impostora de Sasha pone cara de asco.</p>
+<p>—¿Qué tienen de respetable esos humanos? ¡Son realmente feos y repugnantes! ¿Por qué el país no se deshace de ellos de una vez?</p>
+<p>El impostor de Nano me animó a seguir adelante, con un tono que denotaba auténtico enfado.</p>
+<p>—Mátenlo de una vez. No es el "Maestro", así que no es para tanto. Es una pérdida de tiempo.</p>
+<p>El impostor Diablo se encogió de hombros en señal de asentimiento.</p>
+<p>—Nano tiene razón, es una pérdida de tiempo. Y, sobre todo, esa mirada de desesperación es horrible. Lo más sensato es matarlo rápidamente y salir de la mazmorra.</p>
+<p>Los impostores profieren insultos, se burlan y amenazan con matar, utilizando el mismo tono, rostro y voz que los verdaderos.</p>
+<p>No quería que me mataran, así que intenté escapar desesperadamente.</p>
+<p>Me dolían las piernas y no podía correr, así que me arrastré por el suelo.</p>
+<p>Como se trata de un terreno parecido a una cueva, el suelo está hecho de material áspero y rocoso, por lo que simplemente gatear te desgarrará la piel y te hará sangrar, pero lo ignoras y sigues moviéndote.</p>
+<p>Porque no quiero morir sin saber por qué.</p>
+<p>Pero en el fondo lo entiendo.</p>
+<p>—No hay absolutamente ninguna posibilidad de que sobrevivas.</p>
+<p>Mi nivel es 15.</p>
+<p>Este año solo tiene doce años, pero su nivel de habilidad es muy alto para su edad.</p>
+<p>La razón es que me ayudaron a subir de nivel.</p>
+<p>¿Y qué tal les va a los demás?</p>
+<p>El nivel de Drago ronda los 500.</p>
+<p>Garou tiene alrededor del nivel 150.</p>
+<p>Sasha tiene alrededor del nivel 300.</p>
+<p>Nano está alrededor del nivel 300.</p>
+<p>Diablo tiene alrededor del nivel 400.</p>
+<p>En comparación con otras especies, los humanos son inferiores en términos de fuerza física, poder mágico y esperanza de vida.</p>
+<p>Por lo tanto, su nivel es el más bajo, mientras que otras especies pueden elevar fácilmente su nivel mediante la fuerza física, el poder mágico, la longevidad, etc. Este es un factor que agrava la discriminación.</p>
+<p>La abrumadora diferencia en el nivel de habilidad, las especies y el número de individuos significa que no hay absolutamente ninguna manera de escapar de ellos.</p>
+<p>Aun así, no quería morir, así que me arrastré por el suelo.</p>
+<p>Esa lucha solo atraerá la mala suerte.</p>
+<p>Mi mano derecha se estira para gatear y toca el siguiente trozo de tierra.</p>
+<p>En ese instante, el suelo comenzó a brillar intensamente.</p>
+<p>—¡¿Acaso toqué una trampa de teletransportación?!</p>
+<p>—¡No dejen que escape! ¡Mátenlo!</p>
+<p>En ese instante, todas las voces se detuvieron.</p>
+<p>Mi visión también se cortó por un momento.</p>
+<p>***</p>
+<p>—Uf, me duele todo el cuerpo…</p>
+<p>Tuve la suerte de escapar de los miembros de la legión "Reunión de Razas".</p>
+<p>Sin embargo, una flecha le había atravesado el pie izquierdo, y su piel se había desgarrado y sangrado al arrastrarse por el suelo de la cueva.</p>
+<p>El dolor reaparece implacablemente tras el alivio de haber escapado de él.</p>
+<p>Me tumbé boca arriba y miré hacia el techo.</p>
+<p>Logré escapar de ese lugar sano y salvo, pero parece que sigo dentro de una especie de mazmorra con forma de cueva.</p>
+<p>A diferencia de la cueva en la entrada central del "Abismo", me desplomo sobre el suelo, que ahora está aún más oscuro, con su superficie rocosa.</p>
+<p>—Papá, mamá, hermano mayor, Yume… la ciudad da mucho miedo. Quiero volver al campo…</p>
+<p>Sentía dolor en todo el cuerpo, estaba herido por una flecha, e insultado y casi asesinado por los compañeros en quienes confiaba.</p>
+<p>La tristeza de esa traición me llena de nostalgia.</p>
+<p>Él era originalmente el segundo hijo de una familia de agricultores pobres, y su hermano mayor se marchó de casa para hacerse cargo del negocio de su padre.</p>
+<p>Mis padres y mis hermanos mayores intentaron disuadirme, diciéndome: "Light, no hay necesidad de que te vayas de casa". Pero si me iba de casa, mi vida sería más fácil y podría alimentar mejor a mi hermana pequeña, Yume.</p>
+<p>Este es el resultado de la avaricia y del afán de triunfar en la ciudad.</p>
+<p>No puedo mirar a mi familia a la cara ahora.</p>
+<p>Ante todo, a menos que escape de la mazmorra más grande, más fuerte y más malvada de este mundo, el "Abismo", no podré reunirme con mi familia ni volver a ver la luz del sol.</p>
+<p>—…¿Por qué intentaron engañar a un don nadie como yo y matarme? ¿Qué es eso de "Maestro"? ¿Por qué el gobierno los está ayudando deliberadamente? No quiero morir sin saber nada. Más que nada…</p>
+<p>El respeto se convirtió en odio. La tristeza, en furia. La desesperación, en determinación.</p>
+<p>¡Jamás perdonaré a quienes me traicionaron! ¡Los mataré! ¡Me niego rotundamente a morir sin vengarme! ¡No podré morir en paz a menos que me vengue de quienes me traicionaron!</p>
+<p>Una llama de venganza se enciende en mi corazón.</p>
+<p>Las llamas de la venganza abruman el dolor que recorre todo mi cuerpo.</p>
+<p>—Para sobrevivir, vengarme de ellos y reunirme con mi familia, primero necesito detener la hemorragia y salir de aquí… ¡Uf!</p>
+<p>Pero mi mala suerte continuó.</p>
+<p>—¡Grrrrrrrrr!</p>
+<p>Quizás debido al alboroto, o quizás atraído por el olor a sangre, apareció un monstruo.</p>
+<p>Era una criatura gigantesca de cuatro patas, probablemente de diez metros de largo, con una cola parecida a la de una serpiente, más gruesa que mi propio cuerpo, que se extendía y me observaba.</p>
+<p>La bestia de cuatro patas me observaba fijamente, babeando profusamente.</p>
+<p>Si fuera un animal común y corriente, me atacaría y sería mi fin.</p>
+<p>—¡¿Eh?! ¡Eso es imposible, no puede ser… Nivel 1000?!</p>
+<p>La pantalla de estado puede mostrarse opcionalmente a terceros.</p>
+<p>La bestia de cuatro patas muestra una pantalla de estado, como si atormentara no solo tu cuerpo sino también tu mente.</p>
+<p>Me está mostrando la diferencia entre él y yo.</p>
+<p>Me equivoqué.</p>
+<p>Pensé erróneamente que el círculo de teletransportación se había activado y que me habían teletransportado a algún lugar cercano a la entrada central del "Abismo", donde me encontraba originalmente.</p>
+<p>Sin embargo, en realidad, ¿no nos encontramos en la parte más profunda del "Abismo", un lugar al que nadie en este mundo ha llegado jamás?</p>
+<p>De lo contrario, ¡no hay manera de que un monstruo mítico como uno de nivel 1000 estuviera parado justo frente a mí!</p>
+<p>—¡Tengo que correr! ¡Tengo que correr… ¿a dónde?!</p>
+<p>Si te encuentras en la parte más profunda del "Abismo", no hay forma de que un humano de nivel 15 aproximadamente pueda escapar.</p>
+<p>Es imposible escapar del monstruo que tienes delante.</p>
+<p>—¡Grrrrrrrrr!</p>
+<p>El monstruo se ríe.</p>
+<p>Parecía comprender mi desesperación como si pudiera sostenerla en sus manos, y rió con regocijo mientras se acercaba lentamente a mí.</p>
+<p>Si se acercan demasiado, probablemente te devorarán vivo, un destino tan terrible que preferirías morir.</p>
+<p>Pero aún no puedo morir.</p>
+<p>—¡No quiero morir sin saber la verdad, sin poder reunirme con mi familia y sin vengarme de quienes me engañaron y traicionaron! ¡No moriré como un pedazo de basura!</p>
+<p>Sin embargo, como dejé mi mochila en casa, no tengo ni un cuchillo, ni una botella de agua, ni siquiera un pedernal.</p>
+<p>Eso es lo único que hay: el don.</p>
+<p>Mientras rezaba desesperadamente, pulsaba repetidamente la "Gacha Infinita" que Dios me había dado.</p>
+<p>Para salir de esta situación absolutamente terrible, ¡la única opción que queda es confiar en la "Gacha Infinita"!</p>
+<p>—¡!</p>
+<p>—¡Grrr!?</p>
+<p>Aparece un magnífico y gigantesco círculo mágico conmigo en el centro.</p>
+<p>Incluso el monstruo de nivel 1000, que hasta entonces se había acercado con una actitud confiada, se detuvo en seco, asombrado por la deslumbrante y mística luz que emitía.</p>
+<p>—¡Grrrraaaaaaaaaaaaaaa!</p>
+<p>Ya fuera por intuición o por instinto, el monstruo, que hacía tan solo unos instantes se mostraba tan confiado, ¡ataca de repente con todas sus fuerzas!</p>
+<p>Como era de esperar de un personaje de nivel 1000, la distancia, que aún era de varias decenas de metros, se redujo instantáneamente.</p>
+<p>Las enormes fauces llenan por completo mi campo de visión.</p>
+<p>(¿Es esto lo último que veré en mi vida?)</p>
+<p>En el momento en que la desesperación lo abruma por completo, se desata una luz tan poderosa que cubre las profundidades mismas del 'Abismo'.</p>
+<p>—No tendré piedad con nadie que se atreva a mostrarle los colmillos a mi señor, ni siquiera con un cachorro.</p>
+<p>Cabello negro danzando bajo la luz.</p>
+<p>La cabeza de un monstruo de nivel 1000 es cercenada instantáneamente, y sus extremidades son cortadas en pedazos por la afilada hoja, dando la impresión de que ya estaban destrozadas desde el principio.</p>
+<p>La fuente de la voz ni siquiera estaba cubierta por una sola gota de sangre; permanecía allí, entre el monstruo y yo, como si hubiera estado allí desde el principio.</p>
+<p>Su larga y oscura melena, como una pincelada de la oscuridad nocturna, está recogida en una cola de caballo y adornada con una larga cinta.</p>
+<p>Llevaba un uniforme de sirvienta, del tipo que suelen usar las sirvientas de los nobles. Sus guantes eran de un blanco inmaculado y ni un solo zapato tenía una mota de polvo.</p>
+<p>Era alta para ser mujer, con ojos grandes, pestañas largas, labios rojos y una nariz bien definida. Todo en ella era perfecto, y su piel era tan pálida que casi parecía translúcida. Era una mujer hermosa, como una muñeca esculpida con esmero por Dios.</p>
+<p>Su belleza por sí sola es llamativa, pero sus pechos, que se asoman por debajo de su uniforme de sirvienta, son excepcionalmente grandes. Cualquier hombre no podría evitar mirarlos. Sin embargo, su cintura es tan delgada que parece que se va a romper, y sus largas y gráciles extremidades, junto con su estatura, le dan una figura increíblemente atractiva.</p>
+<p>Sus ojos se volvieron hacia mí.</p>
+<p>Sus ojos temblaban de dolor e hincó una rodilla en el suelo.</p>
+<p>Era como si fuera un caballero haciendo una reverencia ante un rey.</p>
+<p>—No podía soportar ver el hermoso rostro y la bella piel nacarada de mi señor sufrir más heridas, así que me tomé la libertad de curarlo. Pido disculpas si fui demasiado atrevida.</p>
+<p>—¿Eh? ¿Qué? ¡¿Oh?! ¡¿De verdad no duele?!</p>
+<p>Levantó la parte superior del cuerpo para comprobar si había lesiones.</p>
+<p>La flecha que tenía clavada en la pierna se había salido de alguna manera, y ni siquiera estaba herido, y mucho menos lesionado.</p>
+<p>—Señor, ¿sería usted tan amable de decirme su nombre con esa hermosa voz suya?</p>
+<p>—¿Eh? ¿Mi nombre? Es, es Light.</p>
+<p>—Señor Light, Señor Light, Señor Light… ¡qué nombre tan maravilloso y noble!</p>
+<p>Tras repetir mi nombre varias veces en voz baja, juntó las manos delante del pecho y comenzó a rezar.</p>
+<p>—He descubierto que el camino de una sirvienta es vivir para mi señor, servir a mi señor y morir por mi señor. Juro por el camino de una sirvienta que seré absolutamente leal a mi señor, así que por favor acepte mi promesa.</p>
+<p>—¿Sí?</p>
+<p>—Gracias. Que podamos ser como dos pájaros con alas entrelazadas en el cielo, y como ramas entrelazadas en la tierra, juntos para siempre, y que podamos seguir estando bajo tu cuidado incluso después de la muerte.</p>
+<p>Ese "sí" no era una afirmación, sino más bien una pregunta… Pero ya era demasiado tarde para corregirlo.</p>
+<p>Pero antes que nada, ¿quién es ella exactamente?</p>
+<p>¿Por qué te encuentras en la parte más profunda del 'Abismo'?</p>
+<p>¿Y qué hay del círculo mágico de antes?</p>
+<p>¿Cuándo curaste mis heridas?</p>
+<p>Hay sangre de monstruo salpicada por todas partes; ¿no deberíamos alejarnos de aquí antes de que el olor atraiga a otros?</p>
+<p>Muchos pensamientos me pasan por la cabeza, pero estoy confundido porque no sé por dónde empezar.</p>
+<p>Al percibir mi confusión, la sirvienta comenzó presentándose.</p>
+<p>—Me disculpo por la presentación tardía, soy la carta SUR "Doncella Buscadora Mei Nivel 9999".</p>
+<p>—¿A, una carta súper ultra rara? L, ¿nivel 9999?</p>
+<p>—Sí. Esta es una carta SUR obtenida de la "Gacha Infinita" de Light-sama. Mientras esté a tu lado, te prometo que ninguno de los incontables monstruos de esta mazmorra pondrá un solo dedo sobre la hermosa piel de Light-sama.</p>
+<p>De hecho, mató instantáneamente a un monstruo que no desentonaría en un mito de nivel 1000.</p>
+<p>Mientras ella esté cerca, mi seguridad está prácticamente garantizada.</p>
+<p>Pero al principio todavía no podía creerlo.</p>
+<p>—…Eso es imposible. Mi "Gacha Infinita" es un fiasco que solo da cartas de objetos inútiles. No hay manera de que alguien tan increíble como Mei salga de ahí. Además, ¿acaso la gente puede salir de las cartas del gacha?</p>
+<p>—Señor, no es necesario usar títulos honoríficos para una sirvienta. Puede llamarme Mei sin problema.</p>
+<p>—No, pero…</p>
+<p>—Por favor.</p>
+<p>Incapaz de resistir su voz firme y sus ojos llenos de tristeza, obedezco obedientemente.</p>
+<p>—M-Mei…</p>
+<p>—Gracias por acceder a la petición de su sirvienta. Su generosidad es digna del Señor Light. Con tales cualidades reales, es imposible que la "Gacha Infinita" del Señor Light sea un fracaso. ¿Puedo, si me permite la osadía, confirmarlo con una "Evaluación"?</p>
+<p>—¿Evaluación?! ¿Mei… Mei tiene la capacidad de "evaluar"?!</p>
+<p>La "evaluación" permite juzgar a personas, objetos, etc., según el propio nivel de experiencia.</p>
+<p>Se dice que quienes obtienen la "Evaluación" nunca tendrán que preocuparse por encontrar trabajo durante el resto de sus vidas, lo que la convierte en una de las habilidades más codiciadas.</p>
+<p>—Para ser precisos, es una de mis habilidades. ¿Puedo usarla para evaluarlo?</p>
+<p>—Eh, sí, por favor.</p>
+<p>—Bueno, entonces, discúlpeme. La evaluación… parece que el nivel de ocultamiento es tan alto que no se pueden comprender los detalles sin una evaluación de ese nivel… Como era de esperar de Lord Light, ni siquiera puedo imaginar lo poderoso que es. "Gacha Infinita". Un gacha con un número ilimitado de usos. La probabilidad de las cartas extraídas cambia según la concentración de poder mágico. Los rangos son EX, SUR, UR, SSSR, SSR, SR, R, N, E, en orden de arriba abajo.</p>
+<p>—¿Qué significa eso?</p>
+<p>Como segundo hijo de una familia de agricultores pobres, no lograba comprender del todo la esencia de aquello.</p>
+<p>Mei continuó.</p>
+<p>—La energía mágica que utilizan los magos y otros practicantes al realizar magia también está presente en el aire. Parece que la "Gacha Infinita" absorbe esta energía mágica y dispensa cartas. Por lo tanto, en la superficie, la concentración y densidad de esta energía son bajas, lo que hace que la probabilidad de obtener una carta SUR sea prácticamente nula. Sin embargo, en los niveles más bajos de las mazmorras, donde se concentra la energía mágica, esa probabilidad se dispara.</p>
+<p>—……Veo.</p>
+<p>Me explicó, pero aún así no entendí ni la mitad.</p>
+<p>Aparentemente, en lugares como el nivel más bajo del 'Abismo', puedes encontrar cartas increíbles como Mei.</p>
+<p>—Pero como era de esperar de Lord Light, incluso sin conocer los detalles de la "Gacha Infinita" mediante la "Evaluación", notaste sus características y descendiste solo al nivel más bajo de la mazmorra para intentar conseguirlo. Eres verdaderamente digno de recibir la bendición de tu sirvienta. Sin embargo, descender solo al nivel más bajo de la mazmorra es quizás un poco imprudente dadas tus estadísticas, ¿no crees? De ahora en adelante, siempre estaré a tu lado, así que te aseguro que jamás volverás a sufrir tales heridas, por el bien del espíritu de tu sirvienta.</p>
+<p>—......</p>
+<p>—Señor Light, ¿en qué puedo ayudarle?</p>
+<p>—No es eso, Mei. No llegué al nivel más bajo del "Abismo" por mi propia voluntad.</p>
+<p>Le conté a Mei, que estaba malinterpretando la situación, todo sobre mis graves heridas y por qué estaba solo en el nivel más bajo de la mazmorra más grande, fuerte y malvada del mundo, el "Abismo".</p>
+<p>En el camino, recordé lo terriblemente traicionado que me habían sentido los amigos en quienes confiaba, y no pude contener las lágrimas que brotaron de mis ojos.</p>
+<p>Después de terminar de contarle todo, Mei me dio un fuerte abrazo.</p>
+<p>Hay una diferencia de altura entre nosotras, así que termino enterrando mi cara en el gran pecho de Mei.</p>
+<p>Hacía apenas unos instantes estaba triste, pero jamás imaginé que una mujer tan hermosa como Mei me abrazaría y que mi rostro se hundiría en su pecho, por lo que no solo mi rostro, sino todo mi cuerpo se puso rojo.</p>
+<p>Un aroma más intenso que el de las flores, una fragancia deliciosa que te hace dar vueltas la cabeza y te cosquillea la nariz.</p>
+<p>Ella no se dio cuenta de que tenía la cara roja y siguió acariciándome la cabeza para consolarme.</p>
+<p>—Una sirvienta como yo jamás podría comprender el dolor, la frustración y la ira que siente Lord Light. Sin embargo, puedo impartir la retribución divina a esos canallas que son peores que bestias. Por favor, dame tu orden. ¡Juro por mi deber de sirvienta que haré alinear las cabezas de esos canallas ante mi señor en una hora!</p>
+<p>—¡E-espera, Mei! ¡Eso no está permitido!</p>
+<p>—Entiendo que Lord Light es bondadoso, pero no veo la más mínima razón para mostrar misericordia a esos canallas.</p>
+<p>Me aparté del pecho de Mei y negué con la cabeza.</p>
+<p>—No es eso. No pienso mostrarles ninguna piedad. Solo quiero hacerme fuerte y vengarme de ellos. Y quiero saber la verdad sobre por qué el país buscaba al "Maestro", intentando absorberlo y tratando de matarlo… Pero supongo que tú, Mei, seguirías oponiéndote, diciendo que es imposible para mí.</p>
+<p>—No, es la voluntad de mi señor. Si mi señor busca venganza, lo apoyaré en todo lo que pueda como sirvienta. Sobre todo, creo que Lord Light no tendrá problemas para vengarse y descubrir la verdad.</p>
+<p>—…Gracias, Mei.</p>
+<p>—Son palabras muy amables.</p>
+<p>Hace apenas un momento, un amigo en quien confiaba me traicionó.</p>
+<p>Sin embargo, en cambio, pude conocer a Mei, quien nació de mi "Gacha Infinita" y me declaró su lealtad eterna.</p>
+<p>La traición que sufrí me enfureció y me entristeció hasta el punto de desear morir, pero el hecho de haber caído al nivel más bajo del "Abismo" significó que conocí a Mei, y realmente me siento increíblemente afortunado.</p>
+<p>Sacó un pañuelo y secó los restos de mis lágrimas.</p>
+<p>—En ese caso, Señor Light, me siento avergonzada, pero no puedo hacerlo sola. Por favor, ayúdame a encontrar más aliados con la "Gacha Infinita".</p>
+<p>—¿Eh? Pero Mei es muy fuerte, ¿verdad? O sea, tiene nivel 9999… ¿Para qué necesitaría otros compañeros?</p>
+<p>—Sí. Juro por mi código de sirvienta que me sería fácil destruir uno o dos países yo sola. Si es solo por venganza, no hay problema. Sin embargo, si quieres descubrir la verdad, una sola persona no tiene los recursos suficientes. Es probable que no logres obtener lo que Lord Light anhela.</p>
+<p>—…Entonces, básicamente, todo lo que necesito hacer es usar la "Gacha Infinita" para conseguir una compañera como Mei, ¿verdad?</p>
+<p>Sus palabras aún eran difíciles de entender, y solo capté la mitad, pero sí entendí la idea de aumentar mis aliados a través de la "Gacha Infinita", así que asentí.</p>
+<p>Mei escucha mis palabras y sonríe ampliamente.</p>
+<p>—Sí, ese entendimiento es correcto. Usemos la "Gacha Infinita" para aumentar nuestros aliados y, primero, crear el reino del Señor Light en esta mazmorra.</p>
+<p>Entendí lo que decía, pero no comprendía por qué quería hacer eso, así que fingí no darme cuenta.</p>
+<p>Siguiendo las instrucciones de Mei, volví a pulsar el botón de la "Gacha Infinita" en el nivel más bajo de la mazmorra más grande, fuerte y malvada del mundo, el "Abismo".</p>
+<p>***</p>
+<p>Traicionado por los camaradas en quienes confiaba, y tras encontrarse con Mei en el nivel más bajo del 'Abismo', aproximadamente tres años después…</p>
     </div>
 
     <hr>
-
-    <!-- SECCIÓN DE CALIFICACIÓN -->
-    <div class="rating-section">
-        <h3>⭐ Califica este capítulo</h3>
-        <div class="stars" id="starRating">
-            <span class="star" data-value="1">★</span>
-            <span class="star" data-value="2">★</span>
-            <span class="star" data-value="3">★</span>
-            <span class="star" data-value="4">★</span>
-            <span class="star" data-value="5">★</span>
-        </div>
-        <div id="ratingMessage" style="font-size:0.85rem; margin-top:0.5rem;"></div>
-    </div>
-
-    <!-- SECCIÓN DE COMENTARIOS -->
-    <div class="comments-section">
-        <h3>💬 Comentarios</h3>
-        <div class="comment-form">
-            <input type="text" id="commentName" placeholder="Tu nombre" readonly>
-            <textarea id="commentText" placeholder="Escribe tu comentario... (Inicia sesión para comentar)"></textarea>
-            <button id="submitComment">Enviar</button>
-        </div>
-        <div id="commentsList"></div>
-    </div>
 
     <div class="nav-container">
         <div class="nav-bottom">
             <a href="index.html" class="nav-btn">📚 Índice</a>
             <a href="#" id="prevLinkBottom" class="nav-btn disabled">← Sin anterior</a>
             <span class="chapter-counter" id="chapterCounterBottom">Capítulo 0 - Episodio 0</span>
-            <a href="capitulo0e1.html" id="nextLinkBottom" class="nav-btn">Gacha Infinita - Parte 2 →</a>
+            <a href="capitulo0e1.html" id="nextLinkBottom" class="nav-btn ">Gacha Infinita - Parte 2 →</a>
         </div>
     </div>
 
@@ -1016,253 +597,6 @@
         const CHAPTER_NUM = 0;
         const EPISODE_NUM = 0;
         
-        let pointsAdded = false;
-        let currentUserProfile = null;
-        
-        // ========== REGISTRAR LECTURA ==========
-        async function registerRead() {
-            if (pointsAdded) return;
-            const user = auth.currentUser;
-            if (!user) return;
-            
-            const result = await registerChapterRead(CHAPTER_NUM, EPISODE_NUM);
-            if (result.success && !result.alreadyRead) {
-                pointsAdded = true;
-                showToast(`📚 +${result.pointsGained} puntos por leer este capítulo`);
-                if (result.newLevel && result.newLevel.name !== currentUserProfile?.level) {
-                    showToast(`🎉 ¡Subiste a nivel ${result.newLevel.name}! ${result.newLevel.badge}`);
-                }
-            }
-        }
-        
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast-message';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-        
-        // ========== SISTEMA DE CALIFICACIÓN ==========
-        let rated = false;
-        
-        async function initRating() {
-            const stars = document.querySelectorAll('.star');
-            const messageDiv = document.getElementById('ratingMessage');
-            
-            const user = auth.currentUser;
-            if (user) {
-                const userDoc = await db.collection('users').doc(user.uid).get();
-                const ratedChapters = userDoc.data()?.ratedChapters || [];
-                rated = ratedChapters.includes(`${CHAPTER_NUM}_${EPISODE_NUM}`);
-                if (rated) {
-                    const ratingData = await db.collection('ratings')
-                        .where('userId', '==', user.uid)
-                        .where('chapterNum', '==', CHAPTER_NUM)
-                        .where('episodeNum', '==', EPISODE_NUM)
-                        .get();
-                    if (!ratingData.empty) {
-                        const rating = ratingData.docs[0].data().rating;
-                        updateStars(rating);
-                        messageDiv.innerHTML = `✅ Ya calificaste este capítulo con ${rating} estrellas. ¡Gracias!`;
-                    } else {
-                        messageDiv.innerHTML = '✅ Ya calificaste este capítulo. ¡Gracias!';
-                    }
-                }
-            }
-            
-            stars.forEach(star => {
-                star.addEventListener('click', async function() {
-                    if (rated) {
-                        messageDiv.innerHTML = '⚠️ Ya calificaste este capítulo anteriormente.';
-                        return;
-                    }
-                    const value = parseInt(this.dataset.value);
-                    const result = await registerRating(CHAPTER_NUM, EPISODE_NUM, value);
-                    if (result.success) {
-                        rated = true;
-                        updateStars(value);
-                        messageDiv.innerHTML = `⭐ Calificaste este capítulo con ${value} estrellas. +${result.pointsGained} puntos. ¡Gracias!`;
-                        showToast(`⭐ +${result.pointsGained} puntos por calificar`);
-                        if (result.newLevel && result.newLevel.name !== currentUserProfile?.level) {
-                            showToast(`🎉 ¡Subiste a nivel ${result.newLevel.name}! ${result.newLevel.badge}`);
-                        }
-                    } else {
-                        messageDiv.innerHTML = `❌ ${result.error}`;
-                    }
-                });
-            });
-        }
-        
-        function updateStars(rating) {
-            const stars = document.querySelectorAll('.star');
-            stars.forEach((star, index) => {
-                if (index < rating) star.classList.add('active');
-                else star.classList.remove('active');
-            });
-        }
-        
-        // ========== SISTEMA DE COMENTARIOS ==========
-        async function loadComments() {
-            const result = await getComments(CHAPTER_NUM, EPISODE_NUM);
-            if (!result.success) {
-                document.getElementById('commentsList').innerHTML = '<p>Error al cargar comentarios</p>';
-                return;
-            }
-            
-            const comments = result.comments;
-            const container = document.getElementById('commentsList');
-            if (comments.length === 0) {
-                container.innerHTML = '<p>No hay comentarios aún. ¡Sé el primero en comentar!</p>';
-                return;
-            }
-            
-            const user = auth.currentUser;
-            let html = '';
-            for (const comment of comments) {
-                const isOwner = user && user.uid === comment.userId;
-                html += `<div class="comment-item" data-comment-id="${comment.id}" data-author-id="${comment.userId}">
-                            <span class="comment-name">${escapeHtml(comment.username)}</span>
-                            <span class="comment-date">${new Date(comment.timestamp?.toDate()).toLocaleString()}</span>
-                            <span class="comment-like" onclick="handleLike('${comment.id}', '${comment.userId}')">❤️ ${comment.likes || 0}</span>
-                            <span class="comment-report" onclick="handleReport('${comment.id}', '${escapeHtml(comment.text)}')">🚩 Reportar</span>
-                            ${isOwner ? `<span class="comment-delete" onclick="handleDeleteComment('${comment.id}')">🗑️ Eliminar</span>` : ''}
-                            <div class="comment-text">${escapeHtml(comment.text)}</div>
-                         </div>`;
-            }
-            container.innerHTML = html;
-        }
-        
-        async function handleLike(commentId, authorId) {
-            const user = auth.currentUser;
-            if (!user) {
-                alert('Inicia sesión para dar like');
-                return;
-            }
-            const result = await likeComment(commentId, authorId);
-            if (result.success) {
-                loadComments();
-                showToast('👍 Like registrado');
-            } else {
-                alert(result.error);
-            }
-        }
-        
-        async function handleReport(commentId, commentText) {
-            const user = auth.currentUser;
-            if (!user) {
-                alert('Debes iniciar sesión para reportar un comentario');
-                return;
-            }
-            
-            const reason = prompt(
-                'Motivo del reporte:\n\n' +
-                '1. Insulto o acoso\n' +
-                '2. Spoiler sin aviso\n' +
-                '3. Spam o publicidad\n' +
-                '4. Contenido inapropiado\n' +
-                '5. Otro\n\n' +
-                'Escribe el motivo:'
-            );
-            
-            if (reason === null) return;
-            
-            const result = await reportComment(commentId, reason, user.uid);
-            if (result.success) {
-                alert('✅ Comentario reportado. Gracias por ayudar a mantener la comunidad.');
-            } else {
-                alert('❌ Error: ' + result.error);
-            }
-        }
-        
-        async function handleDeleteComment(commentId) {
-            if (!confirm('¿Eliminar tu comentario? Esta acción no se puede deshacer.')) return;
-            
-            const result = await deleteComment(commentId);
-            if (result.success) {
-                alert('✅ Comentario eliminado');
-                loadComments();
-            } else {
-                alert('❌ Error: ' + result.error);
-            }
-        }
-        
-        function escapeHtml(str) {
-            return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]);
-        }
-        
-        async function submitComment() {
-            const user = auth.currentUser;
-            if (!user) {
-                alert('Debes iniciar sesión para comentar');
-                return;
-            }
-            
-            const text = document.getElementById('commentText').value;
-            if (!text.trim()) {
-                alert('Escribe un comentario');
-                return;
-            }
-            
-            const userProfile = await getUserProfile();
-            if (!userProfile.success) {
-                alert('Error al obtener perfil');
-                return;
-            }
-            
-            const result = await registerComment(CHAPTER_NUM, EPISODE_NUM, text, userProfile.profile.username);
-            if (result.success) {
-                document.getElementById('commentText').value = '';
-                loadComments();
-                showToast(`💬 +${result.pointsGained} puntos por comentar`);
-                if (result.newLevel && result.newLevel.name !== currentUserProfile?.level) {
-                    showToast(`🎉 ¡Subiste a nivel ${result.newLevel.name}! ${result.newLevel.badge}`);
-                }
-            } else {
-                alert(result.error);
-            }
-        }
-        
-        // ========== ACTUALIZAR INFO DE USUARIO ==========
-        async function updateUserInfo() {
-            const user = auth.currentUser;
-            const userInfoDiv = document.getElementById('userInfo');
-            const logoutBtn = document.getElementById('logoutBtnHeader');
-            const nameInput = document.getElementById('commentName');
-            const modLink = document.getElementById('modLink');
-            
-            if (user) {
-                const result = await getUserProfile();
-                if (result.success) {
-                    currentUserProfile = result.profile;
-                    userInfoDiv.style.display = 'inline-block';
-                    logoutBtn.style.display = 'inline-block';
-                    userInfoDiv.textContent = `${currentUserProfile.username} | ${currentUserProfile.totalPoints} pts | ${currentUserProfile.levelBadge}`;
-                    nameInput.value = currentUserProfile.username;
-                    nameInput.readonly = true;
-                    document.getElementById('commentText').placeholder = "Escribe tu comentario...";
-                    
-                    if (isAdmin(user)) {
-                        modLink.style.display = 'inline-block';
-                    } else {
-                        modLink.style.display = 'none';
-                    }
-                }
-            } else {
-                userInfoDiv.style.display = 'none';
-                logoutBtn.style.display = 'none';
-                nameInput.value = "Inicia sesión para comentar";
-                nameInput.readonly = true;
-                document.getElementById('commentText').placeholder = "Inicia sesión para comentar";
-                modLink.style.display = 'none';
-            }
-        }
-        
-        async function handleLogout() {
-            await logoutUser();
-            location.reload();
-        }
-        
         // ========== NAVEGACIÓN ==========
         function setupNavigation() {
             if (typeof GACHA_DATA !== 'undefined') {
@@ -1278,10 +612,43 @@
                 counters.forEach(c => { if(c) c.textContent = `${currentEpisode.chapterTitle} - Episodio ${currentEpisode.episodeNum}`; });
                 
                 if (prevEpisode) {
-                    prevLinks.forEach(l => { if(l) { l.href = `capitulo${prevEpisode.chapter}e${prevEpisode.episodeNum}.html`; l.classList.remove('disabled'); l.textContent = `← ${prevEpisode.title}`; } });
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${prevEpisode.chapter}e${prevEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = prevEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `← ${shortTitle}`;
+                        }
+                    });
+                } else {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = '← Sin anterior';
+                        }
+                    });
                 }
+                
                 if (nextEpisode) {
-                    nextLinks.forEach(l => { if(l) { l.href = `capitulo${nextEpisode.chapter}e${nextEpisode.episodeNum}.html`; l.classList.remove('disabled'); l.textContent = `${nextEpisode.title} →`; } });
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${nextEpisode.chapter}e${nextEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = nextEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `${shortTitle} →`;
+                        }
+                    });
+                } else {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = 'Sin siguiente →';
+                        }
+                    });
                 }
                 
                 const selects = [document.getElementById('chapterSelect'), document.getElementById('chapterSelectBottom')];
@@ -1296,6 +663,24 @@
                     select.onchange = function() { if(this.value) window.location.href = this.value; };
                 });
             }
+        }
+        
+        // ========== REGISTRAR LECTURA EN HISTORIAL ==========
+        function markAsRead() {
+            const user = localStorage.getItem('gacha_user');
+            if (!user) return;
+            
+            let history = localStorage.getItem(`gacha_history_${user}`);
+            let historyObj = history ? JSON.parse(history) : { chapters: [] };
+            
+            const readKey = { chapter: CHAPTER_NUM, episode: EPISODE_NUM };
+            historyObj.chapters = historyObj.chapters.filter(item => 
+                !(item.chapter == CHAPTER_NUM && item.episode == EPISODE_NUM)
+            );
+            historyObj.chapters.unshift(readKey);
+            if (historyObj.chapters.length > 20) historyObj.chapters.pop();
+            
+            localStorage.setItem(`gacha_history_${user}`, JSON.stringify(historyObj));
         }
         
         // ========== CONTROLES ==========
@@ -1335,29 +720,20 @@
             
             document.getElementById('scrollToTop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
             document.getElementById('scrollToBottom').onclick = () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-            document.getElementById('logoutBtnHeader').onclick = handleLogout;
         }
         
         // ========== INICIALIZACIÓN ==========
-        document.addEventListener('DOMContentLoaded', async () => {
+        document.addEventListener('DOMContentLoaded', () => {
             initControls();
             setupNavigation();
-            await updateUserInfo();
-            await loadComments();
-            await initRating();
+            markAsRead();
             
-            onAuthStateChanged(async (state) => {
-                await updateUserInfo();
-                if (state.loggedIn) {
-                    await registerRead();
-                    await loadComments();
-                }
+            kofiWidgetOverlay.draw('ocholobos', {
+                'type': 'floating-chat',
+                'floating-chat.donateButton.text': 'Apóyame',
+                'floating-chat.donateButton.background-color': '#1a4d5f',
+                'floating-chat.donateButton.text-color': '#ffffff'
             });
-            
-            document.getElementById('submitComment').onclick = submitComment;
-            window.handleLike = handleLike;
-            window.handleReport = handleReport;
-            window.handleDeleteComment = handleDeleteComment;
         });
     </script>
 </body>
