@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gacha Infinita | Novela Web</title>
+    <title>🎲 Gacha Infinita | Novela Web</title>
     <meta name="description" content="Lee Gacha Infinita, una novela web de fantasía y venganza. Light fue traicionado por sus compañeros, pero con el poder del Gacha Infinito reunirá aliados de nivel 9999 para cobrar venganza.">
     <style>
         :root {
@@ -14,9 +14,9 @@
             --accent: #1a4d5f;
             --accent-light: #eef2f0;
             --secondary-text: #6b6a68;
-            --prologue-color: #8b5a2b;
-            --interlude-color: #2b6b5a;
-            --extra-color: #9b6b3a;
+            --prologue-color: #b85c1a;
+            --interlude-color: #2c7a5a;
+            --extra-color: #b86f2c;
         }
         [data-theme="dark"] {
             --bg-color: #1a1a1a;
@@ -26,9 +26,9 @@
             --accent: #5a9e8c;
             --accent-light: #2a3a35;
             --secondary-text: #a0a0a0;
-            --prologue-color: #c97e3a;
+            --prologue-color: #e07c3a;
             --interlude-color: #4aa392;
-            --extra-color: #c98e4a;
+            --extra-color: #e08e3a;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -47,13 +47,27 @@
             border-bottom: 1px solid var(--border-color);
             padding: 0.6rem 1rem;
             display: flex;
-            justify-content: flex-end;
-            gap: 0.8rem;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
             z-index: 100;
             flex-wrap: wrap;
-            align-items: center;
         }
-        .options-bar button, .options-bar a {
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        .controls-area {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .options-bar button {
             background: var(--accent-light);
             border: none;
             padding: 0.4rem 0.8rem;
@@ -61,7 +75,6 @@
             cursor: pointer;
             font-size: 0.8rem;
             color: var(--accent);
-            text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
@@ -124,11 +137,11 @@
         
         .chapter-group { margin: 1.5rem 0 0; }
         .chapter-title {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
             border-left: 4px solid var(--accent);
             padding-left: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         .chapter-title.prologo { color: var(--prologue-color); border-left-color: var(--prologue-color); }
         .chapter-title.capitulo { color: var(--accent); border-left-color: var(--accent); }
@@ -156,26 +169,27 @@
         .episode-link.extra { color: var(--extra-color); }
         .episode-link:hover { text-decoration: underline; }
         .episode-date {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--secondary-text);
             font-family: monospace;
             white-space: nowrap;
             flex-shrink: 0;
         }
-        .episode-type-badge {
+        .episode-badge {
             font-size: 0.65rem;
             padding: 0.1rem 0.4rem;
             border-radius: 12px;
             margin-right: 0.5rem;
             font-weight: normal;
+            display: inline-block;
         }
-        .episode-type-badge.prologo { background: #f0e4d0; color: var(--prologue-color); }
-        .episode-type-badge.capitulo { background: var(--accent-light); color: var(--accent); }
-        .episode-type-badge.interludio { background: #d0f0e8; color: var(--interlude-color); }
-        .episode-type-badge.extra { background: #f0e0d0; color: var(--extra-color); }
-        [data-theme="dark"] .episode-type-badge.prologo { background: #3a2a1a; }
-        [data-theme="dark"] .episode-type-badge.interludio { background: #1a3a2a; }
-        [data-theme="dark"] .episode-type-badge.extra { background: #3a2a1a; }
+        .episode-badge.prologo { background: #f0e4d0; color: var(--prologue-color); }
+        .episode-badge.capitulo { background: var(--accent-light); color: var(--accent); }
+        .episode-badge.interludio { background: #d0f0e8; color: var(--interlude-color); }
+        .episode-badge.extra { background: #f0e0d0; color: var(--extra-color); }
+        [data-theme="dark"] .episode-badge.prologo { background: #3a2a1a; }
+        [data-theme="dark"] .episode-badge.interludio { background: #1a3a2a; }
+        [data-theme="dark"] .episode-badge.extra { background: #3a2a1a; }
         
         .pagination {
             display: flex;
@@ -188,10 +202,10 @@
         .pagination button, .pagination a {
             background: var(--accent-light);
             border: none;
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--accent);
             text-decoration: none;
             font-weight: 500;
@@ -215,7 +229,7 @@
             border-radius: 20px;
         }
         .page-input input {
-            width: 60px;
+            width: 55px;
             padding: 0.2rem;
             border: 1px solid var(--border-color);
             border-radius: 4px;
@@ -237,10 +251,10 @@
             background: var(--accent);
             color: white;
             border: none;
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             display: flex;
@@ -270,28 +284,36 @@
             padding-top: 1.5rem;
             border-top: 1px solid var(--border-color);
             text-align: center;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--secondary-text);
         }
         
         @media (max-width: 600px) {
             .container { padding: 0.5rem 1rem; }
+            .options-bar { flex-direction: column; align-items: stretch; }
+            .controls-area { justify-content: center; }
             .episode-item { flex-direction: column; align-items: flex-start; }
             .episode-date { align-self: flex-end; }
-            .floating-btn { width: 40px; height: 40px; font-size: 1.2rem; }
+            .floating-btn { width: 38px; height: 38px; font-size: 1rem; }
             .pagination { gap: 0.3rem; }
-            .pagination button, .pagination a { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+            .pagination button, .pagination a { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
         }
     </style>
     <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 </head>
 <body>
     <div class="options-bar">
-        <div class="font-size-control">
-            <button id="fontMinus">A-</button>
-            <button id="fontPlus">A+</button>
+        <div class="logo-area">
+            <span>🎲</span>
+            <span>Gacha Infinita</span>
         </div>
-        <button id="themeToggle">🌙 Modo oscuro</button>
+        <div class="controls-area">
+            <div class="font-size-control">
+                <button id="fontMinus">A-</button>
+                <button id="fontPlus">A+</button>
+            </div>
+            <button id="themeToggle">🌙 Modo oscuro</button>
+        </div>
     </div>
 
     <div class="container">
@@ -368,29 +390,6 @@
         let currentPage = 1;
         let totalPages = 1;
         
-        // ========== MAPA DE TIPOS POR CAPÍTULO ==========
-        // Define qué tipo tiene cada capítulo
-        const chapterTypes = {
-            0: 'prologo',      // Prólogo
-            1: 'capitulo',     // Comienzo de la venganza
-            2: 'capitulo',     // Venganza contra la elfa Sasha
-            3: 'capitulo',     // El pasado de Light
-            4: 'capitulo',     // El reino humano
-            5: 'capitulo',     // Venganza contra el enano Nano
-            6: 'capitulo',     // Masacre de hombres bestia
-            7: 'capitulo',     // Reino Demonio
-            8: 'capitulo',     // Conferencia del Ducado de Six
-            9: 'capitulo',     // Reino Demonio - Primera parte
-            10: 'capitulo',    // Reino Demonio - Segunda parte
-            11: 'capitulo',    // Reino Demonio - Tercera parte
-            12: 'capitulo',    // Festival de coronación de la Reina Lilith
-            13: 'capitulo',    // Religión de la Diosa
-            14: 'capitulo',    // Imperio Dragón
-            15: 'capitulo',    // Castillo flotante
-            16: 'capitulo',    // Contra los "Maestros" del Imperio Dragón
-            17: 'capitulo'     // Contra el Dios Maligno
-        };
-        
         // ========== TÍTULOS DE CAPÍTULOS ==========
         const chapterTitles = {
             0: "Prólogo: Gacha Infinita",
@@ -413,51 +412,69 @@
             17: "Contra el Dios Maligno"
         };
         
-        // ========== DETECTAR TIPO DE EPISODIO ==========
-        function detectarTipoEpisodio(ep) {
-            // Si el episodio es del capítulo 0, es prólogo
-            if (ep.chapter === 0) return 'prologo';
+        // ========== DETECTAR TIPO DE EPISODIO POR SU TÍTULO ==========
+        function detectarTipoEpisodio(titulo, chapterNum) {
+            // Capítulo 0 es prólogo
+            if (chapterNum === 0) return 'prologo';
             
-            // Si el título contiene palabras clave
-            const titulo = ep.title || '';
+            // Por título
             if (titulo.includes('Extra:') || titulo.includes('Interludio') || 
                 titulo.includes('Día de Nazuna') || titulo.includes('Charlas de las sirvientas') ||
-                titulo.includes('Las demandas de las sirvientas')) {
+                titulo.includes('Las demandas de las sirvientas') ||
+                titulo.includes('Pasta de frijol') || titulo.includes('El baño y el secreto') ||
+                titulo.includes('La historia de Nemumu') || titulo.includes('Cielo e infierno') ||
+                titulo.includes('Reflexión de Ellie') || titulo.includes('Miedo y alegría de Suz') ||
+                titulo.includes('¿Malestar de Yume?')) {
                 return 'interludio';
             }
             
-            // Por defecto, usar el tipo del capítulo
-            return chapterTypes[ep.chapter] || 'capitulo';
+            // Por defecto, capítulo normal
+            return 'capitulo';
         }
         
-        // ========== FORMATEAR TÍTULO DE CAPÍTULO ==========
-        function formatChapterTitle(chapterNum, tipo) {
-            const tituloBase = chapterTitles[chapterNum] || `Capítulo ${chapterNum}`;
-            
-            if (tipo === 'prologo') {
-                return `📜 ${tituloBase}`;
-            } else if (tipo === 'interludio') {
-                return `🎭 Interludio ${chapterNum}: ${tituloBase}`;
-            } else if (tipo === 'extra') {
-                return `✨ Extra ${chapterNum}: ${tituloBase}`;
-            }
+        // ========== OBTENER TÍTULO FORMATEADO DEL CAPÍTULO ==========
+        function getChapterTitle(chapterNum) {
+            return chapterTitles[chapterNum] || `Capítulo ${chapterNum}`;
+        }
+        
+        // ========== FORMATEAR TÍTULO DE SECCIÓN ==========
+        function formatSectionTitle(chapterNum, tipo) {
+            const tituloBase = getChapterTitle(chapterNum);
+            if (tipo === 'prologo') return `📜 ${tituloBase}`;
+            if (tipo === 'interludio') return `🎭 Interludio: ${tituloBase}`;
             return `📖 ${tituloBase}`;
         }
         
-        // ========== CARGAR DATOS ==========
+        // ========== CARGAR DATOS DESDE GACHA_DATA ==========
         function loadData() {
-            if (typeof GACHA_DATA !== 'undefined') {
-                allEpisodes = GACHA_DATA.getAllEpisodes();
-                totalEpisodes = allEpisodes.length;
-                totalPages = Math.ceil(totalEpisodes / ITEMS_PER_PAGE);
-                document.getElementById('totalChapters').textContent = totalEpisodes;
-                document.getElementById('translatedCount').textContent = totalEpisodes;
-                return true;
-            } else {
+            if (typeof GACHA_DATA === 'undefined') {
                 console.error('GACHA_DATA no está definido');
                 document.getElementById('chapterIndex').innerHTML = '<div class="error-message">❌ Error: No se pudo cargar el archivo data.js. Verifica que exista en la misma carpeta.</div>';
                 return false;
             }
+            
+            // Construir array de episodios desde la estructura chapters
+            allEpisodes = [];
+            for (const chapter of GACHA_DATA.chapters) {
+                for (const ep of chapter.episodes) {
+                    allEpisodes.push({
+                        chapter: chapter.num,
+                        chapterTitle: chapter.title,
+                        episodeNum: ep.num,
+                        title: ep.title,
+                        date: ep.date,
+                        file: `capitulo${chapter.num}e${ep.num}.html`
+                    });
+                }
+            }
+            
+            totalEpisodes = allEpisodes.length;
+            totalPages = Math.ceil(totalEpisodes / ITEMS_PER_PAGE);
+            document.getElementById('totalChapters').textContent = totalEpisodes;
+            document.getElementById('translatedCount').textContent = totalEpisodes;
+            
+            console.log(`✅ Cargados ${totalEpisodes} episodios`);
+            return true;
         }
         
         // ========== RENDERIZAR ÍNDICE ==========
@@ -469,19 +486,19 @@
             // Agrupar por capítulo
             const chaptersMap = new Map();
             for (const ep of pageEpisodes) {
-                const tipo = detectarTipoEpisodio(ep);
+                const tipo = detectarTipoEpisodio(ep.title, ep.chapter);
                 if (!chaptersMap.has(ep.chapter)) {
                     chaptersMap.set(ep.chapter, {
                         chapter: ep.chapter,
                         tipo: tipo,
-                        title: formatChapterTitle(ep.chapter, tipo),
+                        title: formatSectionTitle(ep.chapter, tipo),
                         episodes: []
                     });
                 }
                 chaptersMap.get(ep.chapter).episodes.push(ep);
             }
             
-            // Ordenar por capítulo
+            // Ordenar capítulos
             const chapters = Array.from(chaptersMap.values()).sort((a, b) => a.chapter - b.chapter);
             
             let html = '';
@@ -492,26 +509,22 @@
                 html += `<ul class="episode-list">`;
                 
                 for (const ep of chapter.episodes) {
-                    const tipo = detectarTipoEpisodio(ep);
-                    let tipoBadge = '';
-                    let tipoTexto = '';
+                    const tipo = detectarTipoEpisodio(ep.title, ep.chapter);
+                    let badgeText = '';
+                    let badgeClass = '';
                     let linkClass = '';
                     
                     if (tipo === 'prologo') {
-                        tipoBadge = '📜';
-                        tipoTexto = 'Prólogo';
+                        badgeText = '📜 Prólogo';
+                        badgeClass = 'prologo';
                         linkClass = 'prologo';
                     } else if (tipo === 'interludio') {
-                        tipoBadge = '🎭';
-                        tipoTexto = 'Interludio';
+                        badgeText = '🎭 Interludio';
+                        badgeClass = 'interludio';
                         linkClass = 'interludio';
-                    } else if (tipo === 'extra') {
-                        tipoBadge = '✨';
-                        tipoTexto = 'Extra';
-                        linkClass = 'extra';
                     } else {
-                        tipoBadge = '📖';
-                        tipoTexto = '';
+                        badgeText = '📖';
+                        badgeClass = 'capitulo';
                         linkClass = 'capitulo';
                     }
                     
@@ -519,7 +532,7 @@
                     html += `
                         <li class="episode-item">
                             <a href="${fileName}" class="episode-link ${linkClass}" onclick="markAsRead(${ep.chapter}, ${ep.episodeNum})">
-                                <span class="episode-type-badge ${linkClass}">${tipoBadge} ${tipoTexto}</span>
+                                <span class="episode-badge ${badgeClass}">${badgeText}</span>
                                 Episodio ${ep.episodeNum}: ${escapeHtml(ep.title)}
                             </a>
                             <span class="episode-date">${ep.date || ''}</span>
@@ -542,7 +555,7 @@
             });
         }
         
-        // ========== RENDERIZAR PAGINACIÓN ==========
+        // ========== PAGINACIÓN ==========
         function renderPagination() {
             const container = document.getElementById('pagination');
             
@@ -569,7 +582,7 @@
             
             for (let i = startPage; i <= endPage; i++) {
                 if (i === currentPage) {
-                    html += `<span class="active" style="background:var(--accent); color:white; padding:0.5rem 1rem; border-radius:8px;">${i}</span>`;
+                    html += `<span class="active">${i}</span>`;
                 } else {
                     html += `<a href="#" data-page="${i}">${i}</a>`;
                 }
@@ -657,14 +670,9 @@
             userHistory.chapters.slice(0, 10).forEach(item => {
                 const episode = allEpisodes.find(ep => ep.chapter == item.chapter && ep.episodeNum == item.episode);
                 if (episode) {
-                    const tipo = detectarTipoEpisodio(episode);
-                    let badge = '';
-                    if (tipo === 'prologo') badge = '📜';
-                    else if (tipo === 'interludio') badge = '🎭';
-                    else if (tipo === 'extra') badge = '✨';
-                    else badge = '📖';
-                    
-                    const chapterDisplay = formatChapterTitle(episode.chapter, tipo);
+                    const tipo = detectarTipoEpisodio(episode.title, episode.chapter);
+                    let badge = tipo === 'prologo' ? '📜' : (tipo === 'interludio' ? '🎭' : '📖');
+                    const chapterDisplay = formatSectionTitle(episode.chapter, tipo);
                     html += `<div class="history-item">${badge} <a href="capitulo${episode.chapter}e${episode.episodeNum}.html">${escapeHtml(chapterDisplay)} - Episodio ${episode.episodeNum}: ${escapeHtml(episode.title)}</a></div>`;
                 }
             });
@@ -745,4 +753,22 @@
                 e.preventDefault();
                 if (confirm('¿Borrar todo tu historial de lectura?')) {
                     userHistory = { chapters: [] };
-                    localStorage.setItem(`gacha_history_${
+                    localStorage.setItem(`gacha_history_${currentUser}`, JSON.stringify(userHistory));
+                    updateHistoryDisplay();
+                }
+            };
+            
+            window.markAsRead = markAsRead;
+            
+            if (typeof kofiWidgetOverlay !== 'undefined') {
+                kofiWidgetOverlay.draw('ocholobos', {
+                    'type': 'floating-chat',
+                    'floating-chat.donateButton.text': 'Apóyame',
+                    'floating-chat.donateButton.background-color': '#1a4d5f',
+                    'floating-chat.donateButton.text-color': '#ffffff'
+                });
+            }
+        });
+    </script>
+</body>
+</html>
