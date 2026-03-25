@@ -68,16 +68,6 @@
             width: 32px;
             padding: 0.2rem;
         }
-        .user-info {
-            background: #1a4d5f;
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-        }
-        [data-theme="dark"] .user-info {
-            background: #5a9e8c;
-        }
         
         .nav-container {
             margin: 1rem 0;
@@ -187,106 +177,6 @@
             border-top-color: #404040;
         }
         
-        .rating-section {
-            background: white;
-            border: 1px solid #e5e0d8;
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            text-align: center;
-        }
-        [data-theme="dark"] .rating-section {
-            background: #2d2d2d;
-            border-color: #404040;
-        }
-        .stars {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        .star {
-            font-size: 2rem;
-            cursor: pointer;
-            color: #cbd5e0;
-            transition: color 0.2s;
-        }
-        .star:hover, .star.active {
-            color: #f5b042;
-        }
-        
-        .comments-section {
-            background: white;
-            border: 1px solid #e5e0d8;
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        [data-theme="dark"] .comments-section {
-            background: #2d2d2d;
-            border-color: #404040;
-        }
-        .comment-form {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .comment-form input, .comment-form textarea {
-            padding: 0.5rem;
-            border: 1px solid #e5e0d8;
-            border-radius: 8px;
-            background: #faf9f7;
-            font-family: inherit;
-        }
-        [data-theme="dark"] .comment-form input, [data-theme="dark"] .comment-form textarea {
-            background: #1a1a1a;
-            border-color: #404040;
-            color: #e5e5e5;
-        }
-        .comment-form textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-        .comment-form button {
-            width: 100px;
-            background: #1a4d5f;
-            color: white;
-            border: none;
-            padding: 0.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        [data-theme="dark"] .comment-form button {
-            background: #5a9e8c;
-        }
-        .comment-item {
-            border-bottom: 1px solid #e5e0d8;
-            padding: 0.8rem 0;
-        }
-        .comment-name {
-            font-weight: bold;
-            color: #1a4d5f;
-        }
-        .comment-date {
-            font-size: 0.7rem;
-            color: #6b6a68;
-            margin-left: 0.5rem;
-        }
-        .comment-like, .comment-report, .comment-delete {
-            margin-left: 0.8rem;
-            cursor: pointer;
-            font-size: 0.7rem;
-            display: inline-block;
-            transition: all 0.2s;
-        }
-        .comment-like { color: #9ca3af; }
-        .comment-like:hover { color: #e53e3e; }
-        .comment-report { color: #9ca3af; }
-        .comment-report:hover { color: #e53e3e; }
-        .comment-delete { color: #9ca3af; }
-        .comment-delete:hover { color: #e53e3e; }
-        
         .floating-buttons {
             position: fixed;
             bottom: 20px;
@@ -359,17 +249,11 @@
                 width: 40px;
                 height: 40px;
                 font-size: 1.2rem;
-            }
-            .star {
-                font-size: 1.5rem;
+                bottom: 70px;
+                right: 15px;
             }
         }
     </style>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="firebase-config.js"></script>
-    <script src="auth.js"></script>
     <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 </head>
 <body>
@@ -378,11 +262,6 @@
             <button id="fontMinus">A-</button>
             <button id="fontPlus">A+</button>
         </div>
-        <a href="usuario.html">👤 Mi perfil</a>
-        <a href="reglas.html">📜 Reglas</a>
-        <a href="moderacion.html" id="modLink" style="display: none;">🛡️ Moderación</a>
-        <div id="userInfo" class="user-info" style="display: none;"></div>
-        <button id="logoutBtnHeader" style="display: none;">Cerrar sesión</button>
         <a href="index.html">📚 Índice</a>
         <button id="themeToggle">🌙 Modo oscuro</button>
     </div>
@@ -390,9 +269,9 @@
     <div class="nav-container">
         <div class="nav-center">
             <a href="index.html" class="nav-btn">📚 Índice</a>
-            <a href="capitulo0e2.html" id="prevLinkTop" class="nav-btn">← Gacha Infinita - Parte 3</a>
+            <a href="capitulo0e2.html" id="prevLinkTop" class="nav-btn ">← La venganza contra Garou</a>
             <span class="chapter-counter" id="chapterCounterTop">Capítulo 1 - Episodio 1</span>
-            <a href="capitulo1e2.html" id="nextLinkTop" class="nav-btn">Planes de futuro →</a>
+            <a href="capitulo1e2.html" id="nextLinkTop" class="nav-btn ">Planes de futuro →</a>
         </div>
     </div>
 
@@ -407,170 +286,81 @@
 
     <div class="story-content">
         <p>—Papá, mamá… he vuelto.</p>
-        
-        <p>Yo, Light, después de vengarme con éxito de Garou, el hombre bestia, el primer lugar al que me dirigí al salir del calabozo más grande, más fuerte y más peligroso del mundo, el "Abismo", fue ante la tumba de mis padres, que había construido en mi antiguo hogar.</p>
-        
-        <p>¿Por qué digo "antiguo" hogar? Porque la aldea había sido completamente destruida, no sabía si por monstruos, bandidos, el ejército o cualquier otra cosa.</p>
-        
-        <p>Después de superar varias limitaciones, como el aumento de nivel, y lograr salir del "Abismo", fui a ver cómo estaba la aldea y ya estaba devastada. Mis padres y los aldeanos habían sido asesinados, sus cuerpos abandonados, y las casas, campos y establos habían sido quemados.</p>
-        
-        <p>Intenté determinar la causa, pero había pasado demasiado tiempo y las pruebas se habían deteriorado. No podía saber si los culpables eran monstruos u otra especie.</p>
-        
-        <p>La única suerte fue que, entre los innumerables cadáveres, no estaban los de mi hermano mayor ni los de mi hermana pequeña, Yume. Busqué en un amplio radio, pero no encontré sus cuerpos.</p>
-        
-        <p><em>(Tal vez los dos lograron escapar y siguen vivos…)</em></p>
-        
-        <p>Sin querer, me aferré a esa esperanza y ordené a mis subordinados, que estaban recopilando información en el exterior, que buscaran a los dos e investigaran la causa de la destrucción de la aldea y a los responsables.</p>
-        
-        <p>Fue hace unos seis meses que recogí los cuerpos de mis padres, de los aldeanos que me habían ayudado y de los niños que probablemente habían sido mis amigos, y construí esta tumba.</p>
-        
-        <p>…</p>
-        
-        <p>Coloqué las flores que llevaba en la mano ante la tumba y recé para que mis padres y los aldeanos pudieran viajar en paz al lado de la diosa.</p>
-        
-        <p>Cuando terminé de rezar, me levanté y me quité la tierra de las rodillas.</p>
-        
-        <p>—¿Ya está bien?</p>
-        
-        <p>Preguntó Gold, el "Caballero Dorado", una carta UR de nivel 5000, que era uno de mis acompañantes en calidad de guardaespaldas y compañero aventurero.</p>
-        
-        <p>Como su nombre indica, llevaba una armadura dorada desde la cabeza hasta los pies, y el escudo que cargaba a la espalda también era de un dorado brillante, un atuendo muy llamativo.</p>
-        
-        <p>Su capacidad ofensiva no era muy alta, pero estaba especializado en defensa, por lo que fue elegido para acompañarme en esta ocasión.</p>
-        
-        <p>—Ya pude saludar a papá y mamá y contarles cómo estoy.</p>
-        
-        <p>—Entonces, vámonos de una vez. ¡Quiero llegar al destino con luz de sobra y descansar en una posada! ¡Yo no quiero acampar desde el primer día!</p>
-        
-        <p>—¡Gold! ¡Cómo te atreves a decir eso cuando Light-sama tiene el corazón apenado! ¡Piensa un poco en sus sentimientos antes de hablar! ¡Y usa el lenguaje formal!</p>
-        
-        <p>La joven que estaba junto a Gold se enfureció por sus palabras.</p>
-        
-        <p>Ella también era uno de mis acompañantes, "Hoja Asesina Nemumu", una carta UR de nivel 5000.</p>
-        
-        <p>Era una hermosa joven de unos diecisiete o dieciocho años, con un hermoso cabello plateado que le llegaba un poco por encima de los hombros, la boca cubierta por una bufanda y la piel morena.</p>
-        
-        <p>Me había estado observando con preocupación mientras rezaba, como si le estuvieran clavando un cuchillo en el pecho.</p>
-        
-        <p>Por eso se enfureció con las palabras insensibles de Gold.</p>
-        
-        <p>Pero Gold no pareció prestar atención a las palabras de Nemumu y se encogió de hombros.</p>
-        
-        <p>—Usar lenguaje formal no permite crear cercanía y es aburrido, ¿no? Además, Nemumu, tú tampoco quieres acampar desde el primer día, ¿verdad?</p>
-        
-        <p>—¡No me compares contigo! ¡Yo, si estoy con Light-sama, lo acompañaré aunque sea sobre la hierba, en el barro o entre la basura!</p>
-        
-        <p>—Yo también, si estoy con mi señor, lo acompañaré en las montañas más heladas del invierno o sobre magma ardiente. Porque ofrecer mi lealtad dorada a mi señor es el espíritu caballeresco del "Caballero Dorado". …Sin embargo, si consideramos el descanso confortable de mi señor, evitar acampar desde el primer día es una precaución natural, ¿no crees?</p>
-        
-        <p>—¡Ah!… E-es cierto que si pensamos en el sueño y la salud de Light-sama, deberíamos evitar acampar desde el primer día…</p>
-        
-        <p>—No quiero decirlo, pero creo que ustedes, empezando por Ellie-sama, presumen demasiado de su lealtad. No vayan a terminar molestando a mi señor y que los termine odiando.</p>
-        
-        <p>—¡N-no es posible que pase eso! ¡Qué Light-sama vaya a odiarnos…! ¡Y aunque nos odiara, como sirvientes devotos solo nos queda servirle con todo nuestro ser! ¡Incluso si muriéramos y nos convirtiéramos en almas, solo nos quedaría servirle!</p>
-        
-        <p>Gold soltó un suspiro exasperado, y Nemumu, con sus hermosos ojos rasgados llenos de lágrimas, temblaba de voz.</p>
-        
-        <p>Aunque los dos no lo hicieron a propósito, la atmósfera pesada que había se disipó como si el aire fresco la hubiera barrido.</p>
-        
-        <p>Sin poder evitarlo, esbocé una sonrisa.</p>
-        
-        <p>—Tranquila, Nemumu. No es posible que yo llegue a odiar a ninguno de ustedes, ¿verdad? Gold, tampoco la molestes tanto.</p>
-        
-        <p>—¡Light-sama!</p>
-        
-        <p>—Mi señor es demasiado bondadoso y demasiado excelente. Hay cosas que no se transmiten a los necios si no se dicen con claridad…</p>
-        
-        <p>Nemumu iluminó su rostro como si se encendiera una luz, mientras Gold, con un gesto de resignación, extendió las manos y se encogió de hombros.</p>
-        
-        <p>—Bueno, vámonos. Yo tampoco quiero tener que acampar desde el primer día.</p>
-        
-        <p>En realidad, si tuviéramos que acampar, podría usar el poder de la carta "Teletransportación" obtenida de la Gacha Infinita para regresar al "Abismo".</p>
-        
-        <p>Pero regresar al "Abismo" el mismo día de la partida sería incómodo, así que quería evitarlo.</p>
-        
-        <p>Me di la vuelta a la tumba de mis padres, tomé del ítem box la "Máscara del Bufón", una carta SSR obtenida de mi don "Gacha Infinita", me puse una capucha negra y tomé mi bastón.</p>
-        
-        <p>…</p>
-        
-        <p>Antes de partir, miré una vez más hacia la tumba de mis padres.</p>
-        
-        <p><em>(¿Es posible que, sin tener nada que ver con el hecho de que estuve a punto de ser asesinado por los miembros de la "Reunión de Razas" en el "Abismo" porque no era el "Maestro", mi aldea natal fuera destruida por casualidad?)</em></p>
-        
-        <p>Pensándolo lógicamente, la respuesta es "no".</p>
-        
-        <p>Por mucho que fuera una aldea fronteriza cerca del bosque virgen donde pudieran atacar monstruos o bandidos, una destrucción tan total no ocurre sin más.</p>
-        
-        <p><em>(Los responsables son los países, aquellos que intentaron matarme por precaución. Es muy probable que hayan destruido mi aldea natal por ser mi lugar de origen.)</em></p>
-        
-        <p>No entiendo por qué llegaron tan lejos, pero no puedo ignorar esa posibilidad.</p>
-        
-        <p>Si realmente el país, "por precaución", destruyó incluso mi aldea…</p>
-        
-        <p>—Papá, mamá, habitantes de la aldea… Yo descubriré la verdad. Qué es el "Maestro", por qué estuve a punto de ser asesinado, quiénes destruyeron la aldea, y… me vengaré de los miembros de la "Reunión de Razas" que me traicionaron e intentaron matarme. Les juro que lo lograré.</p>
-        
-        <p>Y si al conocer toda la verdad, el mundo resulta ser un lugar torcido y miserable, entonces yo, sin dudarlo, como el "Portador del Veneno Mortal" de la muerte, la destrucción, la masacre y la desesperación, ¡reduciré el mundo a cenizas con las llamas del infierno!</p>
-        
-        <p>—¡¡…!!</p>
-        
-        <p>Incluso Nemumu, que me tiene una lealtad absoluta hasta el punto de entregarme su alma, y Gold, que lleva un yelmo que le cubre todo el rostro y siempre tiene una actitud despreocupada, contuvieron la respiración y mostraron temor.</p>
-        
-        <p>A lo lejos, sentí cómo las aves del bosque virgen levantaban el vuelo, y tanto bestias como monstruos huían sin distinción.</p>
-        
-        <p>——</p>
-        
-        <p>Si seguía así, no solo no podría entrar a la ciudad, sino que ni siquiera podría acercarme, así que me tranquilicé.</p>
-        
-        <p>En cuestión de segundos, recuperé mi estado de ánimo habitual.</p>
-        
-        <p>—Papá, mamá, todos… me voy.</p>
-        
-        <p>Tras despedirme, me di la vuelta a la tumba.</p>
-        
-        <p>—…Bueno, vámonos.</p>
-        
-        <p>—¡S-sí! ¡Lo acompañaré hasta donde sea! —dijo Nemumu.</p>
-        
-        <p>—Mi señor, no vaya a desatar ese tipo de aura asesina por la ciudad. Nosotros podemos soportarlo, pero si una persona común recibiera algo así, se le pararía el corazón.</p>
-        
-        <p>Cuando comencé a caminar, Nemumu, como queriendo disimular el miedo que había mostrado antes, levantó la voz con entusiasmo entre balbuceos y me siguió.</p>
-        
-        <p>Gold también caminó rezongando.</p>
-        
-        <p>—Así comenzó mi historia de venganza y búsqueda de la verdad.</p>
+<p>Yo, Light, después de vengarme con éxito de Garou, el hombre bestia, el primer lugar al que me dirigí al salir del calabozo más grande, más fuerte y más peligroso del mundo, el "Abismo", fue ante la tumba de mis padres, que había construido en mi antiguo hogar.</p>
+<p>¿Por qué digo "antiguo" hogar? Porque la aldea había sido completamente destruida, no sabía si por monstruos, bandidos, el ejército o cualquier otra cosa.</p>
+<p>Después de superar varias limitaciones, como el aumento de nivel, y lograr salir del "Abismo", fui a ver cómo estaba la aldea y ya estaba devastada. Mis padres y los aldeanos habían sido asesinados, sus cuerpos abandonados, y las casas, campos y establos habían sido quemados.</p>
+<p>Intenté determinar la causa, pero había pasado demasiado tiempo y las pruebas se habían deteriorado. No podía saber si los culpables eran monstruos u otra especie.</p>
+<p>La única suerte fue que, entre los innumerables cadáveres, no estaban los de mi hermano mayor ni los de mi hermana pequeña, Yume. Busqué en un amplio radio, pero no encontré sus cuerpos.</p>
+<p><em>(Tal vez los dos lograron escapar y siguen vivos…)</em></p>
+<p>Sin querer, me aferré a esa esperanza y ordené a mis subordinados, que estaban recopilando información en el exterior, que buscaran a los dos e investigaran la causa de la destrucción de la aldea y a los responsables.</p>
+<p>Fue hace unos seis meses que recogí los cuerpos de mis padres, de los aldeanos que me habían ayudado y de los niños que probablemente habían sido mis amigos, y construí esta tumba.</p>
+<p>…</p>
+<p>Coloqué las flores que llevaba en la mano ante la tumba y recé para que mis padres y los aldeanos pudieran viajar en paz al lado de la diosa.</p>
+<p>Cuando terminé de rezar, me levanté y me quité la tierra de las rodillas.</p>
+<p>—¿Ya está bien?</p>
+<p>Preguntó Gold, el "Caballero Dorado", una carta UR de nivel 5000, que era uno de mis acompañantes en calidad de guardaespaldas y compañero aventurero.</p>
+<p>Como su nombre indica, llevaba una armadura dorada desde la cabeza hasta los pies, y el escudo que cargaba a la espalda también era de un dorado brillante, un atuendo muy llamativo.</p>
+<p>Su capacidad ofensiva no era muy alta, pero estaba especializado en defensa, por lo que fue elegido para acompañarme en esta ocasión.</p>
+<p>—Ya pude saludar a papá y mamá y contarles cómo estoy.</p>
+<p>—Entonces, vámonos de una vez. ¡Quiero llegar al destino con luz de sobra y descansar en una posada! ¡Yo no quiero acampar desde el primer día!</p>
+<p>—¡Gold! ¡Cómo te atreves a decir eso cuando Light-sama tiene el corazón apenado! ¡Piensa un poco en sus sentimientos antes de hablar! ¡Y usa el lenguaje formal!</p>
+<p>La joven que estaba junto a Gold se enfureció por sus palabras.</p>
+<p>Ella también era uno de mis acompañantes, "Hoja Asesina Nemumu", una carta UR de nivel 5000.</p>
+<p>Era una hermosa joven de unos diecisiete o dieciocho años, con un hermoso cabello plateado que le llegaba un poco por encima de los hombros, la boca cubierta por una bufanda y la piel morena.</p>
+<p>Me había estado observando con preocupación mientras rezaba, como si le estuvieran clavando un cuchillo en el pecho.</p>
+<p>Por eso se enfureció con las palabras insensibles de Gold.</p>
+<p>Pero Gold no pareció prestar atención a las palabras de Nemumu y se encogió de hombros.</p>
+<p>—Usar lenguaje formal no permite crear cercanía y es aburrido, ¿no? Además, Nemumu, tú tampoco quieres acampar desde el primer día, ¿verdad?</p>
+<p>—¡No me compares contigo! ¡Yo, si estoy con Light-sama, lo acompañaré aunque sea sobre la hierba, en el barro o entre la basura!</p>
+<p>—Yo también, si estoy con mi señor, lo acompañaré en las montañas más heladas del invierno o sobre magma ardiente. Porque ofrecer mi lealtad dorada a mi señor es el espíritu caballeresco del "Caballero Dorado". …Sin embargo, si consideramos el descanso confortable de mi señor, evitar acampar desde el primer día es una precaución natural, ¿no crees?</p>
+<p>—¡Ah!… E-es cierto que si pensamos en el sueño y la salud de Light-sama, deberíamos evitar acampar desde el primer día…</p>
+<p>—No quiero decirlo, pero creo que ustedes, empezando por Ellie-sama, presumen demasiado de su lealtad. No vayan a terminar molestando a mi señor y que los termine odiando.</p>
+<p>—¡N-no es posible que pase eso! ¡Qué Light-sama vaya a odiarnos…! ¡Y aunque nos odiara, como sirvientes devotos solo nos queda servirle con todo nuestro ser! ¡Incluso si muriéramos y nos convirtiéramos en almas, solo nos quedaría servirle!</p>
+<p>Gold soltó un suspiro exasperado, y Nemumu, con sus hermosos ojos rasgados llenos de lágrimas, temblaba de voz.</p>
+<p>Aunque los dos no lo hicieron a propósito, la atmósfera pesada que había se disipó como si el aire fresco la hubiera barrido.</p>
+<p>Sin poder evitarlo, esbocé una sonrisa.</p>
+<p>—Tranquila, Nemumu. No es posible que yo llegue a odiar a ninguno de ustedes, ¿verdad? Gold, tampoco la molestes tanto.</p>
+<p>—¡Light-sama!</p>
+<p>—Mi señor es demasiado bondadoso y demasiado excelente. Hay cosas que no se transmiten a los necios si no se dicen con claridad…</p>
+<p>Nemumu iluminó su rostro como si se encendiera una luz, mientras Gold, con un gesto de resignación, extendió las manos y se encogió de hombros.</p>
+<p>—Bueno, vámonos. Yo tampoco quiero tener que acampar desde el primer día.</p>
+<p>En realidad, si tuviéramos que acampar, podría usar el poder de la carta "Teletransportación" obtenida de la Gacha Infinita para regresar al "Abismo".</p>
+<p>Pero regresar al "Abismo" el mismo día de la partida sería incómodo, así que quería evitarlo.</p>
+<p>Me di la vuelta a la tumba de mis padres, tomé del ítem box la "Máscara del Bufón", una carta SSR obtenida de mi don "Gacha Infinita", me puse una capucha negra y tomé mi bastón.</p>
+<p>…</p>
+<p>Antes de partir, miré una vez más hacia la tumba de mis padres.</p>
+<p><em>(¿Es posible que, sin tener nada que ver con el hecho de que estuve a punto de ser asesinado por los miembros de la "Reunión de Razas" en el "Abismo" porque no era el "Maestro", mi aldea natal fuera destruida por casualidad?)</em></p>
+<p>Pensándolo lógicamente, la respuesta es "no".</p>
+<p>Por mucho que fuera una aldea fronteriza cerca del bosque virgen donde pudieran atacar monstruos o bandidos, una destrucción tan total no ocurre sin más.</p>
+<p><em>(Los responsables son los países, aquellos que intentaron matarme por precaución. Es muy probable que hayan destruido mi aldea natal por ser mi lugar de origen.)</em></p>
+<p>No entiendo por qué llegaron tan lejos, pero no puedo ignorar esa posibilidad.</p>
+<p>Si realmente el país, "por precaución", destruyó incluso mi aldea…</p>
+<p>—Papá, mamá, habitantes de la aldea… Yo descubriré la verdad. Qué es el "Maestro", por qué estuve a punto de ser asesinado, quiénes destruyeron la aldea, y… me vengaré de los miembros de la "Reunión de Razas" que me traicionaron e intentaron matarme. Les juro que lo lograré.</p>
+<p>Y si al conocer toda la verdad, el mundo resulta ser un lugar torcido y miserable, entonces yo, sin dudarlo, como el "Portador del Veneno Mortal" de la muerte, la destrucción, la masacre y la desesperación, ¡reduciré el mundo a cenizas con las llamas del infierno!</p>
+<p>—¡¡…!!</p>
+<p>Incluso Nemumu, que me tiene una lealtad absoluta hasta el punto de entregarme su alma, y Gold, que lleva un yelmo que le cubre todo el rostro y siempre tiene una actitud despreocupada, contuvieron la respiración y mostraron temor.</p>
+<p>A lo lejos, sentí cómo las aves del bosque virgen levantaban el vuelo, y tanto bestias como monstruos huían sin distinción.</p>
+<p>——</p>
+<p>Si seguía así, no solo no podría entrar a la ciudad, sino que ni siquiera podría acercarme, así que me tranquilicé.</p>
+<p>En cuestión de segundos, recuperé mi estado de ánimo habitual.</p>
+<p>—Papá, mamá, todos… me voy.</p>
+<p>Tras despedirme, me di la vuelta a la tumba.</p>
+<p>—…Bueno, vámonos.</p>
+<p>—¡S-sí! ¡Lo acompañaré hasta donde sea! —dijo Nemumu.</p>
+<p>—Mi señor, no vaya a desatar ese tipo de aura asesina por la ciudad. Nosotros podemos soportarlo, pero si una persona común recibiera algo así, se le pararía el corazón.</p>
+<p>Cuando comencé a caminar, Nemumu, como queriendo disimular el miedo que había mostrado antes, levantó la voz con entusiasmo entre balbuceos y me siguió.</p>
+<p>Gold también caminó rezongando.</p>
+<p>—Así comenzó mi historia de venganza y búsqueda de la verdad.</p>
     </div>
 
     <hr>
 
-    <!-- SECCIÓN DE CALIFICACIÓN -->
-    <div class="rating-section">
-        <h3>⭐ Califica este capítulo</h3>
-        <div class="stars" id="starRating">
-            <span class="star" data-value="1">★</span>
-            <span class="star" data-value="2">★</span>
-            <span class="star" data-value="3">★</span>
-            <span class="star" data-value="4">★</span>
-            <span class="star" data-value="5">★</span>
-        </div>
-        <div id="ratingMessage" style="font-size:0.85rem; margin-top:0.5rem;"></div>
-    </div>
-
-    <!-- SECCIÓN DE COMENTARIOS -->
-    <div class="comments-section">
-        <h3>💬 Comentarios</h3>
-        <div class="comment-form">
-            <input type="text" id="commentName" placeholder="Tu nombre" readonly>
-            <textarea id="commentText" placeholder="Escribe tu comentario... (Inicia sesión para comentar)"></textarea>
-            <button id="submitComment">Enviar</button>
-        </div>
-        <div id="commentsList"></div>
-    </div>
-
     <div class="nav-container">
         <div class="nav-bottom">
             <a href="index.html" class="nav-btn">📚 Índice</a>
-            <a href="capitulo0e2.html" id="prevLinkBottom" class="nav-btn">← Gacha Infinita - Parte 3</a>
+            <a href="capitulo0e2.html" id="prevLinkBottom" class="nav-btn ">← La venganza contra Garou</a>
             <span class="chapter-counter" id="chapterCounterBottom">Capítulo 1 - Episodio 1</span>
-            <a href="capitulo1e2.html" id="nextLinkBottom" class="nav-btn">Planes de futuro →</a>
+            <a href="capitulo1e2.html" id="nextLinkBottom" class="nav-btn ">Planes de futuro →</a>
         </div>
     </div>
 
@@ -596,253 +386,7 @@
         const CHAPTER_NUM = 1;
         const EPISODE_NUM = 1;
         
-        let pointsAdded = false;
-        let currentUserProfile = null;
-        
-        async function registerRead() {
-            if (pointsAdded) return;
-            const user = auth.currentUser;
-            if (!user) return;
-            
-            const result = await registerChapterRead(CHAPTER_NUM, EPISODE_NUM);
-            if (result.success && !result.alreadyRead) {
-                pointsAdded = true;
-                showToast(`📚 +${result.pointsGained} puntos por leer este capítulo`);
-                if (result.newLevel && result.newLevel.name !== currentUserProfile?.level) {
-                    showToast(`🎉 ¡Subiste a nivel ${result.newLevel.name}! ${result.newLevel.badge}`);
-                }
-            }
-        }
-        
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast-message';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-        
-        async function initRating() {
-            const stars = document.querySelectorAll('.star');
-            const messageDiv = document.getElementById('ratingMessage');
-            
-            const user = auth.currentUser;
-            if (user) {
-                const userDoc = await db.collection('users').doc(user.uid).get();
-                const ratedChapters = userDoc.data()?.ratedChapters || [];
-                const rated = ratedChapters.includes(`${CHAPTER_NUM}_${EPISODE_NUM}`);
-                if (rated) {
-                    const ratingData = await db.collection('ratings')
-                        .where('userId', '==', user.uid)
-                        .where('chapterNum', '==', CHAPTER_NUM)
-                        .where('episodeNum', '==', EPISODE_NUM)
-                        .get();
-                    if (!ratingData.empty) {
-                        const rating = ratingData.docs[0].data().rating;
-                        updateStars(rating);
-                        messageDiv.innerHTML = `✅ Ya calificaste este capítulo con ${rating} estrellas. ¡Gracias!`;
-                    } else {
-                        messageDiv.innerHTML = '✅ Ya calificaste este capítulo. ¡Gracias!';
-                    }
-                }
-            }
-            
-            stars.forEach(star => {
-                star.addEventListener('click', async function() {
-                    const user = auth.currentUser;
-                    if (!user) {
-                        messageDiv.innerHTML = '❌ Inicia sesión para calificar';
-                        return;
-                    }
-                    const userDoc = await db.collection('users').doc(user.uid).get();
-                    const rated = userDoc.data()?.ratedChapters?.includes(`${CHAPTER_NUM}_${EPISODE_NUM}`);
-                    if (rated) {
-                        messageDiv.innerHTML = '⚠️ Ya calificaste este capítulo anteriormente.';
-                        return;
-                    }
-                    const value = parseInt(this.dataset.value);
-                    const result = await registerRating(CHAPTER_NUM, EPISODE_NUM, value);
-                    if (result.success) {
-                        updateStars(value);
-                        messageDiv.innerHTML = `⭐ Calificaste este capítulo con ${value} estrellas. +${result.pointsGained} puntos. ¡Gracias!`;
-                        showToast(`⭐ +${result.pointsGained} puntos por calificar`);
-                        if (result.newLevel && result.newLevel.name !== currentUserProfile?.level) {
-                            showToast(`🎉 ¡Subiste a nivel ${result.newLevel.name}! ${result.newLevel.badge}`);
-                        }
-                    } else {
-                        messageDiv.innerHTML = `❌ ${result.error}`;
-                    }
-                });
-            });
-        }
-        
-        function updateStars(rating) {
-            const stars = document.querySelectorAll('.star');
-            stars.forEach((star, index) => {
-                if (index < rating) star.classList.add('active');
-                else star.classList.remove('active');
-            });
-        }
-        
-        async function loadComments() {
-            const result = await getComments(CHAPTER_NUM, EPISODE_NUM);
-            if (!result.success) {
-                document.getElementById('commentsList').innerHTML = '<p>Error al cargar comentarios</p>';
-                return;
-            }
-            
-            const comments = result.comments;
-            const container = document.getElementById('commentsList');
-            if (comments.length === 0) {
-                container.innerHTML = '<p>No hay comentarios aún. ¡Sé el primero en comentar!</p>';
-                return;
-            }
-            
-            const user = auth.currentUser;
-            let html = '';
-            for (const comment of comments) {
-                const isOwner = user && user.uid === comment.userId;
-                html += `<div class="comment-item" data-comment-id="${comment.id}" data-author-id="${comment.userId}">
-                            <span class="comment-name">${escapeHtml(comment.username)}</span>
-                            <span class="comment-date">${new Date(comment.timestamp?.toDate()).toLocaleString()}</span>
-                            <span class="comment-like" onclick="handleLike('${comment.id}', '${comment.userId}')">❤️ ${comment.likes || 0}</span>
-                            <span class="comment-report" onclick="handleReport('${comment.id}', '${escapeHtml(comment.text)}')">🚩 Reportar</span>
-                            ${isOwner ? `<span class="comment-delete" onclick="handleDeleteComment('${comment.id}')">🗑️ Eliminar</span>` : ''}
-                            <div class="comment-text">${escapeHtml(comment.text)}</div>
-                         </div>`;
-            }
-            container.innerHTML = html;
-        }
-        
-        async function handleLike(commentId, authorId) {
-            const user = auth.currentUser;
-            if (!user) {
-                alert('Inicia sesión para dar like');
-                return;
-            }
-            const result = await likeComment(commentId, authorId);
-            if (result.success) {
-                loadComments();
-                showToast('👍 Like registrado');
-            } else {
-                alert(result.error);
-            }
-        }
-        
-        async function handleReport(commentId, commentText) {
-            const user = auth.currentUser;
-            if (!user) {
-                alert('Debes iniciar sesión para reportar un comentario');
-                return;
-            }
-            
-            const reason = prompt(
-                'Motivo del reporte:\n\n' +
-                '1. Insulto o acoso\n' +
-                '2. Spoiler sin aviso\n' +
-                '3. Spam o publicidad\n' +
-                '4. Contenido inapropiado\n' +
-                '5. Otro\n\n' +
-                'Escribe el motivo:'
-            );
-            
-            if (reason === null) return;
-            
-            const result = await reportComment(commentId, reason, user.uid);
-            if (result.success) {
-                alert('✅ Comentario reportado. Gracias por ayudar a mantener la comunidad.');
-            } else {
-                alert('❌ Error: ' + result.error);
-            }
-        }
-        
-        async function handleDeleteComment(commentId) {
-            if (!confirm('¿Eliminar tu comentario? Esta acción no se puede deshacer.')) return;
-            
-            const result = await deleteComment(commentId);
-            if (result.success) {
-                alert('✅ Comentario eliminado');
-                loadComments();
-            } else {
-                alert('❌ Error: ' + result.error);
-            }
-        }
-        
-        function escapeHtml(str) {
-            return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]);
-        }
-        
-        async function submitComment() {
-            const user = auth.currentUser;
-            if (!user) {
-                alert('Debes iniciar sesión para comentar');
-                return;
-            }
-            
-            const text = document.getElementById('commentText').value;
-            if (!text.trim()) {
-                alert('Escribe un comentario');
-                return;
-            }
-            
-            const userProfile = await getUserProfile();
-            if (!userProfile.success) {
-                alert('Error al obtener perfil');
-                return;
-            }
-            
-            const result = await registerComment(CHAPTER_NUM, EPISODE_NUM, text, userProfile.profile.username);
-            if (result.success) {
-                document.getElementById('commentText').value = '';
-                loadComments();
-                showToast(`💬 +${result.pointsGained} puntos por comentar`);
-                if (result.newLevel && result.newLevel.name !== currentUserProfile?.level) {
-                    showToast(`🎉 ¡Subiste a nivel ${result.newLevel.name}! ${result.newLevel.badge}`);
-                }
-            } else {
-                alert(result.error);
-            }
-        }
-        
-        async function updateUserInfo() {
-            const user = auth.currentUser;
-            const userInfoDiv = document.getElementById('userInfo');
-            const logoutBtn = document.getElementById('logoutBtnHeader');
-            const nameInput = document.getElementById('commentName');
-            const modLink = document.getElementById('modLink');
-            
-            if (user) {
-                const result = await getUserProfile();
-                if (result.success) {
-                    currentUserProfile = result.profile;
-                    userInfoDiv.style.display = 'inline-block';
-                    logoutBtn.style.display = 'inline-block';
-                    userInfoDiv.textContent = `${currentUserProfile.username} | ${currentUserProfile.totalPoints} pts | ${currentUserProfile.levelBadge}`;
-                    nameInput.value = currentUserProfile.username;
-                    nameInput.readonly = true;
-                    document.getElementById('commentText').placeholder = "Escribe tu comentario...";
-                    
-                    if (isAdmin(user)) {
-                        modLink.style.display = 'inline-block';
-                    } else {
-                        modLink.style.display = 'none';
-                    }
-                }
-            } else {
-                userInfoDiv.style.display = 'none';
-                logoutBtn.style.display = 'none';
-                nameInput.value = "Inicia sesión para comentar";
-                nameInput.readonly = true;
-                document.getElementById('commentText').placeholder = "Inicia sesión para comentar";
-                modLink.style.display = 'none';
-            }
-        }
-        
-        async function handleLogout() {
-            await logoutUser();
-            location.reload();
-        }
-        
+        // ========== NAVEGACIÓN ==========
         function setupNavigation() {
             if (typeof GACHA_DATA !== 'undefined') {
                 const currentEpisode = GACHA_DATA.getEpisode(CHAPTER_NUM, EPISODE_NUM);
@@ -857,10 +401,43 @@
                 counters.forEach(c => { if(c) c.textContent = `${currentEpisode.chapterTitle} - Episodio ${currentEpisode.episodeNum}`; });
                 
                 if (prevEpisode) {
-                    prevLinks.forEach(l => { if(l) { l.href = `capitulo${prevEpisode.chapter}e${prevEpisode.episodeNum}.html`; l.classList.remove('disabled'); l.textContent = `← ${prevEpisode.title}`; } });
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${prevEpisode.chapter}e${prevEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = prevEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `← ${shortTitle}`;
+                        }
+                    });
+                } else {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = '← Sin anterior';
+                        }
+                    });
                 }
+                
                 if (nextEpisode) {
-                    nextLinks.forEach(l => { if(l) { l.href = `capitulo${nextEpisode.chapter}e${nextEpisode.episodeNum}.html`; l.classList.remove('disabled'); l.textContent = `${nextEpisode.title} →`; } });
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${nextEpisode.chapter}e${nextEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = nextEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `${shortTitle} →`;
+                        }
+                    });
+                } else {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = 'Sin siguiente →';
+                        }
+                    });
                 }
                 
                 const selects = [document.getElementById('chapterSelect'), document.getElementById('chapterSelectBottom')];
@@ -877,6 +454,25 @@
             }
         }
         
+        // ========== REGISTRAR LECTURA EN HISTORIAL ==========
+        function markAsRead() {
+            const user = localStorage.getItem('gacha_user');
+            if (!user) return;
+            
+            let history = localStorage.getItem(`gacha_history_${user}`);
+            let historyObj = history ? JSON.parse(history) : { chapters: [] };
+            
+            const readKey = { chapter: CHAPTER_NUM, episode: EPISODE_NUM };
+            historyObj.chapters = historyObj.chapters.filter(item => 
+                !(item.chapter == CHAPTER_NUM && item.episode == EPISODE_NUM)
+            );
+            historyObj.chapters.unshift(readKey);
+            if (historyObj.chapters.length > 20) historyObj.chapters.pop();
+            
+            localStorage.setItem(`gacha_history_${user}`, JSON.stringify(historyObj));
+        }
+        
+        // ========== CONTROLES ==========
         function initControls() {
             const savedTheme = localStorage.getItem('gacha_theme');
             if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
@@ -913,28 +509,20 @@
             
             document.getElementById('scrollToTop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
             document.getElementById('scrollToBottom').onclick = () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-            document.getElementById('logoutBtnHeader').onclick = handleLogout;
         }
         
-        document.addEventListener('DOMContentLoaded', async () => {
+        // ========== INICIALIZACIÓN ==========
+        document.addEventListener('DOMContentLoaded', () => {
             initControls();
             setupNavigation();
-            await updateUserInfo();
-            await loadComments();
-            await initRating();
+            markAsRead();
             
-            onAuthStateChanged(async (state) => {
-                await updateUserInfo();
-                if (state.loggedIn) {
-                    await registerRead();
-                    await loadComments();
-                }
+            kofiWidgetOverlay.draw('ocholobos', {
+                'type': 'floating-chat',
+                'floating-chat.donateButton.text': 'Apóyame',
+                'floating-chat.donateButton.background-color': '#1a4d5f',
+                'floating-chat.donateButton.text-color': '#ffffff'
             });
-            
-            document.getElementById('submitComment').onclick = submitComment;
-            window.handleLike = handleLike;
-            window.handleReport = handleReport;
-            window.handleDeleteComment = handleDeleteComment;
         });
     </script>
 </body>
