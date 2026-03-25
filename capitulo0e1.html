@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gacha Infinita - Parte 2 | Gacha Infinita</title>
+    <title>Tres años después | Gacha Infinita</title>
     <style>
         * {
             margin: 0;
@@ -67,16 +67,6 @@
         .font-size-control button {
             width: 32px;
             padding: 0.2rem;
-        }
-        .user-info {
-            background: #1a4d5f;
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-        }
-        [data-theme="dark"] .user-info {
-            background: #5a9e8c;
         }
         
         .nav-container {
@@ -187,106 +177,6 @@
             border-top-color: #404040;
         }
         
-        .rating-section {
-            background: white;
-            border: 1px solid #e5e0d8;
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            text-align: center;
-        }
-        [data-theme="dark"] .rating-section {
-            background: #2d2d2d;
-            border-color: #404040;
-        }
-        .stars {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        .star {
-            font-size: 2rem;
-            cursor: pointer;
-            color: #cbd5e0;
-            transition: color 0.2s;
-        }
-        .star:hover, .star.active {
-            color: #f5b042;
-        }
-        
-        .comments-section {
-            background: white;
-            border: 1px solid #e5e0d8;
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        [data-theme="dark"] .comments-section {
-            background: #2d2d2d;
-            border-color: #404040;
-        }
-        .comment-form {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .comment-form input, .comment-form textarea {
-            padding: 0.5rem;
-            border: 1px solid #e5e0d8;
-            border-radius: 8px;
-            background: #faf9f7;
-            font-family: inherit;
-        }
-        [data-theme="dark"] .comment-form input, [data-theme="dark"] .comment-form textarea {
-            background: #1a1a1a;
-            border-color: #404040;
-            color: #e5e5e5;
-        }
-        .comment-form textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-        .comment-form button {
-            width: 100px;
-            background: #1a4d5f;
-            color: white;
-            border: none;
-            padding: 0.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        [data-theme="dark"] .comment-form button {
-            background: #5a9e8c;
-        }
-        .comment-item {
-            border-bottom: 1px solid #e5e0d8;
-            padding: 0.8rem 0;
-        }
-        .comment-name {
-            font-weight: bold;
-            color: #1a4d5f;
-        }
-        .comment-date {
-            font-size: 0.7rem;
-            color: #6b6a68;
-            margin-left: 0.5rem;
-        }
-        .comment-like, .comment-report, .comment-delete {
-            margin-left: 0.8rem;
-            cursor: pointer;
-            font-size: 0.7rem;
-            display: inline-block;
-            transition: all 0.2s;
-        }
-        .comment-like { color: #9ca3af; }
-        .comment-like:hover { color: #e53e3e; }
-        .comment-report { color: #9ca3af; }
-        .comment-report:hover { color: #e53e3e; }
-        .comment-delete { color: #9ca3af; }
-        .comment-delete:hover { color: #e53e3e; }
-        
         .floating-buttons {
             position: fixed;
             bottom: 20px;
@@ -359,17 +249,11 @@
                 width: 40px;
                 height: 40px;
                 font-size: 1.2rem;
-            }
-            .star {
-                font-size: 1.5rem;
+                bottom: 70px;
+                right: 15px;
             }
         }
     </style>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="firebase-config.js"></script>
-    <script src="auth.js"></script>
     <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
 </head>
 <body>
@@ -378,11 +262,6 @@
             <button id="fontMinus">A-</button>
             <button id="fontPlus">A+</button>
         </div>
-        <a href="usuario.html">👤 Mi perfil</a>
-        <a href="reglas.html">📜 Reglas</a>
-        <a href="moderacion.html" id="modLink" style="display: none;">🛡️ Moderación</a>
-        <div id="userInfo" class="user-info" style="display: none;"></div>
-        <button id="logoutBtnHeader" style="display: none;">Cerrar sesión</button>
         <a href="index.html">📚 Índice</a>
         <button id="themeToggle">🌙 Modo oscuro</button>
     </div>
@@ -390,9 +269,9 @@
     <div class="nav-container">
         <div class="nav-center">
             <a href="index.html" class="nav-btn">📚 Índice</a>
-            <a href="capitulo0e0.html" id="prevLinkTop" class="nav-btn">← Gacha Infinita - Parte 1</a>
+            <a href="capitulo0e0.html" id="prevLinkTop" class="nav-btn ">← Gacha Infinita - Parte 1</a>
             <span class="chapter-counter" id="chapterCounterTop">Capítulo 0 - Episodio 1</span>
-            <a href="capitulo0e2.html" id="nextLinkTop" class="nav-btn">Gacha Infinita - Parte 3 →</a>
+            <a href="capitulo0e2.html" id="nextLinkTop" class="nav-btn ">Gacha Infinita - Parte 3 →</a>
         </div>
     </div>
 
@@ -402,255 +281,126 @@
         </select>
     </div>
 
-    <h1>Gacha Infinita - Parte 2</h1>
-    <div class="episode-number">Capítulo 0 - Episodio 1: Tres años después</div>
+    <h1>Tres años después</h1>
+    <div class="episode-number">Capítulo 0 - Episodio 1</div>
 
     <div class="story-content">
         <p>Aproximadamente tres años después de que fui traicionado por los amigos en quienes confiaba y conocí a Mei en el fondo del "Abismo".</p>
-        
-        <p>En un rincón de la parte más profunda del calabozo más grande, más fuerte y más peligroso del mundo, el "Abismo".</p>
-        
-        <p>Originalmente era una roca negra y accidentada, pero como resultado de las renovaciones, se había convertido en un corredor con una textura suave similar al mármol.</p>
-        
-        <p>Las paredes estaban revestidas con lámparas mágicas que las hacían más brillantes.</p>
-        
-        <p>Mientras caminaba, Light, las hadas sirvientas de bajo rango que notaron mi presencia se alinearon contra la pared e hicieron una reverencia.</p>
-        
-        <p>Todas eran chicas hermosas de diversas estaturas y estilos. Si tan solo una de ellas apareciera en el mundo exterior, muchos se alborotarían diciendo que querían hacerla su esposa, su amante o su nuera.</p>
-        
-        <p>—Gracias por su arduo trabajo.</p>
-        
-        <p>—Gracias, Maestro.</p>
-        
-        <p>Respondieron felices cuando les hablé.</p>
-        
-        <p>Levanté la mano ligeramente hacia ellas y pasé de largo.</p>
-        
-        <p>La distancia entre nosotros se había ensanchado considerablemente, pero debido a que el pasillo era de piedra y mi nivel había aumentado, aún podía escuchar sus conversaciones.</p>
-        
-        <p>—¡Light-sama, qué día de suerte poder hablar con él!</p>
-        
-        <p>—Quizás hoy hemos gastado toda nuestra suerte.</p>
-        
-        <p>—Oh, Light-sama es tan guapo… Quiero lamer sus dedos de los pies. No, aunque solo sea su cabello caído, lo lameré.</p>
-        
-        <p>—¡Eres una pervertida!</p>
-        
-        <p>—Pero si tuvieras la oportunidad, tú también lo lamerías, ¿verdad?</p>
-        
-        <p>—¿Por qué no lo haría?</p>
-        
-        <p>—Me gusta lamer, pero también quiero que me acaricien.</p>
-        
-        <p>—Quiero que me mire con ojos desdeñosos y me trate como a un cerdo.</p>
-        
-        <p>—Vale, tu nivel es demasiado alto.</p>
-        
-        <p>No pude evitar soltar una risa.</p>
-        
-        <p>La sirvienta que me acompañaba ese día se veía enojada, con una vena en la cara.</p>
-        
-        <p>—Maestro, por favor permítame detener a esas hadas parlanchinas ahora mismo.</p>
-        
-        <p>—Está bien, no me importa. Solo significa que me quieren mucho.</p>
-        
-        <p>—…Me disculpo por haber reaccionado de forma exagerada.</p>
-        
-        <p>Con mi perdón, la vena en su rostro desapareció como si nunca hubiera estado allí.</p>
-        
-        <p>A medida que avanzaba, el pasillo bellamente elaborado terminó y llegué a una zona accidentada que parecía el calabozo original.</p>
-        
-        <p>Este lugar era un campo de entrenamiento que se había dejado intacto.</p>
-        
-        <p>Las personas que buscaba estaban reunidas en el campo de entrenamiento.</p>
-        
-        <p>Había tres personas en ese lugar. Una vampira de baja estatura y cabello plateado levantó las manos hacia el cielo y gritó.</p>
-        
-        <p>—¡Les dije que no soy estúpida! Incluso puedo recitar la tabla de multiplicar como prueba. Mira, 1 x 1 es 1, 1 x 2 es 2, 1 x 3 es 4…</p>
-        
-        <p>—No hay forma de que puedas hacer eso. Y eres tan increíblemente estúpida que ya te equivocaste al principio.</p>
-        
-        <p>—Nya~.</p>
-        
-        <p>La chica de cabello largo y rubio con sombrero de mago se encogió de hombros como si se hubiera rendido con la chica vampiro bajita.</p>
-        
-        <p>La chica con sudadera de orejas de gato, que era más baja que las otras dos, imitaba la voz de un gato.</p>
-        
-        <p>—"Tres mujeres hacen un mercado". Es bueno estar felices y animadas. Es mucho mejor que estar en la oscuridad y la desesperación.</p>
-        
-        <p>Dejé a mi sirvienta esperando allí y me acerqué a las tres chicas.</p>
-        
-        <p>—Entonces, ¿todas están aquí?</p>
-        
-        <p>Cuando les hablé, las tres que habían estado hablando en voz alta se giraron con expresiones radiantes.</p>
-        
-        <p>—¡Light-sama! ¡Has venido a verme! ¡Estoy tan feliz!</p>
-        
-        <p>La chica vampiro bajita de cabello plateado, ella también era una carta que había obtenido de mi "Gacha Infinita".</p>
-        
-        <p>"Caballera Vampiro Verdadero Nazuna, nivel 9999".</p>
-        
-        <p>Tenía ojos rojo sangre y cabello largo y plateado, y a pesar de su baja estatura, su pecho era muy grande. Parecía una hermosa joven, pero era una chica adorable con mucha energía, como se podía ver por sus palabras y acciones.</p>
-        
-        <p>También era una poderosa caballera, llevaba una armadura pesada y sostenía una enorme espada más grande que ella, y enfrentaría a cualquier monstruo que se le acercara.</p>
-        
-        <p>—No hay forma de que Light-sama viniera a ver a una niña como Nazuna que no tiene ni un ápice de elegancia. Light-sama, Elly siempre está lista para concebir al hijo divino de Light-sama. Vamos, vamos a la habitación de Elly. Si es po-po-posible, dame tiempo para bañarme porque he sudado un poco.</p>
-        
-        <p>La mujer de cabello largo y rubio que llevaba un sombrero de bruja me invitó a su habitación. Su rostro se puso rojo y sus ojos se nublaron con lágrimas.</p>
-        
-        <p>Ella también era una carta que había salido de mi don "Gacha Infinita".</p>
-        
-        <p>"Bruja Prohibida Elly, nivel 9999".</p>
-        
-        <p>Era una bruja que había dominado todo tipo de magia, hechicería, artes prohibidas y artes espirituales.</p>
-        
-        <p>Llevaba un sombrero de bruja y tenía su hermoso cabello rubio recogido en dos coletas. Su altura era alrededor de 160 cm, y siempre llevaba un sombrero, lo que la hacía parecer más alta.</p>
-        
-        <p>Su figura era buena, su pecho firme, su cintura curvilínea y sus caderas bien definidas.</p>
-        
-        <p>Por supuesto, era una hermosa joven con un rostro bien desarrollado y parecía más una chica mágica que una bruja.</p>
-        
-        <p>A menudo me invitaba a su habitación, pero no tenía experiencia y aún era virgen. Me halagaban sus sentimientos, pero aún no había alcanzado mi objetivo, así que no quería tener hijos todavía.</p>
-        
-        <p>Por eso siempre la rechazaba.</p>
-        
-        <p>Elly era una chica hermosa y tenía buen cuerpo, así que estaba muy contento con sus sentimientos.</p>
-        
-        <p>—Nya~.</p>
-        
-        <p>La otra chica terminó ronroneando como un gato y frotó su cabeza contra mi cuerpo con facilidad.</p>
-        
-        <p>Por supuesto, ella también era una carta de mi don "Gacha Infinita".</p>
-        
-        <p>"Genio Domadora de Monstruos Aoyuki, nivel 9999".</p>
-        
-        <p>Era una domadora de monstruos que podía controlar cualquier tipo de bestia mágica, bestia divina, bestia fantasma o bestia rara.</p>
-        
-        <p>Era la más baja de las tres y llevaba una sudadera con orejas de gato.</p>
-        
-        <p>Su pecho era pequeño, y sus brazos y piernas eran largos pero esbeltos.</p>
-        
-        <p>Tenía un rostro juvenil, y con su fantástico color de cabello azul, era una joven extremadamente hermosa.</p>
-        
-        <p>A menudo imitaba el ronroneo de un gato y frotaba su cabeza y cuerpo contra el mío así. Era tan linda que no podía evitar acariciarla debajo de la barbilla como si fuera un gato real.</p>
-        
-        <p>Aoyuki también parecía feliz y soltó un "nyaa~♪".</p>
-        
-        <p>—No solo a Nazuna, tengo negocios con ustedes dos también. Elly, por favor invítame a tu habitación en otra ocasión. Aoyuki también, escucha con atención…</p>
-        
-        <p>Un monstruo se acercó sigilosamente desde la oscuridad al fondo de la sala.</p>
-        
-        <p>Era una enorme bestia de cuatro patas, de casi 10 metros de altura, con una serpiente como cola más grande que mi cuerpo.</p>
-        
-        <p>Había notado la presencia del monstruo, pero el trauma del pasado hizo que mi cuerpo se tensara.</p>
-        
-        <p>Las tres, que notaron que me había tensado, rápidamente tomaron posición, listas para atacar al monstruo de cuatro patas, el "Sabueso Infernal Serpiente".</p>
-        
-        <p>—Cómo te atreves a faltarle el respeto a Light-sama frente a mí… No creas que te dejaré morir fácilmente.</p>
-        
-        <p>Sostenía su gran espada con ligereza mientras fulminaba al monstruo.</p>
-        
-        <p>—Te dejé vivir por misericordia y por tu valor, pero no puedo perdonar tu pecado de atreverte a hacer un movimiento contra Light-sama. Esta especie debería ser exterminada de los calabozos, de la superficie y borrada de toda literatura y registro.</p>
-        
-        <p>Elly abrió el libro mágico en su mano y desató una intención asesina.</p>
-        
-        <p>—Así es. Por hacer sentir incómodo al Rey, esa es razón más que suficiente para que tu existencia infernal perezca.</p>
-        
-        <p>Aoyuki, que normalmente solo hablaba como un gato, incluso dijo: "el monstruo debería ser eliminado inmediatamente".</p>
-        
-        <p>Ocultando su mirada con el borde de su capucha, envolviendo una cadena en su mano y golpeando el suelo para prepararse para la batalla.</p>
-        
-        <p>El Sabueso Infernal Serpiente de nivel 1000 se sintió intimidado por tres personas de nivel 9999, y su rostro mostraba miedo.</p>
-        
-        <p>Si yo hiciera una broma aquí y dijera "lo permito", los sabuesos infernales serpiente en este calabozo y en cualquier otro lugar se extinguirían.</p>
-        
-        <p>Aclare mi garganta y luego llamé a las tres.</p>
-        
-        <p>—Ya estoy bien. Las tres, por favor deténganse. Él está asustado. ¿Ven? Es sorprendentemente lindo una vez que nos acostumbramos.</p>
-        
-        <p>Me acerqué al sabueso infernal serpiente y lo acaricié.</p>
-        
-        <p>El sabueso infernal serpiente también quería sobrevivir, así que se revolcó en el suelo y mostró su vientre para que lo acariciaran.</p>
-        
-        <p>La serpiente en su cola también se estiraba coquetamente, dejando que sus escamas frías tocaran mi mejilla.</p>
-        
-        <p>—Si Light-sama lo dice.</p>
-        
-        <p>—La palabra de Light-sama tiene prioridad sobre todo.</p>
-        
-        <p>—Nyaa.</p>
-        
-        <p>Las tres estuvieron de acuerdo con mis instrucciones y bajaron sus armas.</p>
-        
-        <p>Después de un pequeño desvío, finalmente llegué al tema principal.</p>
-        
-        <p>—Acabo de recibir una llamada de Mei. Dijo: "Atrapé a la presa". Por eso vine a pedirles que se preparen.</p>
-        
-        <p>La única razón por la que no usé la "llamada" es que estaba tan feliz que quería decírselo en persona, así que me tomé la molestia de buscarlas.</p>
-        
-        <p>—¡Wooo! ¡Por fin! ¡Felicidades, Light-sama! ¡Haré mi mejor esfuerzo para prepararme!</p>
-        
-        <p>—No me gusta la idea de que Mei esté a cargo de atrapar a la presa. Esta Elly también puede cumplir la misión perfectamente. No, puedo hacerlo incluso mejor que perfecto.</p>
-        
-        <p>—Nya.</p>
-        
-        <p>—Gracias, Elly. Pero Elly no parece humana… En cambio, Mei sí parece humana. Hay que elegir a la persona adecuada para el lugar adecuado.</p>
-        
-        <p>Elly tenía orejas puntiagudas, aunque no tanto como las de los elfos.</p>
-        
-        <p>Era difícil disfrazarse de humana.</p>
-        
-        <p>Por otro lado, Mei solo parecía una hermosa sirvienta humana.</p>
-        
-        <p>Si Elly quisiera, podría engañar a la gente con herramientas mágicas, pero no había garantía de que siempre funcionara, así que había que tener cuidado.</p>
-        
-        <p>—Lo sé, lo sé. Pero no solo Mei, no olvides que Light-sama también tiene a Elly.</p>
-        
-        <p>—Por supuesto. No solo a Elly, cuento con todas ustedes.</p>
-        
-        <p>—¡!!!!!</p>
-        
-        <p>Las tres se sintieron tan conmovidas por mis palabras que sus mejillas se sonrojaron y sus cuerpos temblaban.</p>
-        
-        <p>Era agradable ver su lealtad tan alta, pero a veces reaccionaban de forma exagerada, y no podía evitar soltar una pequeña risa.</p>
-        
-        <p>El momento había llegado.</p>
-        
-        <p>Había estado esperando casi tres años. No podía evitar sonreír feliz porque finalmente podía cumplir una de mis venganzas.</p>
+<p>En un rincón de la parte más profunda del calabozo más grande, más fuerte y más peligroso del mundo, el "Abismo".</p>
+<p>Originalmente era una roca negra y accidentada, pero como resultado de las renovaciones, se había convertido en un corredor con una textura suave similar al mármol.</p>
+<p>Las paredes estaban revestidas con lámparas mágicas que las hacían más brillantes.</p>
+<p>Mientras caminaba, Light, las hadas sirvientas de bajo rango que notaron mi presencia se alinearon contra la pared e hicieron una reverencia.</p>
+<p>Todas eran chicas hermosas de diversas estaturas y estilos. Si tan solo una de ellas apareciera en el mundo exterior, muchos se alborotarían diciendo que querían hacerla su esposa, su amante o su nuera.</p>
+<p>—Gracias por su arduo trabajo.</p>
+<p>—Gracias, Maestro.</p>
+<p>Respondieron felices cuando les hablé.</p>
+<p>Levanté la mano ligeramente hacia ellas y pasé de largo.</p>
+<p>La distancia entre nosotros se había ensanchado considerablemente, pero debido a que el pasillo era de piedra y mi nivel había aumentado, aún podía escuchar sus conversaciones.</p>
+<p>—¡Light-sama, qué día de suerte poder hablar con él!</p>
+<p>—Quizás hoy hemos gastado toda nuestra suerte.</p>
+<p>—Oh, Light-sama es tan guapo… Quiero lamer sus dedos de los pies. No, aunque solo sea su cabello caído, lo lameré.</p>
+<p>—¡Eres una pervertida!</p>
+<p>—Pero si tuvieras la oportunidad, tú también lo lamerías, ¿verdad?</p>
+<p>—¿Por qué no lo haría?</p>
+<p>—Me gusta lamer, pero también quiero que me acaricien.</p>
+<p>—Quiero que me mire con ojos desdeñosos y me trate como a un cerdo.</p>
+<p>—Vale, tu nivel es demasiado alto.</p>
+<p>No pude evitar soltar una risa.</p>
+<p>La sirvienta que me acompañaba ese día se veía enojada, con una vena en la cara.</p>
+<p>—Maestro, por favor permítame detener a esas hadas parlanchinas ahora mismo.</p>
+<p>—Está bien, no me importa. Solo significa que me quieren mucho.</p>
+<p>—…Me disculpo por haber reaccionado de forma exagerada.</p>
+<p>Con mi perdón, la vena en su rostro desapareció como si nunca hubiera estado allí.</p>
+<p>A medida que avanzaba, el pasillo bellamente elaborado terminó y llegué a una zona accidentada que parecía el calabozo original.</p>
+<p>Este lugar era un campo de entrenamiento que se había dejado intacto.</p>
+<p>Las personas que buscaba estaban reunidas en el campo de entrenamiento.</p>
+<p>Había tres personas en ese lugar. Una vampira de baja estatura y cabello plateado levantó las manos hacia el cielo y gritó.</p>
+<p>—¡Les dije que no soy estúpida! Incluso puedo recitar la tabla de multiplicar como prueba. Mira, 1 x 1 es 1, 1 x 2 es 2, 1 x 3 es 4…</p>
+<p>—No hay forma de que puedas hacer eso. Y eres tan increíblemente estúpida que ya te equivocaste al principio.</p>
+<p>—Nya~.</p>
+<p>La chica de cabello largo y rubio con sombrero de mago se encogió de hombros como si se hubiera rendido con la chica vampiro bajita.</p>
+<p>La chica con sudadera de orejas de gato, que era más baja que las otras dos, imitaba la voz de un gato.</p>
+<p>—"Tres mujeres hacen un mercado". Es bueno estar felices y animadas. Es mucho mejor que estar en la oscuridad y la desesperación.</p>
+<p>Dejé a mi sirvienta esperando allí y me acerqué a las tres chicas.</p>
+<p>—Entonces, ¿todas están aquí?</p>
+<p>Cuando les hablé, las tres que habían estado hablando en voz alta se giraron con expresiones radiantes.</p>
+<p>—¡Light-sama! ¡Has venido a verme! ¡Estoy tan feliz!</p>
+<p>La chica vampiro bajita de cabello plateado, ella también era una carta que había obtenido de mi "Gacha Infinita".</p>
+<p>"Caballera Vampiro Verdadero Nazuna, nivel 9999".</p>
+<p>Tenía ojos rojo sangre y cabello largo y plateado, y a pesar de su baja estatura, su pecho era muy grande. Parecía una hermosa joven, pero era una chica adorable con mucha energía, como se podía ver por sus palabras y acciones.</p>
+<p>También era una poderosa caballera, llevaba una armadura pesada y sostenía una enorme espada más grande que ella, y enfrentaría a cualquier monstruo que se le acercara.</p>
+<p>—No hay forma de que Light-sama viniera a ver a una niña como Nazuna que no tiene ni un ápice de elegancia. Light-sama, Elly siempre está lista para concebir al hijo divino de Light-sama. Vamos, vamos a la habitación de Elly. Si es po-po-posible, dame tiempo para bañarme porque he sudado un poco.</p>
+<p>La mujer de cabello largo y rubio que llevaba un sombrero de bruja me invitó a su habitación. Su rostro se puso rojo y sus ojos se nublaron con lágrimas.</p>
+<p>Ella también era una carta que había salido de mi don "Gacha Infinita".</p>
+<p>"Bruja Prohibida Elly, nivel 9999".</p>
+<p>Era una bruja que había dominado todo tipo de magia, hechicería, artes prohibidas y artes espirituales.</p>
+<p>Llevaba un sombrero de bruja y tenía su hermoso cabello rubio recogido en dos coletas. Su altura era alrededor de 160 cm, y siempre llevaba un sombrero, lo que la hacía parecer más alta.</p>
+<p>Su figura era buena, su pecho firme, su cintura curvilínea y sus caderas bien definidas.</p>
+<p>Por supuesto, era una hermosa joven con un rostro bien desarrollado y parecía más una chica mágica que una bruja.</p>
+<p>A menudo me invitaba a su habitación, pero no tenía experiencia y aún era virgen. Me halagaban sus sentimientos, pero aún no había alcanzado mi objetivo, así que no quería tener hijos todavía.</p>
+<p>Por eso siempre la rechazaba.</p>
+<p>Elly era una chica hermosa y tenía buen cuerpo, así que estaba muy contento con sus sentimientos.</p>
+<p>—Nya~.</p>
+<p>La otra chica terminó ronroneando como un gato y frotó su cabeza contra mi cuerpo con facilidad.</p>
+<p>Por supuesto, ella también era una carta de mi don "Gacha Infinita".</p>
+<p>"Genio Domadora de Monstruos Aoyuki, nivel 9999".</p>
+<p>Era una domadora de monstruos que podía controlar cualquier tipo de bestia mágica, bestia divina, bestia fantasma o bestia rara.</p>
+<p>Era la más baja de las tres y llevaba una sudadera con orejas de gato.</p>
+<p>Su pecho era pequeño, y sus brazos y piernas eran largos pero esbeltos.</p>
+<p>Tenía un rostro juvenil, y con su fantástico color de cabello azul, era una joven extremadamente hermosa.</p>
+<p>A menudo imitaba el ronroneo de un gato y frotaba su cabeza y cuerpo contra el mío así. Era tan linda que no podía evitar acariciarla debajo de la barbilla como si fuera un gato real.</p>
+<p>Aoyuki también parecía feliz y soltó un "nyaa~♪".</p>
+<p>—No solo a Nazuna, tengo negocios con ustedes dos también. Elly, por favor invítame a tu habitación en otra ocasión. Aoyuki también, escucha con atención…</p>
+<p>Un monstruo se acercó sigilosamente desde la oscuridad al fondo de la sala.</p>
+<p>Era una enorme bestia de cuatro patas, de casi 10 metros de altura, con una serpiente como cola más grande que mi cuerpo.</p>
+<p>Había notado la presencia del monstruo, pero el trauma del pasado hizo que mi cuerpo se tensara.</p>
+<p>Las tres, que notaron que me había tensado, rápidamente tomaron posición, listas para atacar al monstruo de cuatro patas, el "Sabueso Infernal Serpiente".</p>
+<p>—Cómo te atreves a faltarle el respeto a Light-sama frente a mí… No creas que te dejaré morir fácilmente.</p>
+<p>Sostenía su gran espada con ligereza mientras fulminaba al monstruo.</p>
+<p>—Te dejé vivir por misericordia y por tu valor, pero no puedo perdonar tu pecado de atreverte a hacer un movimiento contra Light-sama. Esta especie debería ser exterminada de los calabozos, de la superficie y borrada de toda literatura y registro.</p>
+<p>Elly abrió el libro mágico en su mano y desató una intención asesina.</p>
+<p>—Así es. Por hacer sentir incómodo al Rey, esa es razón más que suficiente para que tu existencia infernal perezca.</p>
+<p>Aoyuki, que normalmente solo hablaba como un gato, incluso dijo: "el monstruo debería ser eliminado inmediatamente".</p>
+<p>Ocultando su mirada con el borde de su capucha, envolviendo una cadena en su mano y golpeando el suelo para prepararse para la batalla.</p>
+<p>El Sabueso Infernal Serpiente de nivel 1000 se sintió intimidado por tres personas de nivel 9999, y su rostro mostraba miedo.</p>
+<p>Si yo hiciera una broma aquí y dijera "lo permito", los sabuesos infernales serpiente en este calabozo y en cualquier otro lugar se extinguirían.</p>
+<p>Aclare mi garganta y luego llamé a las tres.</p>
+<p>—Ya estoy bien. Las tres, por favor deténganse. Él está asustado. ¿Ven? Es sorprendentemente lindo una vez que nos acostumbramos.</p>
+<p>Me acerqué al sabueso infernal serpiente y lo acaricié.</p>
+<p>El sabueso infernal serpiente también quería sobrevivir, así que se revolcó en el suelo y mostró su vientre para que lo acariciaran.</p>
+<p>La serpiente en su cola también se estiraba coquetamente, dejando que sus escamas frías tocaran mi mejilla.</p>
+<p>—Si Light-sama lo dice.</p>
+<p>—La palabra de Light-sama tiene prioridad sobre todo.</p>
+<p>—Nyaa.</p>
+<p>Las tres estuvieron de acuerdo con mis instrucciones y bajaron sus armas.</p>
+<p>Después de un pequeño desvío, finalmente llegué al tema principal.</p>
+<p>—Acabo de recibir una llamada de Mei. Dijo: "Atrapé a la presa". Por eso vine a pedirles que se preparen.</p>
+<p>La única razón por la que no usé la "llamada" es que estaba tan feliz que quería decírselo en persona, así que me tomé la molestia de buscarlas.</p>
+<p>—¡Wooo! ¡Por fin! ¡Felicidades, Light-sama! ¡Haré mi mejor esfuerzo para prepararme!</p>
+<p>—No me gusta la idea de que Mei esté a cargo de atrapar a la presa. Esta Elly también puede cumplir la misión perfectamente. No, puedo hacerlo incluso mejor que perfecto.</p>
+<p>—Nya.</p>
+<p>—Gracias, Elly. Pero Elly no parece humana… En cambio, Mei sí parece humana. Hay que elegir a la persona adecuada para el lugar adecuado.</p>
+<p>Elly tenía orejas puntiagudas, aunque no tanto como las de los elfos.</p>
+<p>Era difícil disfrazarse de humana.</p>
+<p>Por otro lado, Mei solo parecía una hermosa sirvienta humana.</p>
+<p>Si Elly quisiera, podría engañar a la gente con herramientas mágicas, pero no había garantía de que siempre funcionara, así que había que tener cuidado.</p>
+<p>—Lo sé, lo sé. Pero no solo Mei, no olvides que Light-sama también tiene a Elly.</p>
+<p>—Por supuesto. No solo a Elly, cuento con todas ustedes.</p>
+<p>—¡!!!!!</p>
+<p>Las tres se sintieron tan conmovidas por mis palabras que sus mejillas se sonrojaron y sus cuerpos temblaban.</p>
+<p>Era agradable ver su lealtad tan alta, pero a veces reaccionaban de forma exagerada, y no podía evitar soltar una pequeña risa.</p>
+<p>El momento había llegado.</p>
+<p>Había estado esperando casi tres años. No podía evitar sonreír feliz porque finalmente podía cumplir una de mis venganzas.</p>
     </div>
 
     <hr>
 
-    <!-- SECCIÓN DE CALIFICACIÓN -->
-    <div class="rating-section">
-        <h3>⭐ Califica este capítulo</h3>
-        <div class="stars" id="starRating">
-            <span class="star" data-value="1">★</span>
-            <span class="star" data-value="2">★</span>
-            <span class="star" data-value="3">★</span>
-            <span class="star" data-value="4">★</span>
-            <span class="star" data-value="5">★</span>
-        </div>
-        <div id="ratingMessage" style="font-size:0.85rem; margin-top:0.5rem;"></div>
-    </div>
-
-    <!-- SECCIÓN DE COMENTARIOS -->
-    <div class="comments-section">
-        <h3>💬 Comentarios</h3>
-        <div class="comment-form">
-            <input type="text" id="commentName" placeholder="Tu nombre" readonly>
-            <textarea id="commentText" placeholder="Escribe tu comentario... (Inicia sesión para comentar)"></textarea>
-            <button id="submitComment">Enviar</button>
-        </div>
-        <div id="commentsList"></div>
-    </div>
-
     <div class="nav-container">
         <div class="nav-bottom">
             <a href="index.html" class="nav-btn">📚 Índice</a>
-            <a href="capitulo0e0.html" id="prevLinkBottom" class="nav-btn">← Gacha Infinita - Parte 1</a>
+            <a href="capitulo0e0.html" id="prevLinkBottom" class="nav-btn ">← Gacha Infinita - Parte 1</a>
             <span class="chapter-counter" id="chapterCounterBottom">Capítulo 0 - Episodio 1</span>
-            <a href="capitulo0e2.html" id="nextLinkBottom" class="nav-btn">Gacha Infinita - Parte 3 →</a>
+            <a href="capitulo0e2.html" id="nextLinkBottom" class="nav-btn ">Gacha Infinita - Parte 3 →</a>
         </div>
     </div>
 
@@ -676,253 +426,6 @@
         const CHAPTER_NUM = 0;
         const EPISODE_NUM = 1;
         
-        let pointsAdded = false;
-        let currentUserProfile = null;
-        
-        // ========== REGISTRAR LECTURA ==========
-        async function registerRead() {
-            if (pointsAdded) return;
-            const user = auth.currentUser;
-            if (!user) return;
-            
-            const result = await registerChapterRead(CHAPTER_NUM, EPISODE_NUM);
-            if (result.success && !result.alreadyRead) {
-                pointsAdded = true;
-                showToast(`📚 +${result.pointsGained} puntos por leer este capítulo`);
-                if (result.newLevel && result.newLevel.name !== currentUserProfile?.level) {
-                    showToast(`🎉 ¡Subiste a nivel ${result.newLevel.name}! ${result.newLevel.badge}`);
-                }
-            }
-        }
-        
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast-message';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-        
-        // ========== SISTEMA DE CALIFICACIÓN ==========
-        let rated = false;
-        
-        async function initRating() {
-            const stars = document.querySelectorAll('.star');
-            const messageDiv = document.getElementById('ratingMessage');
-            
-            const user = auth.currentUser;
-            if (user) {
-                const userDoc = await db.collection('users').doc(user.uid).get();
-                const ratedChapters = userDoc.data()?.ratedChapters || [];
-                rated = ratedChapters.includes(`${CHAPTER_NUM}_${EPISODE_NUM}`);
-                if (rated) {
-                    const ratingData = await db.collection('ratings')
-                        .where('userId', '==', user.uid)
-                        .where('chapterNum', '==', CHAPTER_NUM)
-                        .where('episodeNum', '==', EPISODE_NUM)
-                        .get();
-                    if (!ratingData.empty) {
-                        const rating = ratingData.docs[0].data().rating;
-                        updateStars(rating);
-                        messageDiv.innerHTML = `✅ Ya calificaste este capítulo con ${rating} estrellas. ¡Gracias!`;
-                    } else {
-                        messageDiv.innerHTML = '✅ Ya calificaste este capítulo. ¡Gracias!';
-                    }
-                }
-            }
-            
-            stars.forEach(star => {
-                star.addEventListener('click', async function() {
-                    if (rated) {
-                        messageDiv.innerHTML = '⚠️ Ya calificaste este capítulo anteriormente.';
-                        return;
-                    }
-                    const value = parseInt(this.dataset.value);
-                    const result = await registerRating(CHAPTER_NUM, EPISODE_NUM, value);
-                    if (result.success) {
-                        rated = true;
-                        updateStars(value);
-                        messageDiv.innerHTML = `⭐ Calificaste este capítulo con ${value} estrellas. +${result.pointsGained} puntos. ¡Gracias!`;
-                        showToast(`⭐ +${result.pointsGained} puntos por calificar`);
-                        if (result.newLevel && result.newLevel.name !== currentUserProfile?.level) {
-                            showToast(`🎉 ¡Subiste a nivel ${result.newLevel.name}! ${result.newLevel.badge}`);
-                        }
-                    } else {
-                        messageDiv.innerHTML = `❌ ${result.error}`;
-                    }
-                });
-            });
-        }
-        
-        function updateStars(rating) {
-            const stars = document.querySelectorAll('.star');
-            stars.forEach((star, index) => {
-                if (index < rating) star.classList.add('active');
-                else star.classList.remove('active');
-            });
-        }
-        
-        // ========== SISTEMA DE COMENTARIOS ==========
-        async function loadComments() {
-            const result = await getComments(CHAPTER_NUM, EPISODE_NUM);
-            if (!result.success) {
-                document.getElementById('commentsList').innerHTML = '<p>Error al cargar comentarios</p>';
-                return;
-            }
-            
-            const comments = result.comments;
-            const container = document.getElementById('commentsList');
-            if (comments.length === 0) {
-                container.innerHTML = '<p>No hay comentarios aún. ¡Sé el primero en comentar!</p>';
-                return;
-            }
-            
-            const user = auth.currentUser;
-            let html = '';
-            for (const comment of comments) {
-                const isOwner = user && user.uid === comment.userId;
-                html += `<div class="comment-item" data-comment-id="${comment.id}" data-author-id="${comment.userId}">
-                            <span class="comment-name">${escapeHtml(comment.username)}</span>
-                            <span class="comment-date">${new Date(comment.timestamp?.toDate()).toLocaleString()}</span>
-                            <span class="comment-like" onclick="handleLike('${comment.id}', '${comment.userId}')">❤️ ${comment.likes || 0}</span>
-                            <span class="comment-report" onclick="handleReport('${comment.id}', '${escapeHtml(comment.text)}')">🚩 Reportar</span>
-                            ${isOwner ? `<span class="comment-delete" onclick="handleDeleteComment('${comment.id}')">🗑️ Eliminar</span>` : ''}
-                            <div class="comment-text">${escapeHtml(comment.text)}</div>
-                         </div>`;
-            }
-            container.innerHTML = html;
-        }
-        
-        async function handleLike(commentId, authorId) {
-            const user = auth.currentUser;
-            if (!user) {
-                alert('Inicia sesión para dar like');
-                return;
-            }
-            const result = await likeComment(commentId, authorId);
-            if (result.success) {
-                loadComments();
-                showToast('👍 Like registrado');
-            } else {
-                alert(result.error);
-            }
-        }
-        
-        async function handleReport(commentId, commentText) {
-            const user = auth.currentUser;
-            if (!user) {
-                alert('Debes iniciar sesión para reportar un comentario');
-                return;
-            }
-            
-            const reason = prompt(
-                'Motivo del reporte:\n\n' +
-                '1. Insulto o acoso\n' +
-                '2. Spoiler sin aviso\n' +
-                '3. Spam o publicidad\n' +
-                '4. Contenido inapropiado\n' +
-                '5. Otro\n\n' +
-                'Escribe el motivo:'
-            );
-            
-            if (reason === null) return;
-            
-            const result = await reportComment(commentId, reason, user.uid);
-            if (result.success) {
-                alert('✅ Comentario reportado. Gracias por ayudar a mantener la comunidad.');
-            } else {
-                alert('❌ Error: ' + result.error);
-            }
-        }
-        
-        async function handleDeleteComment(commentId) {
-            if (!confirm('¿Eliminar tu comentario? Esta acción no se puede deshacer.')) return;
-            
-            const result = await deleteComment(commentId);
-            if (result.success) {
-                alert('✅ Comentario eliminado');
-                loadComments();
-            } else {
-                alert('❌ Error: ' + result.error);
-            }
-        }
-        
-        function escapeHtml(str) {
-            return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'})[m]);
-        }
-        
-        async function submitComment() {
-            const user = auth.currentUser;
-            if (!user) {
-                alert('Debes iniciar sesión para comentar');
-                return;
-            }
-            
-            const text = document.getElementById('commentText').value;
-            if (!text.trim()) {
-                alert('Escribe un comentario');
-                return;
-            }
-            
-            const userProfile = await getUserProfile();
-            if (!userProfile.success) {
-                alert('Error al obtener perfil');
-                return;
-            }
-            
-            const result = await registerComment(CHAPTER_NUM, EPISODE_NUM, text, userProfile.profile.username);
-            if (result.success) {
-                document.getElementById('commentText').value = '';
-                loadComments();
-                showToast(`💬 +${result.pointsGained} puntos por comentar`);
-                if (result.newLevel && result.newLevel.name !== currentUserProfile?.level) {
-                    showToast(`🎉 ¡Subiste a nivel ${result.newLevel.name}! ${result.newLevel.badge}`);
-                }
-            } else {
-                alert(result.error);
-            }
-        }
-        
-        // ========== ACTUALIZAR INFO DE USUARIO ==========
-        async function updateUserInfo() {
-            const user = auth.currentUser;
-            const userInfoDiv = document.getElementById('userInfo');
-            const logoutBtn = document.getElementById('logoutBtnHeader');
-            const nameInput = document.getElementById('commentName');
-            const modLink = document.getElementById('modLink');
-            
-            if (user) {
-                const result = await getUserProfile();
-                if (result.success) {
-                    currentUserProfile = result.profile;
-                    userInfoDiv.style.display = 'inline-block';
-                    logoutBtn.style.display = 'inline-block';
-                    userInfoDiv.textContent = `${currentUserProfile.username} | ${currentUserProfile.totalPoints} pts | ${currentUserProfile.levelBadge}`;
-                    nameInput.value = currentUserProfile.username;
-                    nameInput.readonly = true;
-                    document.getElementById('commentText').placeholder = "Escribe tu comentario...";
-                    
-                    if (isAdmin(user)) {
-                        modLink.style.display = 'inline-block';
-                    } else {
-                        modLink.style.display = 'none';
-                    }
-                }
-            } else {
-                userInfoDiv.style.display = 'none';
-                logoutBtn.style.display = 'none';
-                nameInput.value = "Inicia sesión para comentar";
-                nameInput.readonly = true;
-                document.getElementById('commentText').placeholder = "Inicia sesión para comentar";
-                modLink.style.display = 'none';
-            }
-        }
-        
-        async function handleLogout() {
-            await logoutUser();
-            location.reload();
-        }
-        
         // ========== NAVEGACIÓN ==========
         function setupNavigation() {
             if (typeof GACHA_DATA !== 'undefined') {
@@ -938,10 +441,43 @@
                 counters.forEach(c => { if(c) c.textContent = `${currentEpisode.chapterTitle} - Episodio ${currentEpisode.episodeNum}`; });
                 
                 if (prevEpisode) {
-                    prevLinks.forEach(l => { if(l) { l.href = `capitulo${prevEpisode.chapter}e${prevEpisode.episodeNum}.html`; l.classList.remove('disabled'); l.textContent = `← ${prevEpisode.title}`; } });
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${prevEpisode.chapter}e${prevEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = prevEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `← ${shortTitle}`;
+                        }
+                    });
+                } else {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = '← Sin anterior';
+                        }
+                    });
                 }
+                
                 if (nextEpisode) {
-                    nextLinks.forEach(l => { if(l) { l.href = `capitulo${nextEpisode.chapter}e${nextEpisode.episodeNum}.html`; l.classList.remove('disabled'); l.textContent = `${nextEpisode.title} →`; } });
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${nextEpisode.chapter}e${nextEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = nextEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `${shortTitle} →`;
+                        }
+                    });
+                } else {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = 'Sin siguiente →';
+                        }
+                    });
                 }
                 
                 const selects = [document.getElementById('chapterSelect'), document.getElementById('chapterSelectBottom')];
@@ -956,6 +492,24 @@
                     select.onchange = function() { if(this.value) window.location.href = this.value; };
                 });
             }
+        }
+        
+        // ========== REGISTRAR LECTURA EN HISTORIAL ==========
+        function markAsRead() {
+            const user = localStorage.getItem('gacha_user');
+            if (!user) return;
+            
+            let history = localStorage.getItem(`gacha_history_${user}`);
+            let historyObj = history ? JSON.parse(history) : { chapters: [] };
+            
+            const readKey = { chapter: CHAPTER_NUM, episode: EPISODE_NUM };
+            historyObj.chapters = historyObj.chapters.filter(item => 
+                !(item.chapter == CHAPTER_NUM && item.episode == EPISODE_NUM)
+            );
+            historyObj.chapters.unshift(readKey);
+            if (historyObj.chapters.length > 20) historyObj.chapters.pop();
+            
+            localStorage.setItem(`gacha_history_${user}`, JSON.stringify(historyObj));
         }
         
         // ========== CONTROLES ==========
@@ -995,29 +549,20 @@
             
             document.getElementById('scrollToTop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
             document.getElementById('scrollToBottom').onclick = () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-            document.getElementById('logoutBtnHeader').onclick = handleLogout;
         }
         
         // ========== INICIALIZACIÓN ==========
-        document.addEventListener('DOMContentLoaded', async () => {
+        document.addEventListener('DOMContentLoaded', () => {
             initControls();
             setupNavigation();
-            await updateUserInfo();
-            await loadComments();
-            await initRating();
+            markAsRead();
             
-            onAuthStateChanged(async (state) => {
-                await updateUserInfo();
-                if (state.loggedIn) {
-                    await registerRead();
-                    await loadComments();
-                }
+            kofiWidgetOverlay.draw('ocholobos', {
+                'type': 'floating-chat',
+                'floating-chat.donateButton.text': 'Apóyame',
+                'floating-chat.donateButton.background-color': '#1a4d5f',
+                'floating-chat.donateButton.text-color': '#ffffff'
             });
-            
-            document.getElementById('submitComment').onclick = submitComment;
-            window.handleLike = handleLike;
-            window.handleReport = handleReport;
-            window.handleDeleteComment = handleDeleteComment;
         });
     </script>
 </body>
