@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nano y la espada prohibida 1 | Gacha Infinita</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+            line-height: 1.8;
+            background: #faf9f7;
+            color: #2c2b28;
+            transition: all 0.3s ease;
+        }
+        [data-theme="dark"] body {
+            background: #1a1a1a;
+            color: #e5e5e5;
+        }
+        
+        .options-bar {
+            position: sticky;
+            top: 0;
+            background: #faf9f7;
+            border-bottom: 1px solid #e5e0d8;
+            padding: 0.6rem 1rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            z-index: 100;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        [data-theme="dark"] .options-bar {
+            background: #1a1a1a;
+            border-bottom-color: #404040;
+        }
+        .options-bar button, .options-bar a {
+            background: #eef2f0;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #1a4d5f;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        [data-theme="dark"] .options-bar button, [data-theme="dark"] .options-bar a {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        .font-size-control {
+            display: flex;
+            gap: 0.3rem;
+            align-items: center;
+        }
+        .font-size-control button {
+            width: 32px;
+            padding: 0.2rem;
+        }
+        
+        .nav-container {
+            margin: 1rem 0;
+        }
+        .nav-center, .nav-bottom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        .nav-bottom {
+            margin-top: 1rem;
+        }
+        .nav-btn {
+            background: #eef2f0;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: #1a4d5f;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        [data-theme="dark"] .nav-btn {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        .nav-btn:hover {
+            background: #e5e0d8;
+        }
+        .nav-btn.disabled {
+            background: #e5e0d8;
+            color: #9ca3af;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .chapter-counter {
+            background: #eef2f0;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1a4d5f;
+        }
+        [data-theme="dark"] .chapter-counter {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        
+        .chapter-selector {
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+        .chapter-selector select {
+            background: #eef2f0;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            color: #1a4d5f;
+            cursor: pointer;
+            width: 300px;
+            max-width: 90%;
+        }
+        [data-theme="dark"] .chapter-selector select {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin: 1rem 0 0.25rem;
+            color: #1a4d5f;
+        }
+        [data-theme="dark"] h1 {
+            color: #5a9e8c;
+        }
+        .episode-number {
+            color: #6b6a68;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e5e0d8;
+            padding-bottom: 0.5rem;
+        }
+        [data-theme="dark"] .episode-number {
+            color: #a0a0a0;
+            border-bottom-color: #404040;
+        }
+        .story-content {
+            margin: 1.5rem 0;
+        }
+        .story-content p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        hr {
+            margin: 2rem 0;
+            border: none;
+            border-top: 1px solid #e5e0d8;
+        }
+        [data-theme="dark"] hr {
+            border-top-color: #404040;
+        }
+        
+        .floating-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .floating-btn {
+            background: #1a4d5f;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+        }
+        [data-theme="dark"] .floating-btn {
+            background: #5a9e8c;
+        }
+        .floating-btn:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        .toast-message {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: #1a4d5f;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            animation: fadeOut 3s ease forwards;
+        }
+        [data-theme="dark"] .toast-message {
+            background: #5a9e8c;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9ca3af;
+            border-top: 1px solid #e5e0d8;
+            padding-top: 1.5rem;
+        }
+        [data-theme="dark"] footer {
+            border-top-color: #404040;
+        }
+        
+        @media (max-width: 600px) {
+            body { padding: 0.5rem; }
+            .nav-center, .nav-bottom { flex-direction: column; gap: 0.5rem; }
+            .floating-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                bottom: 70px;
+                right: 15px;
+            }
+        }
+    </style>
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+</head>
+<body>
+    <div class="options-bar">
+        <div class="font-size-control">
+            <button id="fontMinus">A-</button>
+            <button id="fontPlus">A+</button>
+        </div>
+        <a href="index.html">📚 Índice</a>
+        <button id="themeToggle">🌙 Modo oscuro</button>
+    </div>
+
+    <div class="nav-container">
+        <div class="nav-center">
+            <a href="index.html" class="nav-btn">📚 Índice</a>
+            <a href="capitulo5e1.html" id="prevLinkTop" class="nav-btn ">← El sueño de Nano</a>
+            <span class="chapter-counter" id="chapterCounterTop">Capítulo 5 - Episodio 2</span>
+            <a href="capitulo5e3.html" id="nextLinkTop" class="nav-btn ">Nano y la espada prohibida 2 →</a>
+        </div>
+    </div>
+
+    <div class="chapter-selector">
+        <select id="chapterSelect">
+            <option value="">📖 Ir a episodio...</option>
+        </select>
+    </div>
+
+    <h1>Nano y la espada prohibida 1</h1>
+    <div class="episode-number">Capítulo 5 - Episodio 2</div>
+
+    <div class="story-content">
+        
+<p>—¿Es usted el señor Nano? ¿Tiene un momento?</p> <p>Cuando el enano Nano se volvió hacia la voz, allí estaba un hombre, como si hubiera aparecido de repente desde una sombra oscura. Medía alrededor de 170 cm, era delgado y vestía ropas muy comunes. Llevaba un maletín de cuero al hombro. El humano, de aspecto generalmente poco llamativo, le había dirigido la palabra. Si acaso, sus ojos finos como hilos y su sonrisa sospechosa eran algo que podría quedar en la memoria.</p> <p>Nano fulminó con la mirada a ese humano de aspecto sospechoso. El otro, sin inmutarse, se sentó a su lado. Como al bar solo iban enanos, tanto las sillas como la barra eran pequeñas, y parecía incómodo.</p> <p>—Encantado de conocerle. Yo soy Hisomi, un comerciante ambulante que trata armas y armaduras. Un placer.</p> <p>—...Mierda.</p> <p>Nano chasqueó la lengua con desagrado.</p> <p><i>(Vaya a meterse conmigo este tipo tan pesado...)</i></p> <p>Escupió para sus adentros Nano. El noventa por ciento del Reino Humano eran campesinos, y el diez por ciento restante eran esclavos, aventureros y comerciantes. Exceptuando a los campesinos, la siguiente profesión más común entre los humanos después de la de aventurero era la de comerciante. Comparado con convertirse en aventurero, era un trabajo que no requería fuerza física, por lo que el listón era bajo, y muchos humanos aspiraban a ser comerciantes. Sin embargo, una vez fuera de su aldea o país, abundaban los peligros como bandidos, salteadores o monstruos. Si contrataban guardaespaldas, los gastos aumentaban y no se sabía si sería rentable. Además, por el hecho de ser humanos, otras razas los menospreciaban y se aprovechaban de ellos, lo que a veces les generaba pérdidas. Como resultado, los comerciantes humanos tenían muchas más desventajas que los de otras razas.</p> <p>Entre los productos más populares entre los comerciantes humanos estaban los "productos enanos". Los productos enanos son de alta calidad, y el Reino Enano discrimina menos a los humanos que otras razas. Por supuesto, eso no significa que no haya discriminación, y también hay algunos radicales, pero básicamente los enanos son gente que "sigue su propio camino". La verdad es que están demasiado ocupados perfeccionando su campo elegido (artesanía, aventuras, cocina, elaboración de licores, etc.) como para estar metiéndose con otras razas por iniciativa propia.</p> <p>No es tanto que "menosprecien a los humanos", sino más bien que "no les interesan". Se dice que "lo contrario del amor es la indiferencia", pero para los humanos, quizás la indiferencia sea más agradecible que la discriminación severa.</p> <p>Los objetivos de este tipo de comerciantes humanos ambulantes al dirigirse a alguien no son muchos. Principalmente hay dos. Uno es el de aquellos que hacen prospección comercial para conseguir contactos con artesanos que fabriquen productos enanos de alta calidad y mayor prestigio de marca. Y el otro es el de aquellos que intentan vender sus propios productos a los enanos.</p> <p>El comerciante humano de ojos rasgados, Hisomi, continuó la conversación con su sonrisa sospechosa.</p> <p>—Como comerciante ambulante, suelo tratar con productos enanos y otros muchos, pero en esta ocasión he traído un artículo que el señor Nano busca.</p> <p>—¡Mierda!</p> <p>Nano volvió a chasquear la lengua, visiblemente molesto. En el pasado, cuando compaginaba la herrería con el aventurerismo, esta clase de individuos también se le acercaban. Como era famoso en la región que el objetivo de Nano era fabricar el "arma legendaria", intentaban venderle basura diciéndole "¡Esto es el arma legendaria, el material que usted busca!".</p> <p>Nano llevaba muchos años trabajando en la herrería y, para su futuro, había estudiado seriamente las armas mágicas. Por la idiosincrasia de los enanos, había profundizado en ello tanto como cualquier especialista. Pero como tenía la etiqueta de excéntrico, parecía que le subestimaban, y no eran pocos los comerciantes estafadores que intentaban engañarlo para ganar dinero. Al parecer, este también era de esa calaña.</p> <p>Lo fulminó con la mirada de forma intimidatoria y lo rechazó en pocas palabras.</p> <p>—No lo quiero. Lárgate.</p> <p>—No diga eso. Estoy seguro de que será algo que gustará al señor Nano.</p> <p>—¡Que te he dicho que no lo quiero! ¿Quieres que haga que no puedas volver a poner esa sonrisa burlona? ¿Eh?</p> <p>—¡¿...?!</p> <p>El comerciante de ojos rasgados palideció ante la amenaza. El propio Nano, que había pertenecido a la "Reunión de Razas", tenía un nivel de alrededor de 300. Normalmente, solo con su presencia intimidatoria podría ahuyentar a un comerciante humano, pero esta vez se mostraba inusualmente insistente.</p> <p>—C, cálmese, señor Nano. Es que, de verdad, he traído algo que le gustará...</p> <p>El autodenominado Hisomi, pálido, dejó ver un libro del maletín de cuero que llevaba al hombro. El ambiente de irritación e intimidación de Nano cambió en un instante a asombro. Contuvo la respiración e hizo un gesto con la mano para que guardara el libro.</p> <p>Algunos enanos que estaban cerca, al percibir la tensión en el ambiente, les dirigieron miradas de extrañeza, como preguntándose "¿qué pasa? ¿pelea?". Pero Nano, sin prestarles atención, dejó el dinero de la bebida en la barra e hizo un gesto con la barbilla al comerciante indicándole que lo siguiera.</p> <p>Los dos salieron del bar, sintiendo en sus espaldas las miradas extrañas de algunos enanos.</p> <p>El siguiente lugar al que se dirigieron fue la propia casa de Nano.</p> <p>A pesar de haber obtenido suficiente dinero para vivir toda una vida, Nano vivía en un bloque de pisos de clase media para solteros. Lo había alquilado porque desde allí la herrería en la que trabajaba actualmente estaba a tiro de piedra y era cómodo para ir.</p> <p>Al ser para enanos solteros, para otras razas la habitación tenía techos bajos y los muebles eran algo pequeños, resultando un poco incómoda. Sin embargo, el comerciante humano Hisomi no se inmutó, y con una sonrisa burlona y sospechosa de victoria asegurada, siguió a Nano en silencio hasta la habitación.</p> <p>Nano cerró bien la puerta con llave y, al pasar al salón, le interrogó sobre el libro de antes. Con los ojos enarcados de forma intimidatoria, pero con la garganta irritada por la tensión, por fin pudo articular palabra después de salir del bar.</p> <p>—...¿Estás en tu sano juicio? Mostrar algo así en un lugar donde hay tanta gente...</p> <p>—Y usted, señor Nano, ¿está seguro? No haberme detenido y entregado a los soldados... ¿O es que al final le interesa? ¿Este libro que trata sobre la "fabricación de la espada prohibida"?</p> <p>¿Qué es la "espada prohibida"? Se refiere a las armas malditas de gran poder que a veces se desentierran en las ruinas. Aunque se les llama "espadas", básicamente se refieren a todo tipo de armas. Básicamente, son armaduras y armas malditas que acortan la vida del usuario, exigen sangre de otros, corrompen la mente y vuelven loco. Se dice que algunos héroes de cuentos de hadas lograron dominar las "espadas prohibidas" con una fuerza de voluntad sobrehumana, pero en general se las trata como objetos peligrosos. Por eso se les llama "espadas prohibidas", "armas malditas" o "espadas del dios maligno".</p> <p>El pacto de los seis países también las considera objetos peligrosos, y la ley obliga a notificarlas inmediatamente en caso de ser encontradas. Si se infringía intencionadamente, podría conllevar incluso la pena de muerte.</p> <p>Un libro que trata sobre esas "espadas prohibidas" —por lo que decía Nano, deducía que era un libro sobre la "fabricación de la espada prohibida". Hay objetos prohibidos que, incluso si se obtienen en mazmorras o ruinas, el simple hecho de poseerlos en secreto ya acarrea graves castigos. El libro de "fabricación de la espada prohibida" que poseía el comerciante humano Hisomi, solo por tenerlo, sería sin duda un delito grave.</p> <p>Sin embargo, Nano no lo denunció, sino que se lo llevó en silencio a su casa. Si fuera un buen enano, debería haberlo sometido y entregado a los guardias de inmediato, pero... Nano no se movió e interrogó a Hisomi.</p> <p>—¿Dónde conseguiste algo tan peligroso? ¿Es auténtico?</p> <p>—...</p> <p>Hisomi, como un apostador que ha ganado una apuesta, profundizó su sonrisa ante la pregunta de Nano.</p>
+    </div>
+
+    <hr>
+
+    <div class="nav-container">
+        <div class="nav-bottom">
+            <a href="index.html" class="nav-btn">📚 Índice</a>
+            <a href="capitulo5e1.html" id="prevLinkBottom" class="nav-btn ">← El sueño de Nano</a>
+            <span class="chapter-counter" id="chapterCounterBottom">Capítulo 5 - Episodio 2</span>
+            <a href="capitulo5e3.html" id="nextLinkBottom" class="nav-btn ">Nano y la espada prohibida 2 →</a>
+        </div>
+    </div>
+
+    <div class="chapter-selector">
+        <select id="chapterSelectBottom">
+            <option value="">📖 Ir a episodio...</option>
+        </select>
+    </div>
+
+    <div class="floating-buttons">
+        <button class="floating-btn" id="scrollToTop" title="Ir arriba">⬆</button>
+        <button class="floating-btn" id="scrollToBottom" title="Ir abajo">⬇</button>
+    </div>
+
+    <footer>
+        <p>Gacha Infinita © 明鏡シスイ (Meikyō Shisui) | Traducción: Ocholobos</p>
+        <p>Apoya al autor comprando los volúmenes oficiales</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        // ========== CONFIGURACIÓN DEL CAPÍTULO ==========
+        const CHAPTER_NUM = 5;
+        const EPISODE_NUM = 2;
+        
+        // ========== NAVEGACIÓN ==========
+        function setupNavigation() {
+            if (typeof GACHA_DATA !== 'undefined') {
+                const currentEpisode = GACHA_DATA.getEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const prevEpisode = GACHA_DATA.getPrevEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const nextEpisode = GACHA_DATA.getNextEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const allEpisodes = GACHA_DATA.getAllEpisodesOrdered();
+                
+                const prevLinks = [document.getElementById('prevLinkTop'), document.getElementById('prevLinkBottom')];
+                const nextLinks = [document.getElementById('nextLinkTop'), document.getElementById('nextLinkBottom')];
+                const counters = [document.getElementById('chapterCounterTop'), document.getElementById('chapterCounterBottom')];
+                
+                counters.forEach(c => { if(c) c.textContent = `${currentEpisode.chapterTitle} - Episodio ${currentEpisode.episodeNum}`; });
+                
+                if (prevEpisode) {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${prevEpisode.chapter}e${prevEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = prevEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `← ${shortTitle}`;
+                        }
+                    });
+                } else {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = '← Sin anterior';
+                        }
+                    });
+                }
+                
+                if (nextEpisode) {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${nextEpisode.chapter}e${nextEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = nextEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `${shortTitle} →`;
+                        }
+                    });
+                } else {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = 'Sin siguiente →';
+                        }
+                    });
+                }
+                
+                const selects = [document.getElementById('chapterSelect'), document.getElementById('chapterSelectBottom')];
+                selects.forEach(select => {
+                    if (!select) return;
+                    let options = '<option value="">📖 Seleccionar episodio...</option>';
+                    for (const ep of allEpisodes) {
+                        const selected = (ep.chapter == CHAPTER_NUM && ep.episodeNum == EPISODE_NUM) ? 'selected' : '';
+                        options += `<option value="capitulo${ep.chapter}e${ep.episodeNum}.html" ${selected}>${ep.chapterTitle} - Episodio ${ep.episodeNum}: ${ep.title}</option>`;
+                    }
+                    select.innerHTML = options;
+                    select.onchange = function() { if(this.value) window.location.href = this.value; };
+                });
+            }
+        }
+        
+        // ========== REGISTRAR LECTURA EN HISTORIAL ==========
+        function markAsRead() {
+            const user = localStorage.getItem('gacha_user');
+            if (!user) return;
+            
+            let history = localStorage.getItem(`gacha_history_${user}`);
+            let historyObj = history ? JSON.parse(history) : { chapters: [] };
+            
+            const readKey = { chapter: CHAPTER_NUM, episode: EPISODE_NUM };
+            historyObj.chapters = historyObj.chapters.filter(item => 
+                !(item.chapter == CHAPTER_NUM && item.episode == EPISODE_NUM)
+            );
+            historyObj.chapters.unshift(readKey);
+            if (historyObj.chapters.length > 20) historyObj.chapters.pop();
+            
+            localStorage.setItem(`gacha_history_${user}`, JSON.stringify(historyObj));
+        }
+        
+        // ========== CONTROLES ==========
+        function initControls() {
+            const savedTheme = localStorage.getItem('gacha_theme');
+            if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            const savedFont = localStorage.getItem('gacha_fontsize');
+            if (savedFont) document.body.style.fontSize = savedFont + '%';
+            
+            document.getElementById('fontPlus').onclick = () => {
+                let size = parseInt(localStorage.getItem('gacha_fontsize')) || 100;
+                size = Math.min(150, size + 10);
+                document.body.style.fontSize = size + '%';
+                localStorage.setItem('gacha_fontsize', size);
+            };
+            document.getElementById('fontMinus').onclick = () => {
+                let size = parseInt(localStorage.getItem('gacha_fontsize')) || 100;
+                size = Math.max(70, size - 10);
+                document.body.style.fontSize = size + '%';
+                localStorage.setItem('gacha_fontsize', size);
+            };
+            
+            const themeBtn = document.getElementById('themeToggle');
+            if (document.documentElement.hasAttribute('data-theme')) themeBtn.textContent = '☀️ Modo claro';
+            themeBtn.onclick = () => {
+                const isDark = document.documentElement.hasAttribute('data-theme');
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('gacha_theme', 'light');
+                    themeBtn.textContent = '🌙 Modo oscuro';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('gacha_theme', 'dark');
+                    themeBtn.textContent = '☀️ Modo claro';
+                }
+            };
+            
+            document.getElementById('scrollToTop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('scrollToBottom').onclick = () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+        
+        // ========== INICIALIZACIÓN ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            initControls();
+            setupNavigation();
+            markAsRead();
+            
+            kofiWidgetOverlay.draw('ocholobos', {
+                'type': 'floating-chat',
+                'floating-chat.donateButton.text': 'Apóyame',
+                'floating-chat.donateButton.background-color': '#1a4d5f',
+                'floating-chat.donateButton.text-color': '#ffffff'
+            });
+        });
+    </script>
+</body>
+</html>

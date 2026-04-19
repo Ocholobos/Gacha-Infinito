@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarta de queso | Gacha Infinita</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+            line-height: 1.8;
+            background: #faf9f7;
+            color: #2c2b28;
+            transition: all 0.3s ease;
+        }
+        [data-theme="dark"] body {
+            background: #1a1a1a;
+            color: #e5e5e5;
+        }
+        
+        .options-bar {
+            position: sticky;
+            top: 0;
+            background: #faf9f7;
+            border-bottom: 1px solid #e5e0d8;
+            padding: 0.6rem 1rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            z-index: 100;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        [data-theme="dark"] .options-bar {
+            background: #1a1a1a;
+            border-bottom-color: #404040;
+        }
+        .options-bar button, .options-bar a {
+            background: #eef2f0;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #1a4d5f;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        [data-theme="dark"] .options-bar button, [data-theme="dark"] .options-bar a {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        .font-size-control {
+            display: flex;
+            gap: 0.3rem;
+            align-items: center;
+        }
+        .font-size-control button {
+            width: 32px;
+            padding: 0.2rem;
+        }
+        
+        .nav-container {
+            margin: 1rem 0;
+        }
+        .nav-center, .nav-bottom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        .nav-bottom {
+            margin-top: 1rem;
+        }
+        .nav-btn {
+            background: #eef2f0;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: #1a4d5f;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        [data-theme="dark"] .nav-btn {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        .nav-btn:hover {
+            background: #e5e0d8;
+        }
+        .nav-btn.disabled {
+            background: #e5e0d8;
+            color: #9ca3af;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .chapter-counter {
+            background: #eef2f0;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1a4d5f;
+        }
+        [data-theme="dark"] .chapter-counter {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        
+        .chapter-selector {
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+        .chapter-selector select {
+            background: #eef2f0;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            color: #1a4d5f;
+            cursor: pointer;
+            width: 300px;
+            max-width: 90%;
+        }
+        [data-theme="dark"] .chapter-selector select {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin: 1rem 0 0.25rem;
+            color: #1a4d5f;
+        }
+        [data-theme="dark"] h1 {
+            color: #5a9e8c;
+        }
+        .episode-number {
+            color: #6b6a68;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e5e0d8;
+            padding-bottom: 0.5rem;
+        }
+        [data-theme="dark"] .episode-number {
+            color: #a0a0a0;
+            border-bottom-color: #404040;
+        }
+        .story-content {
+            margin: 1.5rem 0;
+        }
+        .story-content p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        hr {
+            margin: 2rem 0;
+            border: none;
+            border-top: 1px solid #e5e0d8;
+        }
+        [data-theme="dark"] hr {
+            border-top-color: #404040;
+        }
+        
+        .floating-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .floating-btn {
+            background: #1a4d5f;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+        }
+        [data-theme="dark"] .floating-btn {
+            background: #5a9e8c;
+        }
+        .floating-btn:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        .toast-message {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: #1a4d5f;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            animation: fadeOut 3s ease forwards;
+        }
+        [data-theme="dark"] .toast-message {
+            background: #5a9e8c;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9ca3af;
+            border-top: 1px solid #e5e0d8;
+            padding-top: 1.5rem;
+        }
+        [data-theme="dark"] footer {
+            border-top-color: #404040;
+        }
+        
+        @media (max-width: 600px) {
+            body { padding: 0.5rem; }
+            .nav-center, .nav-bottom { flex-direction: column; gap: 0.5rem; }
+            .floating-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                bottom: 70px;
+                right: 15px;
+            }
+        }
+    </style>
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+</head>
+<body>
+    <div class="options-bar">
+        <div class="font-size-control">
+            <button id="fontMinus">A-</button>
+            <button id="fontPlus">A+</button>
+        </div>
+        <a href="index.html">📚 Índice</a>
+        <button id="themeToggle">🌙 Modo oscuro</button>
+    </div>
+
+    <div class="nav-container">
+        <div class="nav-center">
+            <a href="index.html" class="nav-btn">📚 Índice</a>
+            <a href="capitulo4e5.html" id="prevLinkTop" class="nav-btn ">← Saludos con todos</a>
+            <span class="chapter-counter" id="chapterCounterTop">Capítulo 4 - Episodio 6</span>
+            <a href="capitulo4e7.html" id="nextLinkTop" class="nav-btn ">El amo de la "Bruja de la Torre Gigante" →</a>
+        </div>
+    </div>
+
+    <div class="chapter-selector">
+        <select id="chapterSelect">
+            <option value="">📖 Ir a episodio...</option>
+        </select>
+    </div>
+
+    <h1>Tarta de queso</h1>
+    <div class="episode-number">Capítulo 4 - Episodio 6</div>
+
+    <div class="story-content">
+        
+<p>—Retrocedamos un poco en el tiempo.</p> <p>—Bienvenidos. Yo soy la "Bruja de la Torre Gigante".</p> <p>Una joven con una túnica que le cubría completamente la cabeza, ocultando su rostro, los esperaba en la sala de audiencias. Aunque su cara estaba oculta, se le veía un gran pecho, una buena figura y su voz resonante era hermosa.</p> <p><i>(Considerando que tiene doncellas tan bellas como hadas a su servicio, supongo que la Dama de la "Torre Gigante" también será una mujer extraordinariamente hermosa...)</i> pensó para sus adentros el primer príncipe Kuro.</p> <p>—Nosotros también le agradecemos por invitarnos. Soy Kuro, primer príncipe del Reino Humano.</p> <p>—Yo soy Lilith, la primera princesa.</p> <p>Los tres terminaron los saludos sin contratiempos y comenzaron la reunión en la sala de audiencias.</p> <p>El contenido de la reunión no fue conflictivo. Ellie explicó el trato hacia los humanos en la "Torre Gigante", los detalles y la intención detrás del "Independentismo Absoluto de la Raza Humana", la postura de la "Torre", sus conocimientos y la dirección futura. Kuro y Lilith asumieron básicamente el papel de oyentes, sentados en un sofá al otro lado de la mesa, manteniendo una reunión amena.</p> <p>Tras terminar la reunión sin problemas, los príncipes fueron conducidos a la zona de alojamiento.</p> <p>—La inspección detallada será mañana. Como deben estar cansados por el viaje, primero cuiden su cuerpo.</p> <p>—Le agradecemos su consideración, Dama de la "Torre Gigante".</p> <p>—Entonces, nos vemos en la cena.</p> <p>Kuro respondió con una sonrisa, pero interiormente pensó: <i>"Usando un objeto de larga distancia, no hay tal cosa como cansancio..."</i> No lo dijo en voz alta porque sentía temor al no poder ver el fondo de la "Bruja de la Torre Gigante" a pesar de intercambiar palabras.</p> <p>Al salir de la sala de audiencias, los esperaban las doncellas hada, junto con los guardaespaldas y sirvientes de Kuro y Lilith que ya estaban allí. Siguieron a las doncellas hada y bajaron al segundo piso. El segundo piso había sido remodelado igual que el tercero. Todo el segundo piso eran habitaciones para invitados, y se asignaron habitaciones para Kuro, Lilith, los guardaespaldas y los sirvientes. En las habitaciones a las que fueron guiados ya habían trasladado el equipaje que habían traído del Reino Humano.</p> <p>Además, la habitación a la que fue guiada Lilith era claramente más lujosa que su propia habitación en su país. Lo único era que al no tener ventanas sentía un poco de agobio, pero estaba rodeada de muebles, obras de arte y frutas que nunca había visto ni probado —artículos tan extraordinarios— que no le importaba.</p> <p>Con la ayuda de la jefa de las doncellas, Nono, se cambió del vestido de gala a uno de estar por casa. Como aún había tiempo hasta la cena, continuar con el vestido de gala la cansaría mentalmente. Por supuesto, para la cena tendría que asistir con otro vestido diferente.</p> <p>—...Princesa, ¿cómo era la Dama de la "Torre Gigante"?</p> <p>—No lo sé porque ocultaba su rostro con una túnica, pero era una persona intelectual, erudita y muy refinada. ¡Sobre todo, usa un "objeto de transferencia de larga distancia" solo para un simple desplazamiento, tiene un dragón a su servicio, es una persona con verdadero poder! Tengo que hablar bien con ella y conseguir que preste su poder al Reino Humano cueste lo que cueste. Para eso, tengo que hacer algo con mi hermano...</p> <p>Ya cambiada a su ropa de estar por casa, se sentó frente al tocador mientras le cepillaban el cabello. Nono tomó el peine de manos de Yume, la doncella aprendiz, y se situó detrás de Lilith.</p> <p>—¿Ocurrió algo con ustedes, Nono?</p> <p>—...No, nada en particular. Solo que con tantos eventos impactantes, quizás se acumuló el cansancio, y cuando nos sentamos en el sofá de la sala de espera, dormitamos un momento.</p> <p>Nono, la jefa de las doncellas, y las demás habían presenciado el conmovedor reencuentro entre Light y Yume en la sala de espera, y habían sido dormidas con "SR, Sueño". Sin embargo, con "SR, Hipnosis" ese recuerdo fue manipulado, exactamente como dijo Nono, para hacerles creer que solo "se habían quedado dormidas un instante". Ante estas palabras, Lilith esbozó una leve sonrisa.</p> <p>—Qué raro. Que Nono se quedara dormida. ¿No pasó nada más?</p> <p>—...¿Algo más?</p> <p>Nono se quedó pensativa. A través del espejo, Lilith dirigió su mirada hacia Yume y le preguntó. Yume respondió con una sonrisa inocente y radiante.</p> <p>—¡Los dulces que estaban sobre la mesa estaban deliciosos! El té estaba un poco amargo, así que le puse mucho azúcar y leche.</p> <p>—Jejeje, todavía no entiendes lo bueno que es el té, Yume. Ese amargor es lo bueno. Pero el té que sirvieron en casa de la Dama de la "Torre Gigante" tenía un sabor y aroma más definidos que cualquier hoja de té de alta calidad. Me pregunto dónde lo consiguió. Me gusta personalmente, así que quiero saber la marca.</p> <p>—...Princesa, no puede darse tantos lujos.</p> <p>—Lo sé. Si tuviera ese dinero, sería mejor comprarles aunque sea un dulce a la gente pobre o a los niños del orfanato.</p> <p>—¡Eso es digno de una princesa!</p> <p>Yume halagó a Lilith con una sonrisa radiante. Lilith, su señora, Nono, su instructora, las otras doncellas y la caballero guardaespaldas no sintieron ninguna extrañeza respecto a Yume. Ya había sido reemplazada por una falsa gracias a "UR, Segunda Sombra: Doble Sombra", pero nadie notaba nada raro. Puede copiar palabras, acciones, costumbres, recuerdos e incluso los dones.</p> <p>Incluso usando objetos mágicos y habilidades de identificación, es difícil distinguir a la falsa.</p> <p>Sin embargo, no está exenta de puntos débiles. Los dones se degradan, los objetos mágicos que lleva puestos no se pueden replicar. Si la matan, desaparece, así que se descubriría al instante que es una falsa. Además, tiene limitaciones como que no se copia a menos que la propia persona use una carta del "Gacha Infinita" por su propia voluntad. No existen objetos mágicos perfectos.</p> <p>Cuando terminaron de peinar su cabello, se sentó en el sofá y pidió que le sirvieran té. Lilith, en una postura relajada, sacó el tema del futuro.</p> <p>—Todavía hay tiempo hasta la cena. Tengo que encontrar la manera de burlar a mi hermano y conseguir que la Dama de la "Torre Gigante" se comprometa a cooperar con el Reino Humano. Nono, vamos a reunirnos para eso.</p> <p>—...Entendido. Yume, retírate a otra habitación hasta que te llamemos.</p> <p>—Sí, jefa de doncellas. Entonces, me retiro.</p> <p>Yume (la falsa) hizo una reverencia y salió del dormitorio para pasar a la sala contigua. Lilith y Nono, que quedaron en el dormitorio de la habitación de invitados, mantuvieron una reunión sobre los acontecimientos futuros hasta la cena.</p> <p>—Pedirles a ellas, que son simples humanas, que "previeran" que esta reunión sería en vano era demasiado pedir.</p> <p>☆ ☆ ☆</p> <p>Tras la cena y la charla informal, Lilith se metió en la cama de su habitación de invitados. Revolviéndose en la cama, evocaba sus impresiones de la cena.</p> <p>En la cena, a la que también asistió la "Bruja de la Torre Gigante", sirvieron un menú de varios platos, y sus modales en la mesa eran incluso más refinados que los de ellos, que eran realeza. Lo que más le sorprendió fue lo deliciosa que estaba la comida.</p> <p><i>(Las verduras no tenían nada de amargor, e incluso los mariscos y las carnes eran ligeramente dulces. ¡Sobre todo, que el queso pudiera convertirse en un dulce tan delicioso! Estaba tan bueno que comí dos porciones. Habrá sido de mala educación, ¿verdad?...)</i></p> <p>Uno de los alimentos que Lilith no soportaba era el queso. Aparte de la textura y el sabor, no le gustaba el olor, y era uno de los ingredientes que prefería no comer. Sin embargo, el postre del final, la "Tarta de queso", no era de este mundo. Estaba tan delicioso que podía afirmar que era un manjar celestial. Sin pensarlo, se comió la primera porción en un instante y pidió una segunda. Su hermano Kuro también se sorprendió por lo delicioso que estaba cada plato, y abrió mucho los ojos al ver a su hermana, a quien no le gustaba el queso, repetir.</p> <p><i>(Por haberle mostrado a la Dama de la "Torre Gigante" una imagen tan poco refinada, ¿qué pasaría si piensa que "no soy digna de establecer una relación de cooperación"?... Que el futuro de la raza humana dependa de mi glotonería...)</i></p> <p>Solo imaginarlo le daba vergüenza y se sentía deprimida.</p> <p>Pero ese sentimiento no duró mucho.</p> <p>——Buenas noches, princesa Lilith.</p> <p>—¡¡...!!</p> <p>Alguien la llamó y Lilith saltó de la cama. Al otro lado de los encajes de la cama con dosel, había una mujer de pie. Lo reconoció al instante por la voz.</p> <p>—...¿Dama de la "Torre Gigante"?</p> <p>—Perdón por la hora tan tardía. He venido para que la señorita Lilith se reúna con mi amo.</p>
+    </div>
+
+    <hr>
+
+    <div class="nav-container">
+        <div class="nav-bottom">
+            <a href="index.html" class="nav-btn">📚 Índice</a>
+            <a href="capitulo4e5.html" id="prevLinkBottom" class="nav-btn ">← Saludos con todos</a>
+            <span class="chapter-counter" id="chapterCounterBottom">Capítulo 4 - Episodio 6</span>
+            <a href="capitulo4e7.html" id="nextLinkBottom" class="nav-btn ">El amo de la "Bruja de la Torre Gigante" →</a>
+        </div>
+    </div>
+
+    <div class="chapter-selector">
+        <select id="chapterSelectBottom">
+            <option value="">📖 Ir a episodio...</option>
+        </select>
+    </div>
+
+    <div class="floating-buttons">
+        <button class="floating-btn" id="scrollToTop" title="Ir arriba">⬆</button>
+        <button class="floating-btn" id="scrollToBottom" title="Ir abajo">⬇</button>
+    </div>
+
+    <footer>
+        <p>Gacha Infinita © 明鏡シスイ (Meikyō Shisui) | Traducción: Ocholobos</p>
+        <p>Apoya al autor comprando los volúmenes oficiales</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        // ========== CONFIGURACIÓN DEL CAPÍTULO ==========
+        const CHAPTER_NUM = 4;
+        const EPISODE_NUM = 6;
+        
+        // ========== NAVEGACIÓN ==========
+        function setupNavigation() {
+            if (typeof GACHA_DATA !== 'undefined') {
+                const currentEpisode = GACHA_DATA.getEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const prevEpisode = GACHA_DATA.getPrevEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const nextEpisode = GACHA_DATA.getNextEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const allEpisodes = GACHA_DATA.getAllEpisodesOrdered();
+                
+                const prevLinks = [document.getElementById('prevLinkTop'), document.getElementById('prevLinkBottom')];
+                const nextLinks = [document.getElementById('nextLinkTop'), document.getElementById('nextLinkBottom')];
+                const counters = [document.getElementById('chapterCounterTop'), document.getElementById('chapterCounterBottom')];
+                
+                counters.forEach(c => { if(c) c.textContent = `${currentEpisode.chapterTitle} - Episodio ${currentEpisode.episodeNum}`; });
+                
+                if (prevEpisode) {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${prevEpisode.chapter}e${prevEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = prevEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `← ${shortTitle}`;
+                        }
+                    });
+                } else {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = '← Sin anterior';
+                        }
+                    });
+                }
+                
+                if (nextEpisode) {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${nextEpisode.chapter}e${nextEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = nextEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `${shortTitle} →`;
+                        }
+                    });
+                } else {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = 'Sin siguiente →';
+                        }
+                    });
+                }
+                
+                const selects = [document.getElementById('chapterSelect'), document.getElementById('chapterSelectBottom')];
+                selects.forEach(select => {
+                    if (!select) return;
+                    let options = '<option value="">📖 Seleccionar episodio...</option>';
+                    for (const ep of allEpisodes) {
+                        const selected = (ep.chapter == CHAPTER_NUM && ep.episodeNum == EPISODE_NUM) ? 'selected' : '';
+                        options += `<option value="capitulo${ep.chapter}e${ep.episodeNum}.html" ${selected}>${ep.chapterTitle} - Episodio ${ep.episodeNum}: ${ep.title}</option>`;
+                    }
+                    select.innerHTML = options;
+                    select.onchange = function() { if(this.value) window.location.href = this.value; };
+                });
+            }
+        }
+        
+        // ========== REGISTRAR LECTURA EN HISTORIAL ==========
+        function markAsRead() {
+            const user = localStorage.getItem('gacha_user');
+            if (!user) return;
+            
+            let history = localStorage.getItem(`gacha_history_${user}`);
+            let historyObj = history ? JSON.parse(history) : { chapters: [] };
+            
+            const readKey = { chapter: CHAPTER_NUM, episode: EPISODE_NUM };
+            historyObj.chapters = historyObj.chapters.filter(item => 
+                !(item.chapter == CHAPTER_NUM && item.episode == EPISODE_NUM)
+            );
+            historyObj.chapters.unshift(readKey);
+            if (historyObj.chapters.length > 20) historyObj.chapters.pop();
+            
+            localStorage.setItem(`gacha_history_${user}`, JSON.stringify(historyObj));
+        }
+        
+        // ========== CONTROLES ==========
+        function initControls() {
+            const savedTheme = localStorage.getItem('gacha_theme');
+            if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            const savedFont = localStorage.getItem('gacha_fontsize');
+            if (savedFont) document.body.style.fontSize = savedFont + '%';
+            
+            document.getElementById('fontPlus').onclick = () => {
+                let size = parseInt(localStorage.getItem('gacha_fontsize')) || 100;
+                size = Math.min(150, size + 10);
+                document.body.style.fontSize = size + '%';
+                localStorage.setItem('gacha_fontsize', size);
+            };
+            document.getElementById('fontMinus').onclick = () => {
+                let size = parseInt(localStorage.getItem('gacha_fontsize')) || 100;
+                size = Math.max(70, size - 10);
+                document.body.style.fontSize = size + '%';
+                localStorage.setItem('gacha_fontsize', size);
+            };
+            
+            const themeBtn = document.getElementById('themeToggle');
+            if (document.documentElement.hasAttribute('data-theme')) themeBtn.textContent = '☀️ Modo claro';
+            themeBtn.onclick = () => {
+                const isDark = document.documentElement.hasAttribute('data-theme');
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('gacha_theme', 'light');
+                    themeBtn.textContent = '🌙 Modo oscuro';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('gacha_theme', 'dark');
+                    themeBtn.textContent = '☀️ Modo claro';
+                }
+            };
+            
+            document.getElementById('scrollToTop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('scrollToBottom').onclick = () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+        
+        // ========== INICIALIZACIÓN ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            initControls();
+            setupNavigation();
+            markAsRead();
+            
+            kofiWidgetOverlay.draw('ocholobos', {
+                'type': 'floating-chat',
+                'floating-chat.donateButton.text': 'Apóyame',
+                'floating-chat.donateButton.background-color': '#1a4d5f',
+                'floating-chat.donateButton.text-color': '#ffffff'
+            });
+        });
+    </script>
+</body>
+</html>

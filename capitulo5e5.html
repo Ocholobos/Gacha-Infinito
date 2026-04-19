@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rey Enano Dagan | Gacha Infinita</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+            line-height: 1.8;
+            background: #faf9f7;
+            color: #2c2b28;
+            transition: all 0.3s ease;
+        }
+        [data-theme="dark"] body {
+            background: #1a1a1a;
+            color: #e5e5e5;
+        }
+        
+        .options-bar {
+            position: sticky;
+            top: 0;
+            background: #faf9f7;
+            border-bottom: 1px solid #e5e0d8;
+            padding: 0.6rem 1rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            z-index: 100;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        [data-theme="dark"] .options-bar {
+            background: #1a1a1a;
+            border-bottom-color: #404040;
+        }
+        .options-bar button, .options-bar a {
+            background: #eef2f0;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #1a4d5f;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        [data-theme="dark"] .options-bar button, [data-theme="dark"] .options-bar a {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        .font-size-control {
+            display: flex;
+            gap: 0.3rem;
+            align-items: center;
+        }
+        .font-size-control button {
+            width: 32px;
+            padding: 0.2rem;
+        }
+        
+        .nav-container {
+            margin: 1rem 0;
+        }
+        .nav-center, .nav-bottom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        .nav-bottom {
+            margin-top: 1rem;
+        }
+        .nav-btn {
+            background: #eef2f0;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: #1a4d5f;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        [data-theme="dark"] .nav-btn {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        .nav-btn:hover {
+            background: #e5e0d8;
+        }
+        .nav-btn.disabled {
+            background: #e5e0d8;
+            color: #9ca3af;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .chapter-counter {
+            background: #eef2f0;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1a4d5f;
+        }
+        [data-theme="dark"] .chapter-counter {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        
+        .chapter-selector {
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+        .chapter-selector select {
+            background: #eef2f0;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            color: #1a4d5f;
+            cursor: pointer;
+            width: 300px;
+            max-width: 90%;
+        }
+        [data-theme="dark"] .chapter-selector select {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin: 1rem 0 0.25rem;
+            color: #1a4d5f;
+        }
+        [data-theme="dark"] h1 {
+            color: #5a9e8c;
+        }
+        .episode-number {
+            color: #6b6a68;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e5e0d8;
+            padding-bottom: 0.5rem;
+        }
+        [data-theme="dark"] .episode-number {
+            color: #a0a0a0;
+            border-bottom-color: #404040;
+        }
+        .story-content {
+            margin: 1.5rem 0;
+        }
+        .story-content p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        hr {
+            margin: 2rem 0;
+            border: none;
+            border-top: 1px solid #e5e0d8;
+        }
+        [data-theme="dark"] hr {
+            border-top-color: #404040;
+        }
+        
+        .floating-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .floating-btn {
+            background: #1a4d5f;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+        }
+        [data-theme="dark"] .floating-btn {
+            background: #5a9e8c;
+        }
+        .floating-btn:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        .toast-message {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: #1a4d5f;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            animation: fadeOut 3s ease forwards;
+        }
+        [data-theme="dark"] .toast-message {
+            background: #5a9e8c;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9ca3af;
+            border-top: 1px solid #e5e0d8;
+            padding-top: 1.5rem;
+        }
+        [data-theme="dark"] footer {
+            border-top-color: #404040;
+        }
+        
+        @media (max-width: 600px) {
+            body { padding: 0.5rem; }
+            .nav-center, .nav-bottom { flex-direction: column; gap: 0.5rem; }
+            .floating-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                bottom: 70px;
+                right: 15px;
+            }
+        }
+    </style>
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+</head>
+<body>
+    <div class="options-bar">
+        <div class="font-size-control">
+            <button id="fontMinus">A-</button>
+            <button id="fontPlus">A+</button>
+        </div>
+        <a href="index.html">📚 Índice</a>
+        <button id="themeToggle">🌙 Modo oscuro</button>
+    </div>
+
+    <div class="nav-container">
+        <div class="nav-center">
+            <a href="index.html" class="nav-btn">📚 Índice</a>
+            <a href="capitulo5e4.html" id="prevLinkTop" class="nav-btn ">← La actitud de las distintas razas hacia los humanos</a>
+            <span class="chapter-counter" id="chapterCounterTop">Capítulo 5 - Episodio 5</span>
+            <a href="capitulo5e6.html" id="nextLinkTop" class="nav-btn ">"Si aceleramos la tecnología, el mundo será destruido". ¿Cómo será destruido? →</a>
+        </div>
+    </div>
+
+    <div class="chapter-selector">
+        <select id="chapterSelect">
+            <option value="">📖 Ir a episodio...</option>
+        </select>
+    </div>
+
+    <h1>Rey Enano Dagan</h1>
+    <div class="episode-number">Capítulo 5 - Episodio 5</div>
+
+    <div class="story-content">
+        
+<p>Fortaleza del Reino Enano.</p> <p>Rodeada de montañas, la capital del reino se había construido como una fortaleza sólida gracias a la abundante piedra disponible y a la meticulosidad de los enanos. Hasta el más mínimo mueble del interior era de una calidad tan alta que parecía un derroche de esfuerzo. No es que se esforzaran por ser el castillo del rey. Los artesanos enanos entregaban sus obras con más confianza para demostrar que "¡mi trabajo es el mejor!". Como resultado, cada pieza era magnífica, pero el conjunto, pensando en la coordinación general, tenía un equilibrio algo deficiente. Para un observador externo podía ser un detalle, pero para quienes lo usaban no parecía ser un gran problema, y hasta ahora no se había corregido.</p> <p>Uno de esos usuarios —el rey del Reino Enano, Dagan— regresó a su dormitorio tras terminar su jornada de trabajo. Esa noche solo pensaba beber y dormir.</p> <p>—¡Ah, maldición! ¡Quiero dejar de ser rey cuanto antes y dedicarme a mi trabajo y a mi investigación! ¿Por qué tengo que hacer este trabajo tan tedioso?</p> <p>Era un enano de cabeza calva y barba espesa; bajo de estatura, pero con el torso, las extremidades y los hombros llenos de músculos, sin dar la más mínima impresión de debilidad. Al regresar al dormitorio haciendo resonar sus pasos, se bebió de un trago la botella de licor que había sobre la mesa y se limpió la boca bruscamente con la manga. Todo su comportamiento era impropio de un rey.</p> <p>Dagan, con la botella de licor aún en la mano, lamentó el pasado.</p> <p>—¡Maldición! ¿Por qué saqué papel en la reunión? Si hubiera sacado piedra, ahora estaría entregado a la investigación!</p> <p>Si alguien lo oyera, pensaría que es una tontería, pero para él era un problema grave y actual.</p> <p>En la administración del Reino Enano, la realeza no es entronizada por línea de sangre. Los maestros artesanos, cuyos linajes se remontan a la fundación del Reino Enano, se reúnen y se turnan el cargo de rey. Originalmente, el Reino Enano se creó para que los artesanos se reunieran y fabricaran mejores productos. Para los artesanos, reunirse todos, formar facciones y decidir por consenso era engorroso y poco racional. Que alguien asumiera el liderazgo como rey y decidiera la dirección del país era lo más eficiente. Por eso, desde antaño, los maestros artesanos reunidos se turnaban el trabajo de rey. Aunque cuentan con un mínimo de burócratas para la administración del país, y los productos enanos que fabrican son de una calidad tan alta que otras razas no pueden imitar, mantienen a duras penas la apariencia de nación.</p> <p>Dagan también provenía de una familia que se dedicaba al desarrollo y la investigación de objetos mágicos desde la fundación del reino. Su habilidad como artesano era excelente, y como investigador de objetos mágicos era un personaje tan famoso que ningún enano desconocía su nombre. Por eso se podría decir que le endosaron el trabajo de rey, pero...</p> <p>A la hora de decidir al rey, hubo otro enano, también de un linaje que se remontaba a la fundación, un artesano comparable a Dagan, y se turnaron el trono. Trás acaloradas discusiones, finalmente decidieron echarlo a suertes, y Dagan perdió, teniendo que convertirse en rey. Todavía lamentaba aquel incidente.</p> <p>Dagan se bebió el siguiente trago de la botella que tenía en la mano.</p> <p>—¡Buaaah! Pero con el próximo Congreso del Ducado de Six termina mi mandato. Cuando termine, ¡podré dedicarme libremente al desarrollo y la investigación de objetos mágicos! No me queda más que aguantar hasta entonces...</p> <p>—...Rey Enano.</p> <p>—¡¿...?!</p> <p>Cuando esperaba con ansia el fin de su mandato, alguien le dirigió la palabra a pesar de que no debería haber nadie más en el dormitorio. Al volverse hacia la voz, una persona envuelta en una capa con capucha que le cubría completamente la cabeza apareció deslizándose desde la sombra de la cama.</p> <p>—¡¿Un asesino?!</p> <p>Dagan alzó la voz y empuñó la botella vacía que tenía en la mano derecha como si fuera una espada, mientras llevaba la izquierda a la espalda. Agachó la cadera, adoptando una postura completamente combativa.</p> <p>A pesar de la postura de combate de Dagan, el intruso no mostró signos de nerviosismo y señaló con voz tranquila.</p> <p>—Rey Enano, es imposible que grite y llame a los soldados. Además, por mucho que intente activar el objeto mágico que lleva en la cintura, será inútil. Ya he tomado todas las medidas.</p> <p>—¡¿...?!</p> <p>Dagan abrió mucho los ojos, asombrado. Como señalaba el intruso, había gritado para llamar a los soldados que esperaban fuera del dormitorio, y mientras llamaba la atención empujando la botella con la mano derecha, intentaba activar el objeto mágico que llevaba en la cintura para crear una barrera. Intentaba ganar tiempo hasta que llegaran los soldados creando una barrera entre él y el intruso, pero se sorprendió de que todo hubiera sido descubierto y anulado.</p> <p>Para ser exactos, es posible que el objeto mágico que crea la barrera pudiera activarse un instante, pero incluso si se activara, el intruso de identidad desconocida no permitiría que la barrera se mantuviera. Viendo que nadie acude aunque grite, el oponente es superior. Aunque creara una barrera, lo más probable es que la destruyera enseguida por algún medio. Y, en primer lugar, podría ser que el objeto mágico no se activara en absoluto. Por ahora, más vale evitar acciones hostiles.</p> <p>El intruso le informó del motivo, como para tranquilizarlo.</p> <p>—Primero, le ruego me disculpe por visitarle a altas horas de la noche y de forma tan descortés. No he cometido esta grosería para herir al Rey Enano. He venido porque tengo un asunto que tratar con usted.</p> <p>—...¿No eres un asesino enviado por los dragones, los elfos o los demonios?</p> <p>—Sí, no lo soy. Yo sirvo a una presencia augusta. Esa persona desea conocer la verdad.</p> <p>—¿La verdad, dices?</p> <p>—¿Qué son los "Maestros"? ¿Por qué hay que matar a los candidatos a "Maestro", aunque sean falsos? ¿Acaso existe alguien superior a los "Maestros"? Hay más cuestiones, pero la augusta persona desea conocer toda la verdad. Por eso, desea reunirse en secreto con el Rey Enano. Por supuesto, en nombre de la augusta persona, le garantizo su seguridad. Así que, ¿podría hacerme un hueco en su agenda?</p> <p>—...</p> <p>Dagan permaneció en silencio. Aunque le hubieran endosado el cargo, era el rey. Evidentemente, tenía información sobre los "Maestros" y demás. Pero no era algo que pudiera contar a la ligera a una persona de aspecto sospechoso.</p> <p>Sin embargo, aquel individuo había logrado infiltrarse sin dificultad en la fortaleza construida con la mejor tecnología enana, sin ser detectado por los soldados ni por los últimos objetos mágicos de seguridad instalados, llegando hasta el dormitorio del rey. Era alguien que había anulado sin esfuerzo el objeto mágico que creaba la barrera, el as bajo la manga de Dagan. Si lo rechazaba, podría matarlo sin problemas y huir de la fortaleza con facilidad. En una situación en la que su vida pendía de un hilo, no podía rechazar ni aceptar a la ligera, y permaneció en silencio.</p> <p>—En realidad, para la intrusa —Nemumu, "UR, nivel 5000, Hoja Asesina"—, infiltrarse en la fortaleza enana era fácil, y los guardias y los últimos objetos mágicos de seguridad eran casi inexistentes. No es en vano que sea una asesina de nivel 5000. Para ella, era tan sencillo como trasladarse a la habitación de al lado.</p> <p>Volviendo al tema.</p> <p>Nemumu, por su parte, no tenía intención de matar al rey enano aunque rechazara su oferta. Porque así se lo había ordenado Light. Simplemente se retiraría sin atacar, y más tarde la "Bruja de la Torre Gigante" aplastaría al Reino Enano por la fuerza y lo pondría bajo su dominio, como hizo con el Reino de las Elfas. Para Light y los demás, daba igual una opción que la otra.</p> <p>No obstante... siguiendo el consejo de Lilith, sacó un objeto de negociación.</p> <p>Nemumu, con movimientos lentos para no alarmarlo, sacó la mano de debajo de la capa. Dagan, por un instante, intensificó su desconfianza ante sus movimientos, pero al darse cuenta de que no se movía para matarlo, observó la situación. Nemumu abrió la tapa de la cajita que sostenía en la mano.</p> <p>—Si acepta la reunión, tengo orden de obsequiarle un anillo de "Anulación de Venenos", un objeto mágico de nivel Fantasmal.</p> <p>—¡¿Un objeto mágico de nivel Fantasmal?!</p> <p>Según Lilith, el rey enano Dagan estaba obsesionado con el desarrollo de objetos mágicos. Por eso habían preparado un objeto mágico de nivel Fantasmal como cebo para que aceptara la reunión... y el efecto fue extraordinario.</p> <p>Dagan, que había mostrado desconfianza, se acercó sin ceremonias a la mano de Nemumu como un perro al que le ofrecen un cebo.</p> <p>—¡Déjame verlo! ¡Déjame tocarlo! ¡Déjame lamerlo!</p> <p>—S, si acepta la reunión, se lo entregaremos al Rey Enano, así que podrá hacer lo que quiera con él...</p> <p>—¡La reunión! ¡De acuerdo, iré! ¿Cuándo y a dónde tengo que ir para que me den ese anillo?</p> <p>—...</p> <p>Ante una actitud completamente diferente a la de antes, esta vez fue Nemumu la que se quedó callada, sorprendida.</p> <p><i>(¿Estará bien llevar a este señor ante el señor Light...?)</i></p> <p>Nemumu no pudo evitar pensarlo. Mientras tanto, Dagan, con los ojos brillando como un niño, seguía observando el objeto mágico de nivel Fantasmal que estaba en la mano de Nemumu con una mirada pegajosa, por arriba, por abajo, por los lados.</p> <p>—De momento, así consiguió la aprobación para una reunión secreta con el rey enano Dagan como primera fase.</p>
+    </div>
+
+    <hr>
+
+    <div class="nav-container">
+        <div class="nav-bottom">
+            <a href="index.html" class="nav-btn">📚 Índice</a>
+            <a href="capitulo5e4.html" id="prevLinkBottom" class="nav-btn ">← La actitud de las distintas razas hacia los humanos</a>
+            <span class="chapter-counter" id="chapterCounterBottom">Capítulo 5 - Episodio 5</span>
+            <a href="capitulo5e6.html" id="nextLinkBottom" class="nav-btn ">"Si aceleramos la tecnología, el mundo será destruido". ¿Cómo será destruido? →</a>
+        </div>
+    </div>
+
+    <div class="chapter-selector">
+        <select id="chapterSelectBottom">
+            <option value="">📖 Ir a episodio...</option>
+        </select>
+    </div>
+
+    <div class="floating-buttons">
+        <button class="floating-btn" id="scrollToTop" title="Ir arriba">⬆</button>
+        <button class="floating-btn" id="scrollToBottom" title="Ir abajo">⬇</button>
+    </div>
+
+    <footer>
+        <p>Gacha Infinita © 明鏡シスイ (Meikyō Shisui) | Traducción: Ocholobos</p>
+        <p>Apoya al autor comprando los volúmenes oficiales</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        // ========== CONFIGURACIÓN DEL CAPÍTULO ==========
+        const CHAPTER_NUM = 5;
+        const EPISODE_NUM = 5;
+        
+        // ========== NAVEGACIÓN ==========
+        function setupNavigation() {
+            if (typeof GACHA_DATA !== 'undefined') {
+                const currentEpisode = GACHA_DATA.getEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const prevEpisode = GACHA_DATA.getPrevEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const nextEpisode = GACHA_DATA.getNextEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const allEpisodes = GACHA_DATA.getAllEpisodesOrdered();
+                
+                const prevLinks = [document.getElementById('prevLinkTop'), document.getElementById('prevLinkBottom')];
+                const nextLinks = [document.getElementById('nextLinkTop'), document.getElementById('nextLinkBottom')];
+                const counters = [document.getElementById('chapterCounterTop'), document.getElementById('chapterCounterBottom')];
+                
+                counters.forEach(c => { if(c) c.textContent = `${currentEpisode.chapterTitle} - Episodio ${currentEpisode.episodeNum}`; });
+                
+                if (prevEpisode) {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${prevEpisode.chapter}e${prevEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = prevEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `← ${shortTitle}`;
+                        }
+                    });
+                } else {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = '← Sin anterior';
+                        }
+                    });
+                }
+                
+                if (nextEpisode) {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${nextEpisode.chapter}e${nextEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = nextEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `${shortTitle} →`;
+                        }
+                    });
+                } else {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = 'Sin siguiente →';
+                        }
+                    });
+                }
+                
+                const selects = [document.getElementById('chapterSelect'), document.getElementById('chapterSelectBottom')];
+                selects.forEach(select => {
+                    if (!select) return;
+                    let options = '<option value="">📖 Seleccionar episodio...</option>';
+                    for (const ep of allEpisodes) {
+                        const selected = (ep.chapter == CHAPTER_NUM && ep.episodeNum == EPISODE_NUM) ? 'selected' : '';
+                        options += `<option value="capitulo${ep.chapter}e${ep.episodeNum}.html" ${selected}>${ep.chapterTitle} - Episodio ${ep.episodeNum}: ${ep.title}</option>`;
+                    }
+                    select.innerHTML = options;
+                    select.onchange = function() { if(this.value) window.location.href = this.value; };
+                });
+            }
+        }
+        
+        // ========== REGISTRAR LECTURA EN HISTORIAL ==========
+        function markAsRead() {
+            const user = localStorage.getItem('gacha_user');
+            if (!user) return;
+            
+            let history = localStorage.getItem(`gacha_history_${user}`);
+            let historyObj = history ? JSON.parse(history) : { chapters: [] };
+            
+            const readKey = { chapter: CHAPTER_NUM, episode: EPISODE_NUM };
+            historyObj.chapters = historyObj.chapters.filter(item => 
+                !(item.chapter == CHAPTER_NUM && item.episode == EPISODE_NUM)
+            );
+            historyObj.chapters.unshift(readKey);
+            if (historyObj.chapters.length > 20) historyObj.chapters.pop();
+            
+            localStorage.setItem(`gacha_history_${user}`, JSON.stringify(historyObj));
+        }
+        
+        // ========== CONTROLES ==========
+        function initControls() {
+            const savedTheme = localStorage.getItem('gacha_theme');
+            if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            const savedFont = localStorage.getItem('gacha_fontsize');
+            if (savedFont) document.body.style.fontSize = savedFont + '%';
+            
+            document.getElementById('fontPlus').onclick = () => {
+                let size = parseInt(localStorage.getItem('gacha_fontsize')) || 100;
+                size = Math.min(150, size + 10);
+                document.body.style.fontSize = size + '%';
+                localStorage.setItem('gacha_fontsize', size);
+            };
+            document.getElementById('fontMinus').onclick = () => {
+                let size = parseInt(localStorage.getItem('gacha_fontsize')) || 100;
+                size = Math.max(70, size - 10);
+                document.body.style.fontSize = size + '%';
+                localStorage.setItem('gacha_fontsize', size);
+            };
+            
+            const themeBtn = document.getElementById('themeToggle');
+            if (document.documentElement.hasAttribute('data-theme')) themeBtn.textContent = '☀️ Modo claro';
+            themeBtn.onclick = () => {
+                const isDark = document.documentElement.hasAttribute('data-theme');
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('gacha_theme', 'light');
+                    themeBtn.textContent = '🌙 Modo oscuro';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('gacha_theme', 'dark');
+                    themeBtn.textContent = '☀️ Modo claro';
+                }
+            };
+            
+            document.getElementById('scrollToTop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('scrollToBottom').onclick = () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+        
+        // ========== INICIALIZACIÓN ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            initControls();
+            setupNavigation();
+            markAsRead();
+            
+            kofiWidgetOverlay.draw('ocholobos', {
+                'type': 'floating-chat',
+                'floating-chat.donateButton.text': 'Apóyame',
+                'floating-chat.donateButton.background-color': '#1a4d5f',
+                'floating-chat.donateButton.text-color': '#ffffff'
+            });
+        });
+    </script>
+</body>
+</html>

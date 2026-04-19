@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿La esperanza de la raza humana? | Gacha Infinita</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+            line-height: 1.8;
+            background: #faf9f7;
+            color: #2c2b28;
+            transition: all 0.3s ease;
+        }
+        [data-theme="dark"] body {
+            background: #1a1a1a;
+            color: #e5e5e5;
+        }
+        
+        .options-bar {
+            position: sticky;
+            top: 0;
+            background: #faf9f7;
+            border-bottom: 1px solid #e5e0d8;
+            padding: 0.6rem 1rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            z-index: 100;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        [data-theme="dark"] .options-bar {
+            background: #1a1a1a;
+            border-bottom-color: #404040;
+        }
+        .options-bar button, .options-bar a {
+            background: #eef2f0;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #1a4d5f;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        [data-theme="dark"] .options-bar button, [data-theme="dark"] .options-bar a {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        .font-size-control {
+            display: flex;
+            gap: 0.3rem;
+            align-items: center;
+        }
+        .font-size-control button {
+            width: 32px;
+            padding: 0.2rem;
+        }
+        
+        .nav-container {
+            margin: 1rem 0;
+        }
+        .nav-center, .nav-bottom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        .nav-bottom {
+            margin-top: 1rem;
+        }
+        .nav-btn {
+            background: #eef2f0;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: #1a4d5f;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        [data-theme="dark"] .nav-btn {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        .nav-btn:hover {
+            background: #e5e0d8;
+        }
+        .nav-btn.disabled {
+            background: #e5e0d8;
+            color: #9ca3af;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .chapter-counter {
+            background: #eef2f0;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1a4d5f;
+        }
+        [data-theme="dark"] .chapter-counter {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        
+        .chapter-selector {
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+        .chapter-selector select {
+            background: #eef2f0;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            color: #1a4d5f;
+            cursor: pointer;
+            width: 300px;
+            max-width: 90%;
+        }
+        [data-theme="dark"] .chapter-selector select {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin: 1rem 0 0.25rem;
+            color: #1a4d5f;
+        }
+        [data-theme="dark"] h1 {
+            color: #5a9e8c;
+        }
+        .episode-number {
+            color: #6b6a68;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e5e0d8;
+            padding-bottom: 0.5rem;
+        }
+        [data-theme="dark"] .episode-number {
+            color: #a0a0a0;
+            border-bottom-color: #404040;
+        }
+        .story-content {
+            margin: 1.5rem 0;
+        }
+        .story-content p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        hr {
+            margin: 2rem 0;
+            border: none;
+            border-top: 1px solid #e5e0d8;
+        }
+        [data-theme="dark"] hr {
+            border-top-color: #404040;
+        }
+        
+        .floating-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .floating-btn {
+            background: #1a4d5f;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+        }
+        [data-theme="dark"] .floating-btn {
+            background: #5a9e8c;
+        }
+        .floating-btn:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        .toast-message {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: #1a4d5f;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            animation: fadeOut 3s ease forwards;
+        }
+        [data-theme="dark"] .toast-message {
+            background: #5a9e8c;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9ca3af;
+            border-top: 1px solid #e5e0d8;
+            padding-top: 1.5rem;
+        }
+        [data-theme="dark"] footer {
+            border-top-color: #404040;
+        }
+        
+        @media (max-width: 600px) {
+            body { padding: 0.5rem; }
+            .nav-center, .nav-bottom { flex-direction: column; gap: 0.5rem; }
+            .floating-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                bottom: 70px;
+                right: 15px;
+            }
+        }
+    </style>
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+</head>
+<body>
+    <div class="options-bar">
+        <div class="font-size-control">
+            <button id="fontMinus">A-</button>
+            <button id="fontPlus">A+</button>
+        </div>
+        <a href="index.html">📚 Índice</a>
+        <button id="themeToggle">🌙 Modo oscuro</button>
+    </div>
+
+    <div class="nav-container">
+        <div class="nav-center">
+            <a href="index.html" class="nav-btn">📚 Índice</a>
+            <a href="capitulo4e8.html" id="prevLinkTop" class="nav-btn ">← Audiencia secreta</a>
+            <span class="chapter-counter" id="chapterCounterTop">Capítulo 4 - Episodio 9</span>
+            <a href="capitulo4e10.html" id="nextLinkTop" class="nav-btn ">Discusión sobre el futuro de la raza humana →</a>
+        </div>
+    </div>
+
+    <div class="chapter-selector">
+        <select id="chapterSelect">
+            <option value="">📖 Ir a episodio...</option>
+        </select>
+    </div>
+
+    <h1>¿La esperanza de la raza humana?</h1>
+    <div class="episode-number">Capítulo 4 - Episodio 9</div>
+
+    <div class="story-content">
+        
+<p>—Perdón por hacerla venir tan tarde. Princesa Lilith, primera princesa del Reino Humano. Yo soy el hermano de Yume, Light.</p> <p>El joven que se presentó como Light, el hermano de Yume, se levantó del dorado trono y bajó las escaleras por su propio pie para dirigirse hacia la primera princesa del Reino Humano, Lilith. Light se detuvo frente a ella.</p> <p>Como Lilith era ligeramente más alta, la postura hacía que ella mirara hacia abajo, pero a él no pareció importarle e inclinó la cabeza.</p> <p>—He escuchado lo sucedido de parte de mi hermana Yume. No solo le salvaron la vida con una poción a la princesa Lilith, sino que además le dieron un trabajo y la protegieron generosamente. Realmente, muchas gracias.</p> <p>Cuando Light inclinó la cabeza, Ellie y los demás, e incluso los monstruos que estaban detrás, inclinaron la cabeza al unísono ante Lilith. Ella se sintió confusa al recibir agradecimientos e inclinaciones de parte de Light, que poseía un poder como para que dijeran que era un "dios", de la "Bruja de la Torre Gigante" y de criaturas mitológicas. Pero al mismo tiempo sintió una sensación de superioridad, y notó cómo una gran cantidad de sustancias placenteras inundaban su cerebro.</p> <p>Sin embargo, no decir nada en ese momento podría costarle la vida. Así que agitó apresuradamente ambas manos de un lado a otro.</p> <p>—¡No, no! Solo hice lo que es humano. Así que, por favor, levanten la cabeza.</p> <p>—Le agradezco nuevamente su noble espíritu, princesa Lilith.</p> <p>—¡Mngh...!</p> <p>Light expresó su gratitud con una sonrisa radiante. Lilith sintió un vuelco en el corazón ante su sonrisa, de una belleza tal que podría confundírsele con una joven, y soltó un pequeño ruido mientras se sonrojaba. Light, sin notarlo, continuó.</p> <p>—No olvidaré la bondad que tuvo al salvar a mi hermana. Hemos preparado las pociones de la más alta calidad que podemos ofrecer, en compensación por la poción que usó para curar las heridas de Yume. También tenemos lista una recompensa en metálico, así que, por favor, acéptela.</p> <p>—¡¡...!!</p> <p>Light dirigió su mirada hacia Mei, y ella hizo aparecer desde su caja de objetos un barril lleno de monedas de oro, y encima de él, pociones de la más alta calidad. Ante esto, Lilith entró en pánico en su interior.</p> <p><i>(¡Lo que usé en Yume fue una poción de nivel intermedio, no una de la más alta calidad como se ve a simple vista...! Además, "un barril lleno de monedas de oro"... ¡un barril literalmente lleno de monedas de oro! ¡Es increíble!)</i></p> <p>Los frascos de las pociones tenían ornamentos de oro, proclamando a simple vista que eran del más alto nivel. Un barril lleno de monedas de oro podría igualar o incluso superar el presupuesto nacional del Reino Humano. Era imposible que una persona particular recibiera y se llevara semejante fortuna. En primer lugar, no podría explicar el motivo. Nadie aceptaría una explicación como "recibí una poción de la más alta calidad y un barril de monedas de oro como agradecimiento por ayudar a una joven que era hija de campesinos pobres".</p> <p>Lilith puso una mueca amarga, pensando en cómo rechazarlo. Por supuesto, el bando de Light ya había previsto esta situación. Él respondió con una sonrisa.</p> <p>—La poción de alta calidad puede tenerla la princesa Lilith como seguro en caso de emergencia. Es algo que no tiene por qué mostrar en público. En cuanto a las monedas de oro, considérelas como fondos personales de Su Alteza. Más tarde le presentaré a un comerciante que abrirá una tienda en el Reino Humano. Puede depositarle este barril, y si nos contacta con la cantidad que necesite, se la prepararemos de inmediato.</p> <p>—Le, le agradezco sus consideraciones.</p> <p>Ante unas palabras tan bien preparadas, no tuvo más remedio que aceptar. Lilith esbozó una sonrisa de cortesía. Además, si podía llevárselo, el dinero nunca está de más.</p> <p>Además, el bando de Light quería que aceptara la poción de alta calidad y el barril de monedas de oro para quedar bien. Le habían salvado la vida a su hermana pequeña, le habían dado trabajo y la habían protegido durante años en el castillo. Un simple agradecimiento no sería suficiente para el señor del "Abismo". Necesitaban mostrar algo que superara las expectativas de su interlocutora, que era una princesa. Por eso prepararon la poción de alta calidad y el barril de monedas de oro, y hasta dejaron todo listo para que pudiera aceptarlo.</p> <p>Además, Light añadió más palabras.</p> <p>—Pero con solo este agradecimiento no me siento satisfecho. Así que, ¿no tiene algún otro deseo? Si lo desea, podemos ofrecerle cosas como una "Pulsera de la Inmortalidad", una "Poción del Rejuvenecimiento" o unos "Aretes de Anulación de Venenos", ¿qué le parece?</p> <p>—Es, esto es realmente... Todo son cosas que parecen sacadas de cuentos de hadas, ¡me, me siento abrumada!</p> <p>Ante su ofrecimiento, la princesa Lilith forzó la voz. Era evidente que estaba sorprendida, aunque no hiciera falta leerle la mente. Si lo dijera otra persona sería una broma, pero viniendo del joven que tenía a su servicio a monstruos de nivel mitológico —Light—, tenía la certeza de que "no sería extraño que pudiera prepararlos".</p> <p>—Dígalo sin reparos. Es la salvadora de la vida de mi hermana. Si le cuesta decidirse, ¿se los doy todos?</p> <p>Light lo dijo con la misma naturalidad que si estuviera regalando una caja de surtido de dulces que se compran en la calle. La sonrisa de Lilith se tensó mientras pensaba, asombrada: <i>"¡¿C, cuánta riqueza y desahogo tiene?!"</i>.</p> <p>Lilith respiró hondo para calmarse.</p> <p><i>(Este ofrecimiento es muy generoso... Si en lugar de los objetos mágicos que me ha ofrecido, pudiera tomar prestada una o dos de las criaturas que hay aquí como monstruos familiares, podría cambiar muchas cosas: el desprecio hacia el Reino Humano, la presión para que bajemos injustamente el precio del grano, los aranceles, la venta de esclavos... Pero...)</i></p> <p>Lilith apretó fuertemente la palma de la mano. Se preguntó a sí misma "¿Está bien realmente?" y aceleró su pensamiento como nunca antes en su vida. Su conciencia le hablaba.</p> <p><i>(No sé qué efectos tendría depender de seres como ellos. Pero también es una realidad que es una esperanza inesperada... Así es, lo más importante para mí como princesa es proteger el futuro de la raza humana. ¡Por el futuro de la raza humana, besaré al demonio, aceptaré todo aunque me llamen reina demonio!)</i></p> <p>Lilith se volvió a enfrentar a Light. Y pronunció su deseo.</p> <p>—Lord Light, tengo un único deseo —prestar su poder para el futuro de la raza humana, ¡por favor! ¡Se lo ruego!</p> <p>—...Comprendido. Aunque sea humilde, le prestaré mi poder.</p> <p>Ante la petición de Lilith, Light aceptó con una sonrisa. Su respuesta fue tan inmediata y sin titubeos que Lilith sintió la ilusión de que había estado bailando en la palma de su mano desde el principio. Pero una vez dicho, ya no se podía volver atrás.</p> <p>No se sabía en ese momento si la decisión de Lilith sería una bendición o una desesperanza, un favor divino o un castigo divino para la raza humana.</p> <p>☆ ☆ ☆</p> <p>—A la mañana siguiente.</p> <p>Tras desayunar, el primer príncipe y la primera princesa del Reino Humano inspeccionaron los alrededores de la "Torre Gigante". La guía corría a cargo de Ellie, la "Bruja de la Torre Gigante".</p> <p>—Las viviendas son de dos tipos: cajas de metal y casas de madera, ¿no?</p> <p>—Las cajas de metal se llaman "prefabricadas". Son las que entregamos como viviendas temporales. Ahora estamos procesando madera para construir casas, dando prioridad a los hogares con niños sobre las personas solteras.</p> <p>Ellie, la "Bruja de la Torre Gigante", respondió con fluidez a la pregunta de Lilith.</p> <p>Tras proteger a los esclavos, utilizaron "R, Prefabricada", una carta salida del "Gacha Infinita", como vivienda temporal. Después, talaron madera del bosque virgen de los alrededores, dando prioridad a las familias, y la secaron con magia para construir casas unifamiliares. Para esa construcción contrataron a artesanos humanos, y también estaban fabricando muebles, vajillas y otros enseres.</p> <p>Luego fue su hermano Kuro quien habló.</p> <p>—Los campos... los están arando los gólems, ¿no?</p> <p>—Así es. A los humanos les falta fuerza física, y los gólems pueden arar sin descanso. Sin embargo, para las tareas delicadas, como sembrar o regar, se necesitan manos humanas. No dependemos exclusivamente de los gólems, sino que cada uno contribuye en su campo de especialización. Es la persona adecuada en el puesto adecuado.</p> <p>—Me parece una idea magnífica. Por cierto, ¿podrían cedernos a esos gólems?</p> <p>—No lo hemos pensado. Tampoco tenemos intención de sacarlos al exterior en el futuro.</p> <p>—Qué lástima. Pensé que si nos los cedieran, el desarrollo de nuestro país avanzaría...</p> <p>Kuro se mostró decepcionado. Sin embargo, si sacaran los gólems al exterior para usarlos en el desarrollo, aunque fuera temporalmente, se perderían puestos de trabajo para los humanos. Sin trabajo, no podrían ganar un salario ni comer sopa o pan. La "Bruja de la Torre Gigante" estaba en la posición de abanderar el "Independentismo Absoluto de la Raza Humana". Además de otras razones, en ese momento, cuando la "Torre Gigante" llevaba poco tiempo en pie, no tenía necesidad de hacer nada que pudiera granjearle el odio de los humanos, aunque fuera en parte.</p> <p>Al notar la presencia de la "Bruja de la Torre Gigante" y las demás, las doncellas hada que estaban trabajando se detuvieron e inclinaron la cabeza, mientras que los otros humanos se arrodillaron en el suelo con ambas rodillas, juntaron las manos e inclinaron profundamente la cabeza como si rezaran. Ellie, la "Bruja de la Torre Gigante", respondió con familiaridad levantando ligeramente la mano. Lilith, con los ojos brillando de emoción, pensó: "Al final, para el futuro de la raza humana, deberíamos aliarnos con ellas". Su hermano Kuro, en cambio, mostró cierto descontento en su rostro: "Ignorando a la realeza humana...".</p> <p>Ellie, sin hacer caso a ese descontento, se dirigió al siguiente lugar de la inspección.</p> <p>—Ahora inspeccionaremos la zona exterior.</p> <p>—Una sombra observaba esa escena desde la entrada del primer piso de la torre. Era la propia primera princesa Lilith, que se suponía que estaba inspeccionando la "Torre Gigante".</p> <p>—No puedo creer que ni siquiera mi hermano, sino también Nono, la jefa de las doncellas, se hayan dado cuenta de que soy una falsa...</p>
+    </div>
+
+    <hr>
+
+    <div class="nav-container">
+        <div class="nav-bottom">
+            <a href="index.html" class="nav-btn">📚 Índice</a>
+            <a href="capitulo4e8.html" id="prevLinkBottom" class="nav-btn ">← Audiencia secreta</a>
+            <span class="chapter-counter" id="chapterCounterBottom">Capítulo 4 - Episodio 9</span>
+            <a href="capitulo4e10.html" id="nextLinkBottom" class="nav-btn ">Discusión sobre el futuro de la raza humana →</a>
+        </div>
+    </div>
+
+    <div class="chapter-selector">
+        <select id="chapterSelectBottom">
+            <option value="">📖 Ir a episodio...</option>
+        </select>
+    </div>
+
+    <div class="floating-buttons">
+        <button class="floating-btn" id="scrollToTop" title="Ir arriba">⬆</button>
+        <button class="floating-btn" id="scrollToBottom" title="Ir abajo">⬇</button>
+    </div>
+
+    <footer>
+        <p>Gacha Infinita © 明鏡シスイ (Meikyō Shisui) | Traducción: Ocholobos</p>
+        <p>Apoya al autor comprando los volúmenes oficiales</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        // ========== CONFIGURACIÓN DEL CAPÍTULO ==========
+        const CHAPTER_NUM = 4;
+        const EPISODE_NUM = 9;
+        
+        // ========== NAVEGACIÓN ==========
+        function setupNavigation() {
+            if (typeof GACHA_DATA !== 'undefined') {
+                const currentEpisode = GACHA_DATA.getEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const prevEpisode = GACHA_DATA.getPrevEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const nextEpisode = GACHA_DATA.getNextEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const allEpisodes = GACHA_DATA.getAllEpisodesOrdered();
+                
+                const prevLinks = [document.getElementById('prevLinkTop'), document.getElementById('prevLinkBottom')];
+                const nextLinks = [document.getElementById('nextLinkTop'), document.getElementById('nextLinkBottom')];
+                const counters = [document.getElementById('chapterCounterTop'), document.getElementById('chapterCounterBottom')];
+                
+                counters.forEach(c => { if(c) c.textContent = `${currentEpisode.chapterTitle} - Episodio ${currentEpisode.episodeNum}`; });
+                
+                if (prevEpisode) {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${prevEpisode.chapter}e${prevEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = prevEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `← ${shortTitle}`;
+                        }
+                    });
+                } else {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = '← Sin anterior';
+                        }
+                    });
+                }
+                
+                if (nextEpisode) {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${nextEpisode.chapter}e${nextEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = nextEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `${shortTitle} →`;
+                        }
+                    });
+                } else {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = 'Sin siguiente →';
+                        }
+                    });
+                }
+                
+                const selects = [document.getElementById('chapterSelect'), document.getElementById('chapterSelectBottom')];
+                selects.forEach(select => {
+                    if (!select) return;
+                    let options = '<option value="">📖 Seleccionar episodio...</option>';
+                    for (const ep of allEpisodes) {
+                        const selected = (ep.chapter == CHAPTER_NUM && ep.episodeNum == EPISODE_NUM) ? 'selected' : '';
+                        options += `<option value="capitulo${ep.chapter}e${ep.episodeNum}.html" ${selected}>${ep.chapterTitle} - Episodio ${ep.episodeNum}: ${ep.title}</option>`;
+                    }
+                    select.innerHTML = options;
+                    select.onchange = function() { if(this.value) window.location.href = this.value; };
+                });
+            }
+        }
+        
+        // ========== REGISTRAR LECTURA EN HISTORIAL ==========
+        function markAsRead() {
+            const user = localStorage.getItem('gacha_user');
+            if (!user) return;
+            
+            let history = localStorage.getItem(`gacha_history_${user}`);
+            let historyObj = history ? JSON.parse(history) : { chapters: [] };
+            
+            const readKey = { chapter: CHAPTER_NUM, episode: EPISODE_NUM };
+            historyObj.chapters = historyObj.chapters.filter(item => 
+                !(item.chapter == CHAPTER_NUM && item.episode == EPISODE_NUM)
+            );
+            historyObj.chapters.unshift(readKey);
+            if (historyObj.chapters.length > 20) historyObj.chapters.pop();
+            
+            localStorage.setItem(`gacha_history_${user}`, JSON.stringify(historyObj));
+        }
+        
+        // ========== CONTROLES ==========
+        function initControls() {
+            const savedTheme = localStorage.getItem('gacha_theme');
+            if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            const savedFont = localStorage.getItem('gacha_fontsize');
+            if (savedFont) document.body.style.fontSize = savedFont + '%';
+            
+            document.getElementById('fontPlus').onclick = () => {
+                let size = parseInt(localStorage.getItem('gacha_fontsize')) || 100;
+                size = Math.min(150, size + 10);
+                document.body.style.fontSize = size + '%';
+                localStorage.setItem('gacha_fontsize', size);
+            };
+            document.getElementById('fontMinus').onclick = () => {
+                let size = parseInt(localStorage.getItem('gacha_fontsize')) || 100;
+                size = Math.max(70, size - 10);
+                document.body.style.fontSize = size + '%';
+                localStorage.setItem('gacha_fontsize', size);
+            };
+            
+            const themeBtn = document.getElementById('themeToggle');
+            if (document.documentElement.hasAttribute('data-theme')) themeBtn.textContent = '☀️ Modo claro';
+            themeBtn.onclick = () => {
+                const isDark = document.documentElement.hasAttribute('data-theme');
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('gacha_theme', 'light');
+                    themeBtn.textContent = '🌙 Modo oscuro';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('gacha_theme', 'dark');
+                    themeBtn.textContent = '☀️ Modo claro';
+                }
+            };
+            
+            document.getElementById('scrollToTop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('scrollToBottom').onclick = () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+        
+        // ========== INICIALIZACIÓN ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            initControls();
+            setupNavigation();
+            markAsRead();
+            
+            kofiWidgetOverlay.draw('ocholobos', {
+                'type': 'floating-chat',
+                'floating-chat.donateButton.text': 'Apóyame',
+                'floating-chat.donateButton.background-color': '#1a4d5f',
+                'floating-chat.donateButton.text-color': '#ffffff'
+            });
+        });
+    </script>
+</body>
+</html>

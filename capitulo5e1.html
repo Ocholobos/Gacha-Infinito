@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El sueño de Nano | Gacha Infinita</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+            line-height: 1.8;
+            background: #faf9f7;
+            color: #2c2b28;
+            transition: all 0.3s ease;
+        }
+        [data-theme="dark"] body {
+            background: #1a1a1a;
+            color: #e5e5e5;
+        }
+        
+        .options-bar {
+            position: sticky;
+            top: 0;
+            background: #faf9f7;
+            border-bottom: 1px solid #e5e0d8;
+            padding: 0.6rem 1rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            z-index: 100;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        [data-theme="dark"] .options-bar {
+            background: #1a1a1a;
+            border-bottom-color: #404040;
+        }
+        .options-bar button, .options-bar a {
+            background: #eef2f0;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #1a4d5f;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        [data-theme="dark"] .options-bar button, [data-theme="dark"] .options-bar a {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        .font-size-control {
+            display: flex;
+            gap: 0.3rem;
+            align-items: center;
+        }
+        .font-size-control button {
+            width: 32px;
+            padding: 0.2rem;
+        }
+        
+        .nav-container {
+            margin: 1rem 0;
+        }
+        .nav-center, .nav-bottom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        .nav-bottom {
+            margin-top: 1rem;
+        }
+        .nav-btn {
+            background: #eef2f0;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: #1a4d5f;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        [data-theme="dark"] .nav-btn {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        .nav-btn:hover {
+            background: #e5e0d8;
+        }
+        .nav-btn.disabled {
+            background: #e5e0d8;
+            color: #9ca3af;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .chapter-counter {
+            background: #eef2f0;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1a4d5f;
+        }
+        [data-theme="dark"] .chapter-counter {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        
+        .chapter-selector {
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+        .chapter-selector select {
+            background: #eef2f0;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            color: #1a4d5f;
+            cursor: pointer;
+            width: 300px;
+            max-width: 90%;
+        }
+        [data-theme="dark"] .chapter-selector select {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin: 1rem 0 0.25rem;
+            color: #1a4d5f;
+        }
+        [data-theme="dark"] h1 {
+            color: #5a9e8c;
+        }
+        .episode-number {
+            color: #6b6a68;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e5e0d8;
+            padding-bottom: 0.5rem;
+        }
+        [data-theme="dark"] .episode-number {
+            color: #a0a0a0;
+            border-bottom-color: #404040;
+        }
+        .story-content {
+            margin: 1.5rem 0;
+        }
+        .story-content p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        hr {
+            margin: 2rem 0;
+            border: none;
+            border-top: 1px solid #e5e0d8;
+        }
+        [data-theme="dark"] hr {
+            border-top-color: #404040;
+        }
+        
+        .floating-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .floating-btn {
+            background: #1a4d5f;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+        }
+        [data-theme="dark"] .floating-btn {
+            background: #5a9e8c;
+        }
+        .floating-btn:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        .toast-message {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: #1a4d5f;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            animation: fadeOut 3s ease forwards;
+        }
+        [data-theme="dark"] .toast-message {
+            background: #5a9e8c;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9ca3af;
+            border-top: 1px solid #e5e0d8;
+            padding-top: 1.5rem;
+        }
+        [data-theme="dark"] footer {
+            border-top-color: #404040;
+        }
+        
+        @media (max-width: 600px) {
+            body { padding: 0.5rem; }
+            .nav-center, .nav-bottom { flex-direction: column; gap: 0.5rem; }
+            .floating-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                bottom: 70px;
+                right: 15px;
+            }
+        }
+    </style>
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+</head>
+<body>
+    <div class="options-bar">
+        <div class="font-size-control">
+            <button id="fontMinus">A-</button>
+            <button id="fontPlus">A+</button>
+        </div>
+        <a href="index.html">📚 Índice</a>
+        <button id="themeToggle">🌙 Modo oscuro</button>
+    </div>
+
+    <div class="nav-container">
+        <div class="nav-center">
+            <a href="index.html" class="nav-btn">📚 Índice</a>
+            <a href="capitulo4e14.html" id="prevLinkTop" class="nav-btn ">← Extra: El mohicano y el hombre bestia</a>
+            <span class="chapter-counter" id="chapterCounterTop">Capítulo 5 - Episodio 1</span>
+            <a href="capitulo5e2.html" id="nextLinkTop" class="nav-btn ">Nano y la espada prohibida 1 →</a>
+        </div>
+    </div>
+
+    <div class="chapter-selector">
+        <select id="chapterSelect">
+            <option value="">📖 Ir a episodio...</option>
+        </select>
+    </div>
+
+    <h1>El sueño de Nano</h1>
+    <div class="episode-number">Capítulo 5 - Episodio 1</div>
+
+    <div class="story-content">
+        
+<p>El Reino Enano es una nación montañosa rodeada de montañas. Aunque hay pocas llanuras, abundan los minerales y recursos que se obtienen de las montañas, y junto con la tecnología enana, se exportan en grandes cantidades a otros países.</p> <p>El Reino Enano está situado en el extremo oeste del continente, limitando al norte con el Reino Demonio y al sur con el Reino de las Elfas, pero ambos están separados por montañas. Sus relaciones con el vecino Reino Humano no eran ni buenas ni malas.</p> <p>En la capital de ese Reino Enano, un hombre entró en un bar. Se sentó en una mesa del fondo y bebió su bebida con aire aburrido. Era Nano, el enano traidor que había traicionado a Light y había aprobado que intentaran matarlo en el "Abismo".</p> <p>Tenía las extremidades cortas pero gruesas, y aunque era bajo, su constitución era musculosa y robusta. No daba una impresión débil, sino más bien la imagen de una pequeña montaña compacta y sólida. Su boca estaba rodeada por una abundante barba, el aspecto típico de un enano.</p> <p>Los clientes del bar eran también enanos en su mayoría, que bebían alegremente con sus compañeros después del trabajo. Nano también bebía después de su jornada, pero no sentía ni la liberación del trabajo ni el placer de beber. Exudaba una atmósfera sombría, como alguien que, habiendo fracasado en sus inversiones y acumulado muchas deudas, se preocupaba por el futuro. Gracias a ello, el entorno de Nano parecía más oscuro y sombrío que el resto, o así se sentía.</p> <p>—Suspiro...</p> <p>Nano bebió de nuevo el licor servido en la jarra de madera y suspiró.</p> <p>La razón por la que estaba abatido no era que estuviera preocupado por el futuro por haber acumulado una gran deuda. Más bien, tenía ahorros suficientes para no tener que trabajar en toda su vida. También le habían conseguido un trabajo en una herrería, una de las mejores de la capital del Reino Enano, y trabajaba allí. Para un observador externo, se le podría considerar sin duda un triunfador. Sin embargo, Nano bebía como si estuviera desilusionado con la vida. Tenía sus propias razones para estar desilusionado.</p> <p><i>(...Todos los días, todos los días, solo trabajo en cosas aburridas... ¿Acaso voy a pudrirme así sin haber podido fabricar el "arma legendaria" que era mi anhelo...?)</i></p> <p>Nano era huérfano. Cuando estaba en el orfanato, desde pequeño le gustaban las historias de héroes. Especialmente aquellas en las que aparecían espadas, lanzas o arcos legendarios. Desde pequeño, en lugar de "convertirse en héroe", deseó "fabricar un arma legendaria".</p> <p>Y cuando se graduó del orfanato en una ciudad provincial del Reino Enano, consiguió trabajo en una herrería, como él quería. Tenía talento para la fabricación de armas, hasta el punto de ser elogiado sin reservas por su maestro y sus compañeros mayores. Su vida iba viento en popa, pero al mismo tiempo tomó conciencia de sus propios límites. "Así, mi sueño seguirá siendo solo un sueño —no podré fabricar el 'arma legendaria' con mis propias manos".</p> <p>Aunque le dijeran que tenía talento, al fin y al cabo solo era un talento para fabricar las armas comunes y corrientes que se encuentran por ahí. Así nunca podría alcanzar su deseo. Sintiendo eso, Nano, para cumplir el sueño de su infancia, mientras trabajaba en la herrería, también empezó a actuar como aventurero. Los días de descanso, desde temprano en la mañana, se adentraba en mazmorras o ruinas como aventurero. Pensaba que así podría ganar dinero para conseguir su propia herrería en el futuro y, con un poco de suerte, obtener armas que le sirvieran de muestra para el "arma legendaria" que idealizaba, para poder analizarlas e investigarlas.</p> <p>Su maestro, sus compañeros mayores y sus colegas, como era natural, intentaron disuadirlo. Le decían que, como Nano era hábil, si seguía adelante con su trabajo, podría convertirse en un maestro herrero sin problemas para comer, y que dejara de meterse en lugares peligrosos como mazmorras o ruinas. Pero su deseo era fabricar con sus propias manos el "arma legendaria".</p> <p>Para acallar las objeciones, Nano no escatimaba esfuerzos en su trabajo de herrería, y lo hacía mejor que nadie. Y además, si al día siguiente descansaba, en cuanto terminaba el trabajo se iba de aventurero a mazmorras o ruinas. Aunque los que le rodeaban le miraban como a un loco, a Nano no le importaba lo más mínimo. Como se dedicaba por entero a su sueño, no sentía cansancio alguno, y por muchas veces que experimentara peligros de muerte, solo le resultaba divertido. Sentía la sensación de estar vivo, de plenitud. Por eso, no le importaba en absoluto lo que pensaran los demás.</p> <p>A ese Nano, el Reino Enano le hizo una propuesta.</p> <p>—¿Investigar a los candidatos a "Maestro"?</p> <p>—Oye, ¿te gustaría probar?</p> <p>Un enviado del Reino Enano había oído hablar de la reputación de Nano y vino a verle. Se había decidido reunir a aventureros de los cinco países, exceptuando a los humanos, para investigar y presentar informes sobre la existencia de los llamados "Maestros". Los enanos que se dedican a la aventura o la artesanía tienden a especializarse en su campo. Por eso, hay muy pocos que puedan desempeñar funciones de investigación como esta, porque "si tienen tiempo, prefieren perfeccionar su campo elegido". Pero tampoco podían dejar de aportar personal por cuestión de prestigio nacional. Al ser un asunto confidencial del estado, tampoco podían presentar a alguien claramente incompetente.</p> <p>Por eso, pensaron que "Nano, que compagina la artesanía y el aventurerismo con excelentes resultados, podría aceptar por interés", y le hicieron la propuesta.</p> <p>—El período de vinculación es largo, pero incluso si fracasas, te daremos una buena compensación económica, y si triunfas, te daremos esta recompensa y privilegios. ¿Qué dices, te animas? Creo que no es mala oferta.</p> <p>La cantidad y los privilegios que le ofreció el enviado eran ciertamente impresionantes. Como era de esperar de un asunto confidencial del estado. Sin embargo, Nano no se dejó mover por eso. Lo que realmente le movió fue la existencia de los "Maestros".</p> <p><i>(¡Si pudiera descubrir a esos "Maestros" y conocerlos, sería muy probable que obtuviera el conocimiento o las ideas que me permitirían fabricar el "arma legendaria"!)</i></p> <p>Cuanto más oía hablar de los "Maestros", con su inmenso poder, armas y conocimientos, más se sentía atraído Nano. No por la enorme recompensa, sino por el deseo de conocer a los "Maestros" y obtener el conocimiento para fabricar el "arma legendaria", por lo que solicitó participar en la "Reunión de Razas".</p> <p>—Pero años después, el candidato a "Maestro" que había caído en la red resultó ser un fracaso.</p> <p>Desecharon a Light en el "Abismo"... para ser precisos, desapareció por la matriz de teletransportación, por lo que no confirmaron su muerte, pero todos los miembros coincidieron en que "es imposible que Light, un humano inferior moribundo, esté vivo", e informaron a los superiores. Los superiores, al oír las palabras de los miembros de la "Reunión de Razas", determinaron que "era poco probable que Light siguiera con vida". Se le declaró muerto.</p> <p>Aunque no era un "Maestro", como recompensa por haber matado a un humano sospechoso, se pagó una gran suma a los miembros de la "Reunión de Razas". Nano la rechazó al principio. En su lugar, solicitó "querer volver a participar en la búsqueda de 'Maestros'", pero fue denegado. Para que no se desconfiara de otros futuros candidatos a "Maestro", estaba prohibido por acuerdo entre los países volver a contratar a quienes ya habían realizado la misión. Como resultado, se vio obligado a aceptar la recompensa por el asesinato del candidato a "Maestro" fracasado, Light.</p> <p>Gracias a ello, obtuvo suficiente dinero para no tener que trabajar en toda su vida y consiguió empleo en la mejor herrería, la envidia de cualquier artesano enano. Había conseguido un entorno que cualquier enano que deseara dedicarse a la herrería envidiaría, pero para Nano, paradójicamente, lo alejó más de su sueño.</p> <p>Llegó a pensar: "¿y si uso el dinero que conseguí matando a Light para buscar por mi cuenta a los 'Maestros'?" Pero si cometía tal infracción contractual, aunque los enanos lo permitieran, otras razas vendrían a matarlo. Sobre todo, surgía el problema de "¿cómo buscar a los 'Maestros'?"</p> <p>Incluso encontrar a Light, el candidato a "Maestro" fracasado, había sido en gran parte cuestión de suerte. En principio, encontrar a un candidato a "Maestro" ya es difícil por sí solo. Buscar por cuenta propia al verdadero "Maestro" es como buscar una joya en el desierto.</p> <p>Si se le preguntara si, como antaño, preferiría adentrarse en mazmorras o ruinas en busca de "armas" que pudieran servirle de muestra... el hecho de conocer la existencia de los "Maestros", que son lo más cercano al "arma legendaria" y de quienes es muy probable obtener información, y aun así tener que reiniciar la tarea de adentrarse solo en mazmorras y probar por su cuenta, sin saber si realmente podría fabricarla, sería un suplicio.</p> <p><i>(Cuando creí acercarme a mi sueño, de repente se alejó...)</i></p> <p>Como resultado, no pudo abandonar su sueño, no encontró la manera de buscar a los "Maestros" y vivía días ociosos.</p> <p><i>(¡Maldición! ¡Ese mocoso de Light! ¡Si no se hubiera dejado atrapar ese falso mocoso de mierda, yo seguiría pudiendo buscar a los "Maestros" en la "Reunión de Razas" con la ayuda del país! ¡Inútil! ¡Al menos, para expiar tu culpa, muere sufriendo en el "Abismo", inútil humano inferior!)</i></p> <p>Nano, con un tono de desahogo, soltó improperios llenos de odio en su interior contra Light, el candidato a "Maestro" fracasado que había caído en la red años atrás. Acto seguido, se bebió todo el licor que quedaba en la jarra de madera.</p> <p>Bajó la mirada hacia la jarra vacía y suspiró.</p> <p><i>(¿Cómo puedo encontrar a los "Maestros"?... Si pudiera encontrar a los "Maestros", que podrían darme la oportunidad de fabricar el "arma legendaria", mi sueño, no me importaría que mi alma quedara atada al Rey Demonio después de muerto...)</i></p> <p>Como si su deseo se hubiera cumplido...</p> <p>—¿Es usted el señor Nano? ¿Tiene un momento? Tengo un asunto muy importante para usted.</p> <p>Un humano con sombrero, que entrecerró aún más sus ya de por sí finos ojos como hilos, esbozando una sonrisa sospechosa, le dirigió la palabra. Apareció como por arte de magia desde una sombra oscura, como un enviado del Rey Demonio.</p>
+    </div>
+
+    <hr>
+
+    <div class="nav-container">
+        <div class="nav-bottom">
+            <a href="index.html" class="nav-btn">📚 Índice</a>
+            <a href="capitulo4e14.html" id="prevLinkBottom" class="nav-btn ">← Extra: El mohicano y el hombre bestia</a>
+            <span class="chapter-counter" id="chapterCounterBottom">Capítulo 5 - Episodio 1</span>
+            <a href="capitulo5e2.html" id="nextLinkBottom" class="nav-btn ">Nano y la espada prohibida 1 →</a>
+        </div>
+    </div>
+
+    <div class="chapter-selector">
+        <select id="chapterSelectBottom">
+            <option value="">📖 Ir a episodio...</option>
+        </select>
+    </div>
+
+    <div class="floating-buttons">
+        <button class="floating-btn" id="scrollToTop" title="Ir arriba">⬆</button>
+        <button class="floating-btn" id="scrollToBottom" title="Ir abajo">⬇</button>
+    </div>
+
+    <footer>
+        <p>Gacha Infinita © 明鏡シスイ (Meikyō Shisui) | Traducción: Ocholobos</p>
+        <p>Apoya al autor comprando los volúmenes oficiales</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        // ========== CONFIGURACIÓN DEL CAPÍTULO ==========
+        const CHAPTER_NUM = 5;
+        const EPISODE_NUM = 1;
+        
+        // ========== NAVEGACIÓN ==========
+        function setupNavigation() {
+            if (typeof GACHA_DATA !== 'undefined') {
+                const currentEpisode = GACHA_DATA.getEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const prevEpisode = GACHA_DATA.getPrevEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const nextEpisode = GACHA_DATA.getNextEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const allEpisodes = GACHA_DATA.getAllEpisodesOrdered();
+                
+                const prevLinks = [document.getElementById('prevLinkTop'), document.getElementById('prevLinkBottom')];
+                const nextLinks = [document.getElementById('nextLinkTop'), document.getElementById('nextLinkBottom')];
+                const counters = [document.getElementById('chapterCounterTop'), document.getElementById('chapterCounterBottom')];
+                
+                counters.forEach(c => { if(c) c.textContent = `${currentEpisode.chapterTitle} - Episodio ${currentEpisode.episodeNum}`; });
+                
+                if (prevEpisode) {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${prevEpisode.chapter}e${prevEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = prevEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `← ${shortTitle}`;
+                        }
+                    });
+                } else {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = '← Sin anterior';
+                        }
+                    });
+                }
+                
+                if (nextEpisode) {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${nextEpisode.chapter}e${nextEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = nextEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `${shortTitle} →`;
+                        }
+                    });
+                } else {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = 'Sin siguiente →';
+                        }
+                    });
+                }
+                
+                const selects = [document.getElementById('chapterSelect'), document.getElementById('chapterSelectBottom')];
+                selects.forEach(select => {
+                    if (!select) return;
+                    let options = '<option value="">📖 Seleccionar episodio...</option>';
+                    for (const ep of allEpisodes) {
+                        const selected = (ep.chapter == CHAPTER_NUM && ep.episodeNum == EPISODE_NUM) ? 'selected' : '';
+                        options += `<option value="capitulo${ep.chapter}e${ep.episodeNum}.html" ${selected}>${ep.chapterTitle} - Episodio ${ep.episodeNum}: ${ep.title}</option>`;
+                    }
+                    select.innerHTML = options;
+                    select.onchange = function() { if(this.value) window.location.href = this.value; };
+                });
+            }
+        }
+        
+        // ========== REGISTRAR LECTURA EN HISTORIAL ==========
+        function markAsRead() {
+            const user = localStorage.getItem('gacha_user');
+            if (!user) return;
+            
+            let history = localStorage.getItem(`gacha_history_${user}`);
+            let historyObj = history ? JSON.parse(history) : { chapters: [] };
+            
+            const readKey = { chapter: CHAPTER_NUM, episode: EPISODE_NUM };
+            historyObj.chapters = historyObj.chapters.filter(item => 
+                !(item.chapter == CHAPTER_NUM && item.episode == EPISODE_NUM)
+            );
+            historyObj.chapters.unshift(readKey);
+            if (historyObj.chapters.length > 20) historyObj.chapters.pop();
+            
+            localStorage.setItem(`gacha_history_${user}`, JSON.stringify(historyObj));
+        }
+        
+        // ========== CONTROLES ==========
+        function initControls() {
+            const savedTheme = localStorage.getItem('gacha_theme');
+            if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            const savedFont = localStorage.getItem('gacha_fontsize');
+            if (savedFont) document.body.style.fontSize = savedFont + '%';
+            
+            document.getElementById('fontPlus').onclick = () => {
+                let size = parseInt(localStorage.getItem('gacha_fontsize')) || 100;
+                size = Math.min(150, size + 10);
+                document.body.style.fontSize = size + '%';
+                localStorage.setItem('gacha_fontsize', size);
+            };
+            document.getElementById('fontMinus').onclick = () => {
+                let size = parseInt(localStorage.getItem('gacha_fontsize')) || 100;
+                size = Math.max(70, size - 10);
+                document.body.style.fontSize = size + '%';
+                localStorage.setItem('gacha_fontsize', size);
+            };
+            
+            const themeBtn = document.getElementById('themeToggle');
+            if (document.documentElement.hasAttribute('data-theme')) themeBtn.textContent = '☀️ Modo claro';
+            themeBtn.onclick = () => {
+                const isDark = document.documentElement.hasAttribute('data-theme');
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('gacha_theme', 'light');
+                    themeBtn.textContent = '🌙 Modo oscuro';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('gacha_theme', 'dark');
+                    themeBtn.textContent = '☀️ Modo claro';
+                }
+            };
+            
+            document.getElementById('scrollToTop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('scrollToBottom').onclick = () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+        
+        // ========== INICIALIZACIÓN ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            initControls();
+            setupNavigation();
+            markAsRead();
+            
+            kofiWidgetOverlay.draw('ocholobos', {
+                'type': 'floating-chat',
+                'floating-chat.donateButton.text': 'Apóyame',
+                'floating-chat.donateButton.background-color': '#1a4d5f',
+                'floating-chat.donateButton.text-color': '#ffffff'
+            });
+        });
+    </script>
+</body>
+</html>

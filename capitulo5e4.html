@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La actitud de las distintas razas hacia los humanos | Gacha Infinita</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+            line-height: 1.8;
+            background: #faf9f7;
+            color: #2c2b28;
+            transition: all 0.3s ease;
+        }
+        [data-theme="dark"] body {
+            background: #1a1a1a;
+            color: #e5e5e5;
+        }
+        
+        .options-bar {
+            position: sticky;
+            top: 0;
+            background: #faf9f7;
+            border-bottom: 1px solid #e5e0d8;
+            padding: 0.6rem 1rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            z-index: 100;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        [data-theme="dark"] .options-bar {
+            background: #1a1a1a;
+            border-bottom-color: #404040;
+        }
+        .options-bar button, .options-bar a {
+            background: #eef2f0;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #1a4d5f;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        [data-theme="dark"] .options-bar button, [data-theme="dark"] .options-bar a {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        .font-size-control {
+            display: flex;
+            gap: 0.3rem;
+            align-items: center;
+        }
+        .font-size-control button {
+            width: 32px;
+            padding: 0.2rem;
+        }
+        
+        .nav-container {
+            margin: 1rem 0;
+        }
+        .nav-center, .nav-bottom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        .nav-bottom {
+            margin-top: 1rem;
+        }
+        .nav-btn {
+            background: #eef2f0;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: #1a4d5f;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        [data-theme="dark"] .nav-btn {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        .nav-btn:hover {
+            background: #e5e0d8;
+        }
+        .nav-btn.disabled {
+            background: #e5e0d8;
+            color: #9ca3af;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .chapter-counter {
+            background: #eef2f0;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1a4d5f;
+        }
+        [data-theme="dark"] .chapter-counter {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        
+        .chapter-selector {
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+        .chapter-selector select {
+            background: #eef2f0;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            color: #1a4d5f;
+            cursor: pointer;
+            width: 300px;
+            max-width: 90%;
+        }
+        [data-theme="dark"] .chapter-selector select {
+            background: #2a3a35;
+            color: #5a9e8c;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin: 1rem 0 0.25rem;
+            color: #1a4d5f;
+        }
+        [data-theme="dark"] h1 {
+            color: #5a9e8c;
+        }
+        .episode-number {
+            color: #6b6a68;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e5e0d8;
+            padding-bottom: 0.5rem;
+        }
+        [data-theme="dark"] .episode-number {
+            color: #a0a0a0;
+            border-bottom-color: #404040;
+        }
+        .story-content {
+            margin: 1.5rem 0;
+        }
+        .story-content p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        hr {
+            margin: 2rem 0;
+            border: none;
+            border-top: 1px solid #e5e0d8;
+        }
+        [data-theme="dark"] hr {
+            border-top-color: #404040;
+        }
+        
+        .floating-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+        .floating-btn {
+            background: #1a4d5f;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+        }
+        [data-theme="dark"] .floating-btn {
+            background: #5a9e8c;
+        }
+        .floating-btn:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        .toast-message {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: #1a4d5f;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            animation: fadeOut 3s ease forwards;
+        }
+        [data-theme="dark"] .toast-message {
+            background: #5a9e8c;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+        
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #9ca3af;
+            border-top: 1px solid #e5e0d8;
+            padding-top: 1.5rem;
+        }
+        [data-theme="dark"] footer {
+            border-top-color: #404040;
+        }
+        
+        @media (max-width: 600px) {
+            body { padding: 0.5rem; }
+            .nav-center, .nav-bottom { flex-direction: column; gap: 0.5rem; }
+            .floating-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                bottom: 70px;
+                right: 15px;
+            }
+        }
+    </style>
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+</head>
+<body>
+    <div class="options-bar">
+        <div class="font-size-control">
+            <button id="fontMinus">A-</button>
+            <button id="fontPlus">A+</button>
+        </div>
+        <a href="index.html">📚 Índice</a>
+        <button id="themeToggle">🌙 Modo oscuro</button>
+    </div>
+
+    <div class="nav-container">
+        <div class="nav-center">
+            <a href="index.html" class="nav-btn">📚 Índice</a>
+            <a href="capitulo5e3.html" id="prevLinkTop" class="nav-btn ">← Nano y la espada prohibida 2</a>
+            <span class="chapter-counter" id="chapterCounterTop">Capítulo 5 - Episodio 4</span>
+            <a href="capitulo5e5.html" id="nextLinkTop" class="nav-btn ">Rey Enano Dagan →</a>
+        </div>
+    </div>
+
+    <div class="chapter-selector">
+        <select id="chapterSelect">
+            <option value="">📖 Ir a episodio...</option>
+        </select>
+    </div>
+
+    <h1>La actitud de las distintas razas hacia los humanos</h1>
+    <div class="episode-number">Capítulo 5 - Episodio 4</div>
+
+    <div class="story-content">
+        
+<p>—Retrocedamos un poco en el tiempo.</p> <p>La primera princesa del Reino Humano, Lilith, que había venido a inspeccionar la "Torre Gigante", fue intercambiada por una falsa usando "UR, Segunda Sombra: Doble Sombra", y la verdadera se quedó en la "Torre Gigante" para mantener diversas conversaciones conmigo. Entre ellas, obtuve información útil de sus labios.</p> <p>En el despacho de la "Torre Gigante", sentados en sofás frente a una mesa, conversamos.</p> <p>—Si lo que dice el señor Light es cierto, será fácil atraer al Reino Enano a nuestro bando.</p> <p>—...Señorita Lilith, ¿tiene alguna base para decir eso?</p> <p>—¡Sí, por supuesto!</p> <p>Ella respondió con energía y explicó sus razones.</p> <p>—Los enanos son una raza que valora la excelencia en el camino que cada uno elige.</p> <p>Personas que intentan reconstruir grandes civilizaciones del pasado, que buscan la fabricación de espadas y armaduras, artesanía, vajillas, objetos mágicos, etcétera. Sin embargo, al parecer, los países han impuesto restricciones al avance tecnológico porque la civilización mágica que prosperó en el pasado fue destruida. Esto debe ser un estrés considerable para los enanos. Es como decirle a un pez que no nade, o a un pájaro que no vuele.</p> <p>—Que no se opongan abiertamente es, quizás, porque nosotros los humanos y los hombres bestia somos una cosa, pero enfrentarse a la vez a elfos, demonios y dragones les sería desfavorable, y en el peor de los casos podrían acabar con la propia raza enana.</p> <p>—...Ya veo. Ciertamente, cualquiera elegiría el camino de la opresión antes que ser aniquilado.</p> <p>Asentí a sus palabras. Lilith continuó con fuerza.</p> <p>—Sí, sin duda cualquiera pensaría lo mismo. Por cierto, en el Reino Humano, aunque es vergonzoso, a veces se venden ciudadanos propios como esclavos porque otros países lo desean... la raza que mejor trato les da es la enana.</p> <p>Según Lilith, ella misma al principio imaginaba "a niños pequeños trabajando en minas de carbón", pero los enanos le dijeron que "las minas de carbón no son un parque de recreo para niños. ¡Fuera los aficionados!", y al parecer ni siquiera la dejaron entrar en las minas. La razón por la que los enanos buscan esclavos humanos es para que se ocupen de sus asuntos personales y les encarguen tareas diversas.</p> <p>—Cuando era pequeña, en una ocasión en que asistí al Congreso del Ducado de Six, tuve la oportunidad de conversar con la realeza enana. ...El rey enano tenía la manía de decir "quiero dejar de ser rey cuanto antes para dedicarme a mi trabajo y mis investigaciones"... Recuerdo que me impactó, a pesar de mi juventud.</p> <p>Lilith relató el pasado con mirada ausente. Había una clara sensación de realidad en sus palabras.</p> <p>Por eso, excepto para las tareas domésticas cotidianas, rara vez se les emplea en trabajos peligrosos. A los enanos no les interesa nada más que su propia búsqueda. En el fondo, quizás no les interesan ni los humanos ni siquiera las otras razas. Por supuesto, no todos los enanos son iguales. Al parecer, hay un cierto sector que menosprecia a los "humanos inferiores". Pero se dice que entre los enanos que se dedican a la artesanía, la tendencia a discriminar ferozmente disminuye notablemente.</p> <p>—Así que creo que si les ofrecemos minerales, armas o artículos raros, nos escucharán sin problemas.</p> <p>—Esa es la opinión de Lilith.</p> <p><i>(Al principio, la recepcionista enana me menospreciaba como "humano inferior"... pero cuando empecé a entregar artículos valiosos, dio un giro de 180 grados y me recibió con gran entusiasmo).</i></p> <p>Recordé cuando empecé a actuar como aventurero en la superficie con la "SSR, Máscara de Bufón". Supongo que ella también juzgaba si era beneficioso o no para su propio oficio.</p> <p>—Por cierto, le pregunté a Lilith, que es realeza y ha experimentado el Congreso del Ducado de Six, sobre la actitud de cada raza hacia los humanos.</p> <p>Hombres bestia: en general, menosprecian a los humanos y suelen ser personas brutales.</p> <p>Elfos: más que "desprecio", parece que es cercano al odio. Lilith pensaba que "quizás sea una manifestación de aversión hacia los semejantes, ya que los elfos son la raza más parecida físicamente a los humanos". Quizás por eso, los esclavos humanos enviados al Reino de las Elfas eran tratados como ganado.</p> <p>Demonios: los humanos son mano de obra barata, tratados como ganado. Honestamente, para ellos los humanos no existen; más bien, a menudo se mostraban hostiles hacia los dragones. Aunque hostil, no era odio o rencor, sino que parecían considerar a los dragones como rivales.</p> <p>Dragones: ellos mismos se consideraban la raza más superior de las seis, y así lo manifestaban naturalmente incluso en las reuniones. Sin mala intención alguna. Su carácter es muy reservado, y no está muy claro qué trato reciben los humanos enviados al Imperio Dragón.</p> <p>Eso es todo.</p> <p>Mei recordó esta conversación y propuso que nuestro próximo objetivo fueran los enanos, el Reino Enano. Y yo, aceptando su propuesta, decidí que el siguiente objetivo fuera la "venganza contra el enano Nano y el contacto con el Reino Enano".</p> <p>☆ ☆ ☆</p> <p>En el despacho subterráneo del "Abismo".</p> <p>Mantuvimos una reunión Mei y yo sobre la "venganza contra el enano Nano y el contacto con el Reino Enano". Aoyuki vigila el "Abismo" y los alrededores de la "Torre Gigante" a través de monstruos; Ellie, como la "Bruja de la Torre Gigante", ayuda en el desarrollo de la ciudad de los antiguos esclavos humanos que se está formando en los alrededores; Nazuna... estaba acompañando a mi hermana Yume como compañera de juegos y guardaespaldas.</p> <p>Sentado en la silla del despacho, revisé el plan que Mei había presentado.</p> <p>—...Al final, será mejor no hacer como con el Reino Humano, ¿no? Es decir, intentar que los altos mandos del Reino Enano accedan a reunirse con nosotros a través del Reino de las Elfas.</p> <p>—Sí. En el caso del Reino Humano, se nos permitió inspeccionar la "Torre Gigante" con la excusa de ver si "trataban a los humanos de forma humanitaria". Pero que la actual "Torre Gigante" contacte con los altos mandos del Reino Enano sería llamativo y también sería difícil inventar una excusa que convenciera a los demás países. Por supuesto, actuar abiertamente para llamar la atención puede tener ventajas... pero esta vez se desvía un poco del objetivo.</p> <p>—...Porque si la "Torre Gigante" contactara con el Reino Enano, es muy probable que los dragones, entre otros, malinterpretaran nuestras intenciones y se negaran a la reunión.</p> <p>No tiene sentido hacer algo que pueda molestar a la otra parte antes de hablar. Nuestro objetivo es vengarnos de los antiguos miembros de la "Reunión de Razas" y conocer la verdad sobre los "Maestros" y por qué intentaron matarme. No es necesario tomar medidas drásticas sin saber hasta qué punto el Reino Enano tiene información sobre los "Maestros" o está implicado. Está también la entidad que atacó mi aldea; para avanzar en la obtención de información, hay fases. Por supuesto, si la situación es demasiado grave, tengo la intención de destruir el país entero...</p> <p>Pero primero hay que recabar información.</p> <p>—Entonces, como propone Mei, ¿enviaremos a Nemumu al Reino Enano para que se reúna directamente con el rey enano en una reunión secreta, evaluemos la profundidad de su información y, si sus actos pasados no han sido graves, negociemos una alianza encubierta? Si cooperan, bien; si nos rechazan y se convierten en enemigos, también bien.</p> <p>—Si se convierten en enemigos, ¿qué hacemos?</p> <p>Ante la pregunta de Mei, respondí con una sonrisa amplia y relajada.</p> <p>—Lamentablemente, en ese caso, los dominaremos desde las sombras, quebrando su espíritu o cambiando sus cabezas, como hicimos con el Reino de las Elfas. De cualquier manera, el resultado será el mismo.</p> <p>—Como era de esperar del señor Light.</p> <p>Mei sonrió de la misma manera ante mis palabras. Así, en lo profundo del "Abismo", se celebró una reunión que decidiría el futuro del Reino Enano.</p>
+    </div>
+
+    <hr>
+
+    <div class="nav-container">
+        <div class="nav-bottom">
+            <a href="index.html" class="nav-btn">📚 Índice</a>
+            <a href="capitulo5e3.html" id="prevLinkBottom" class="nav-btn ">← Nano y la espada prohibida 2</a>
+            <span class="chapter-counter" id="chapterCounterBottom">Capítulo 5 - Episodio 4</span>
+            <a href="capitulo5e5.html" id="nextLinkBottom" class="nav-btn ">Rey Enano Dagan →</a>
+        </div>
+    </div>
+
+    <div class="chapter-selector">
+        <select id="chapterSelectBottom">
+            <option value="">📖 Ir a episodio...</option>
+        </select>
+    </div>
+
+    <div class="floating-buttons">
+        <button class="floating-btn" id="scrollToTop" title="Ir arriba">⬆</button>
+        <button class="floating-btn" id="scrollToBottom" title="Ir abajo">⬇</button>
+    </div>
+
+    <footer>
+        <p>Gacha Infinita © 明鏡シスイ (Meikyō Shisui) | Traducción: Ocholobos</p>
+        <p>Apoya al autor comprando los volúmenes oficiales</p>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        // ========== CONFIGURACIÓN DEL CAPÍTULO ==========
+        const CHAPTER_NUM = 5;
+        const EPISODE_NUM = 4;
+        
+        // ========== NAVEGACIÓN ==========
+        function setupNavigation() {
+            if (typeof GACHA_DATA !== 'undefined') {
+                const currentEpisode = GACHA_DATA.getEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const prevEpisode = GACHA_DATA.getPrevEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const nextEpisode = GACHA_DATA.getNextEpisode(CHAPTER_NUM, EPISODE_NUM);
+                const allEpisodes = GACHA_DATA.getAllEpisodesOrdered();
+                
+                const prevLinks = [document.getElementById('prevLinkTop'), document.getElementById('prevLinkBottom')];
+                const nextLinks = [document.getElementById('nextLinkTop'), document.getElementById('nextLinkBottom')];
+                const counters = [document.getElementById('chapterCounterTop'), document.getElementById('chapterCounterBottom')];
+                
+                counters.forEach(c => { if(c) c.textContent = `${currentEpisode.chapterTitle} - Episodio ${currentEpisode.episodeNum}`; });
+                
+                if (prevEpisode) {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${prevEpisode.chapter}e${prevEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = prevEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `← ${shortTitle}`;
+                        }
+                    });
+                } else {
+                    prevLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = '← Sin anterior';
+                        }
+                    });
+                }
+                
+                if (nextEpisode) {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.href = `capitulo${nextEpisode.chapter}e${nextEpisode.episodeNum}.html`;
+                            l.classList.remove('disabled');
+                            let shortTitle = nextEpisode.title;
+                            if (shortTitle.length > 25) shortTitle = shortTitle.substring(0, 22) + '...';
+                            l.textContent = `${shortTitle} →`;
+                        }
+                    });
+                } else {
+                    nextLinks.forEach(l => {
+                        if(l) {
+                            l.classList.add('disabled');
+                            l.removeAttribute('href');
+                            l.textContent = 'Sin siguiente →';
+                        }
+                    });
+                }
+                
+                const selects = [document.getElementById('chapterSelect'), document.getElementById('chapterSelectBottom')];
+                selects.forEach(select => {
+                    if (!select) return;
+                    let options = '<option value="">📖 Seleccionar episodio...</option>';
+                    for (const ep of allEpisodes) {
+                        const selected = (ep.chapter == CHAPTER_NUM && ep.episodeNum == EPISODE_NUM) ? 'selected' : '';
+                        options += `<option value="capitulo${ep.chapter}e${ep.episodeNum}.html" ${selected}>${ep.chapterTitle} - Episodio ${ep.episodeNum}: ${ep.title}</option>`;
+                    }
+                    select.innerHTML = options;
+                    select.onchange = function() { if(this.value) window.location.href = this.value; };
+                });
+            }
+        }
+        
+        // ========== REGISTRAR LECTURA EN HISTORIAL ==========
+        function markAsRead() {
+            const user = localStorage.getItem('gacha_user');
+            if (!user) return;
+            
+            let history = localStorage.getItem(`gacha_history_${user}`);
+            let historyObj = history ? JSON.parse(history) : { chapters: [] };
+            
+            const readKey = { chapter: CHAPTER_NUM, episode: EPISODE_NUM };
+            historyObj.chapters = historyObj.chapters.filter(item => 
+                !(item.chapter == CHAPTER_NUM && item.episode == EPISODE_NUM)
+            );
+            historyObj.chapters.unshift(readKey);
+            if (historyObj.chapters.length > 20) historyObj.chapters.pop();
+            
+            localStorage.setItem(`gacha_history_${user}`, JSON.stringify(historyObj));
+        }
+        
+        // ========== CONTROLES ==========
+        function initControls() {
+            const savedTheme = localStorage.getItem('gacha_theme');
+            if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            const savedFont = localStorage.getItem('gacha_fontsize');
+            if (savedFont) document.body.style.fontSize = savedFont + '%';
+            
+            document.getElementById('fontPlus').onclick = () => {
+                let size = parseInt(localStorage.getItem('gacha_fontsize')) || 100;
+                size = Math.min(150, size + 10);
+                document.body.style.fontSize = size + '%';
+                localStorage.setItem('gacha_fontsize', size);
+            };
+            document.getElementById('fontMinus').onclick = () => {
+                let size = parseInt(localStorage.getItem('gacha_fontsize')) || 100;
+                size = Math.max(70, size - 10);
+                document.body.style.fontSize = size + '%';
+                localStorage.setItem('gacha_fontsize', size);
+            };
+            
+            const themeBtn = document.getElementById('themeToggle');
+            if (document.documentElement.hasAttribute('data-theme')) themeBtn.textContent = '☀️ Modo claro';
+            themeBtn.onclick = () => {
+                const isDark = document.documentElement.hasAttribute('data-theme');
+                if (isDark) {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('gacha_theme', 'light');
+                    themeBtn.textContent = '🌙 Modo oscuro';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('gacha_theme', 'dark');
+                    themeBtn.textContent = '☀️ Modo claro';
+                }
+            };
+            
+            document.getElementById('scrollToTop').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById('scrollToBottom').onclick = () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+        
+        // ========== INICIALIZACIÓN ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            initControls();
+            setupNavigation();
+            markAsRead();
+            
+            kofiWidgetOverlay.draw('ocholobos', {
+                'type': 'floating-chat',
+                'floating-chat.donateButton.text': 'Apóyame',
+                'floating-chat.donateButton.background-color': '#1a4d5f',
+                'floating-chat.donateButton.text-color': '#ffffff'
+            });
+        });
+    </script>
+</body>
+</html>
